@@ -1,56 +1,103 @@
 @import "tailwindcss";
 
-:root {
-  --background: #000000;
-  --foreground: #f1f5f9;
-  --card-bg: #07090e;
-  --card-surface: #0e131f;
-  --border-subtle: #1e293b;
-  --accent-cyan: #38bdf8;
-  --accent-purple: #c084fc;
-  --accent-emerald: #34d399;
-  --accent-amber: #fbbf24;
+@font-face {
+  font-family: 'Computer Modern';
+  src: url('/fonts/KaTeX_Main-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card-bg: var(--card-bg);
-  --color-card-surface: var(--card-surface);
-  --color-border-subtle: var(--border-subtle);
-  --color-accent-cyan: var(--accent-cyan);
-  --color-accent-purple: var(--accent-purple);
-  --color-accent-emerald: var(--accent-emerald);
-  --color-accent-amber: var(--accent-amber);
+@font-face {
+  font-family: 'Computer Modern';
+  src: url('/fonts/KaTeX_Main-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Computer Modern';
+  src: url('/fonts/KaTeX_Main-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Archival Paper Light Theme (TeX Parchment) */
+  --bg-monograph: #FBF9F4;
+  --surface-card: #FFFFFF;
+  --hairline-border: #E7E5E0;
+  --ink-primary: #1C1917;
+  --ink-secondary: #57534E;
+  --ink-tertiary: #8C827A;
+  --academic-prussian: #1E3A8A;
+  --academic-crimson: #991B1B;
+  --academic-forest: #166534;
+  --academic-amber: #B45309;
+}
+
+.theme-blackboard {
+  /* Slate Blackboard Night Theme */
+  --bg-monograph: #0F1115;
+  --surface-card: #161920;
+  --hairline-border: #272B35;
+  --ink-primary: #F2F0EB;
+  --ink-secondary: #94A3B8;
+  --ink-tertiary: #64748B;
+  --academic-prussian: #60A5FA;
+  --academic-crimson: #F87171;
+  --academic-forest: #4ADE80;
+  --academic-amber: #FBBF24;
 }
 
 body {
-  background-color: #000000;
-  color: #f1f5f9;
-  font-family: var(--font-sarabun), var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Sarabun", "Plus Jakarta Sans", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-monograph);
+  color: var(--ink-primary);
+  font-family: 'Computer Modern', var(--font-noto-serif-thai), 'KaTeX_Main', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-  overflow-x: hidden;
+  line-height: 1.7;
 }
 
-/* Custom OLED selection styling */
+/* Formal TeX Typography classes */
+.tex-font {
+  font-family: 'Computer Modern', var(--font-noto-serif-thai), serif;
+}
+
+.tex-mono {
+  font-family: 'KaTeX_Typewriter', monospace;
+}
+
+/* Academic TeX Section rules */
+.academic-section-divider {
+  border-top: 1px solid var(--hairline-border);
+  margin: 2rem 0;
+}
+
+/* Formal Paper Text Selection */
 ::selection {
-  background-color: rgba(56, 189, 248, 0.3);
-  color: #38bdf8;
+  background-color: rgba(30, 58, 138, 0.15);
+  color: inherit;
 }
 
-/* KaTeX custom zero-shift overrides */
+.theme-blackboard ::selection {
+  background-color: rgba(96, 165, 250, 0.3);
+  color: #FFFFFF;
+}
+
+/* Zero layout shift math styling */
 .katex {
   font-size: 1.05em;
   text-rendering: auto;
 }
 
 .katex-display {
-  margin: 0.6em 0 !important;
+  margin: 0.8em 0 !important;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0.25rem 0;
+  padding: 0.35rem 0;
 }
 
 .latex-display-block {
@@ -58,21 +105,21 @@ body {
   contain-intrinsic-size: 2.8rem;
 }
 
-/* Custom scrollbars for math formulas and code blocks */
+/* Academic Paper scrollbar */
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #05070b;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 9999px;
+  background: var(--hairline-border);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--ink-tertiary);
 }

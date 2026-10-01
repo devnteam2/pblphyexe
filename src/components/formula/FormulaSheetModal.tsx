@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { LatexRenderer } from '@/components/math/LatexRenderer';
-import { BookMarked, X, Search, Sparkles } from 'lucide-react';
+import { BookMarked, X, Search } from 'lucide-react';
 
 interface FormulaSheetModalProps {
   isOpen: boolean;
@@ -110,54 +110,53 @@ export const FormulaSheetModal: React.FC<FormulaSheetModalProps> = ({ isOpen, on
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
-      <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl border border-slate-800 bg-[#07090e] shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150 font-serif">
+      <div className="relative w-full max-w-4xl max-h-[88vh] flex flex-col rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 md:p-5 border-b border-slate-800 bg-zinc-950">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400">
+        <div className="flex items-center justify-between p-4 md:p-5 border-b border-[var(--hairline-border)]">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded border border-[var(--hairline-border)] bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-300">
               <BookMarked className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base md:text-lg font-bold text-white flex items-center gap-2">
-                <span>คลังสูตรและทฤษฎีบทสำคัญ สอวน. ฟิสิกส์</span>
-                <Sparkles className="w-4 h-4 text-amber-400" />
+              <h2 className="text-base md:text-lg font-bold text-[var(--ink-primary)]">
+                ดัชนีสูตรและทฤษฎีบทสำคัญ (Index of Formulae & Theorems)
               </h2>
-              <p className="text-xs text-slate-400">
-                Formula Quick Reference & Calculus Theorems (เข้าถึงได้แม้ไม่มีเน็ต)
+              <p className="text-xs text-[var(--ink-secondary)]">
+                สูตรหลักทางกลศาสตร์แคลคูลัสสำหรับ สอวน. ฟิสิกส์ ค่าย 1 และ 2
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Filter Bar */}
-        <div className="p-4 border-b border-slate-800/80 bg-zinc-950/60 space-y-3">
+        <div className="p-4 border-b border-[var(--hairline-border)] space-y-3 bg-stone-50/50 dark:bg-stone-900/30">
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-3 text-slate-500" />
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-stone-400" />
             <input
               type="text"
-              placeholder="ค้นหาสูตร เช่น Taylor, กฎลูกโซ่, โมเมนต์ความเฉื่อย, SHM..."
+              placeholder="ค้นหา เช่น Taylor, กฎลูกโซ่, โมเมนต์ความเฉื่อย, Stokes..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-zinc-900 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-xs md:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+              className="w-full bg-[var(--surface-card)] border border-[var(--hairline-border)] rounded pl-9 pr-4 py-1.5 text-xs md:text-sm text-[var(--ink-primary)] placeholder-stone-400 focus:outline-none focus:border-stone-500 font-serif"
             />
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1.5 text-xs">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCat(cat)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-all ${
+                className={`px-2 py-0.5 rounded border transition-all ${
                   selectedCat === cat
-                    ? 'bg-sky-500/20 text-sky-300 border-sky-500/40'
-                    : 'bg-zinc-900 text-slate-400 border-slate-800 hover:text-slate-200'
+                    ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
+                    : 'bg-[var(--surface-card)] text-[var(--ink-secondary)] border-[var(--hairline-border)] hover:text-[var(--ink-primary)]'
                 }`}
               >
                 {cat}
@@ -172,31 +171,29 @@ export const FormulaSheetModal: React.FC<FormulaSheetModalProps> = ({ isOpen, on
             {filtered.map((item, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl border border-slate-800/90 bg-zinc-950/80 hover:border-slate-700 transition-all flex flex-col justify-between"
+                className="p-4 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-400 dark:hover:border-stone-600 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="font-semibold text-white">{item.nameTh}</span>
-                    <span className="text-[10px] uppercase font-bold text-sky-400 bg-sky-950/40 border border-sky-500/20 px-2 py-0.5 rounded">
+                    <span className="font-bold text-[var(--ink-primary)]">{item.nameTh}</span>
+                    <span className="text-[10px] font-mono uppercase px-1.5 py-0.2 rounded border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400">
                       {item.category}
                     </span>
                   </div>
                   <div className="my-2">
-                    <LatexRenderer math={item.latex} displayMode={true} className="bg-black/80 text-sky-200" />
+                    <LatexRenderer
+                      math={item.latex}
+                      displayMode={true}
+                      className="bg-stone-50/80 dark:bg-stone-950/80 border-stone-200 dark:border-stone-800 text-[var(--ink-primary)]"
+                    />
                   </div>
                 </div>
-                <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-900">
-                  💡 {item.noteTh}
+                <div className="text-[11px] text-[var(--ink-secondary)] pt-2 border-t border-[var(--hairline-border)]">
+                  ↳ {item.noteTh}
                 </div>
               </div>
             ))}
           </div>
-
-          {filtered.length === 0 && (
-            <div className="text-center py-12 text-slate-500 text-sm">
-              ไม่พบสูตรที่ตรงกับคำค้นหา
-            </div>
-          )}
         </div>
       </div>
     </div>

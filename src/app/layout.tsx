@@ -1,24 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Sarabun } from "next/font/google";
+import { Noto_Serif_Thai } from "next/font/google";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-plus-jakarta",
-  display: "swap",
-});
-
-const sarabun = Sarabun({
+const notoSerifThai = Noto_Serif_Thai({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["thai", "latin"],
-  variable: "--font-sarabun",
+  variable: "--font-noto-serif-thai",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "OpenPOSN - สอวน. ฟิสิกส์ เพื่อทุกคน | Calculus Physics Olympiad",
-  description: "Interactive physics curriculum & first-principles derivation engine for POSN Physics Olympiad. 100% Free & Open-Access Progressive Web App.",
+  title: "OpenPOSN — สอวน. ฟิสิกส์ เพื่อทุกคน (Academic Monograph & First Principles)",
+  description: "An open-access academic physics monograph and first-principles calculus derivation engine for the Thailand POSN Physics Olympiad.",
   manifest: "/manifest.json",
   icons: {
     icon: "/icon.svg",
@@ -26,13 +20,13 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "OpenPOSN",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#FBF9F4",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -44,11 +38,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="th"
-      className={`dark h-full antialiased bg-black ${plusJakartaSans.variable} ${sarabun.variable}`}
-    >
-      <body className="min-h-full flex flex-col bg-black text-slate-100 font-sans">
+    <html lang="th" className={`${notoSerifThai.variable}`}>
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/KaTeX_Main-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/KaTeX_Math-Italic.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+          integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-serif antialiased">
         {children}
         <ServiceWorkerRegister />
       </body>

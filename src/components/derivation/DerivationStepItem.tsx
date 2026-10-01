@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { DerivationStep } from '@/types/curriculum';
 import { LatexRenderer, FormattedMathText } from '@/components/math/LatexRenderer';
-import { ChevronDown, ChevronUp, Lightbulb, Wrench, AlertTriangle } from 'lucide-react';
+import { ChevronDown, ChevronUp, AlertCircle, Info, Calculator } from 'lucide-react';
 
 interface DerivationStepItemProps {
   step: DerivationStep;
@@ -17,18 +17,18 @@ export const DerivationStepItem: React.FC<DerivationStepItemProps> = ({ step, to
 
   return (
     <div
-      className={`relative pl-6 pb-6 border-l-2 transition-all duration-200 ${
+      className={`relative pl-7 pb-6 border-l transition-all ${
         step.isCrucialLeap
-          ? 'border-purple-500/60 bg-purple-950/10'
-          : 'border-slate-800 hover:border-slate-700'
+          ? 'border-amber-600/70 dark:border-amber-500/70 bg-amber-50/20 dark:bg-amber-950/10'
+          : 'border-stone-300 dark:border-stone-800'
       } ${step.stepNumber === totalSteps ? 'border-transparent pb-0' : ''}`}
     >
-      {/* Step Circle Badge */}
+      {/* Formal TeX Step Marker */}
       <div
-        className={`absolute -left-[17px] top-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border transition-colors ${
+        className={`absolute -left-[14px] top-0 w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-bold border transition-colors ${
           step.isCrucialLeap
-            ? 'bg-purple-950 text-purple-300 border-purple-500 shadow-[0_0_12px_rgba(168,85,247,0.35)]'
-            : 'bg-zinc-900 text-slate-300 border-slate-700'
+            ? 'bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 border-amber-600 dark:border-amber-500 shadow-2xs'
+            : 'bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 border-stone-400 dark:border-stone-700'
         }`}
       >
         {step.stepNumber}
@@ -37,48 +37,52 @@ export const DerivationStepItem: React.FC<DerivationStepItemProps> = ({ step, to
       <div className="space-y-2">
         {/* Step Header */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h4 className="text-sm md:text-base font-medium text-slate-200 flex items-center gap-2">
+          <h4 className="text-sm font-serif font-bold text-[var(--ink-primary)] flex items-center gap-2">
             <span>{step.titleTh}</span>
             {step.isCrucialLeap && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                <AlertTriangle className="w-3 h-3" />
-                จุดสังเกตสำคัญ
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+                <AlertCircle className="w-3 h-3" />
+                จุดสังเกตสำคัญ (Crucial Leap)
               </span>
             )}
           </h4>
         </div>
 
-        {/* Latex Display Block */}
-        <div className="my-1.5">
-          <LatexRenderer math={step.latexMath} displayMode={true} />
+        {/* Latex Display Block with Academic Paper background */}
+        <div className="my-2">
+          <LatexRenderer
+            math={step.latexMath}
+            displayMode={true}
+            className="border-stone-300 dark:border-stone-800 bg-stone-50/80 dark:bg-stone-950/80 text-[var(--ink-primary)] shadow-2xs"
+          />
         </div>
 
         {/* Action Toggles */}
-        <div className="flex flex-wrap gap-2 pt-1">
+        <div className="flex flex-wrap gap-2 pt-1 font-serif text-xs">
           <button
             onClick={() => setShowIntuition(!showIntuition)}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded border transition-all ${
               showIntuition
-                ? 'bg-sky-500/20 text-sky-300 border-sky-500/40'
-                : 'bg-zinc-900 text-slate-400 border-slate-800 hover:text-slate-200 hover:bg-zinc-800'
+                ? 'bg-stone-200 dark:bg-stone-800 text-stone-900 dark:text-stone-100 border-stone-400 dark:border-stone-600 font-medium'
+                : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-400 border-stone-300 dark:border-stone-800 hover:text-stone-900 dark:hover:text-stone-200'
             }`}
           >
-            <Lightbulb className="w-3.5 h-3.5 text-sky-400" />
-            <span>ทำไมต้องก้าวนี้? (Physical Intuition)</span>
+            <Info className="w-3.5 h-3.5 text-stone-500" />
+            <span>Physical Intuition (ทำไมต้องขั้นตอนนี้?)</span>
             {showIntuition ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
           </button>
 
           {step.mathOperationTh && (
             <button
               onClick={() => setShowMathOp(!showMathOp)}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all ${
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded border transition-all ${
                 showMathOp
-                  ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
-                  : 'bg-zinc-900 text-slate-400 border-slate-800 hover:text-slate-200 hover:bg-zinc-800'
+                  ? 'bg-stone-200 dark:bg-stone-800 text-stone-900 dark:text-stone-100 border-stone-400 dark:border-stone-600 font-medium'
+                  : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-400 border-stone-300 dark:border-stone-800 hover:text-stone-900 dark:hover:text-stone-200'
               }`}
             >
-              <Wrench className="w-3.5 h-3.5 text-purple-400" />
-              <span>เทคนิคแคลคูลัส (Math Operation)</span>
+              <Calculator className="w-3.5 h-3.5 text-stone-500" />
+              <span>Calculus Technique (เทคนิคการอินทิเกรต)</span>
               {showMathOp ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </button>
           )}
@@ -86,11 +90,11 @@ export const DerivationStepItem: React.FC<DerivationStepItemProps> = ({ step, to
 
         {/* Intuition Box */}
         {showIntuition && (
-          <div className="p-3 rounded-lg bg-sky-950/30 border border-sky-800/40 text-xs md:text-sm text-sky-200 animate-in fade-in duration-150">
+          <div className="p-3.5 rounded border border-stone-300 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/60 text-xs md:text-sm text-stone-700 dark:text-stone-300 font-serif leading-relaxed animate-in fade-in duration-150">
             <div className="flex items-start gap-2">
-              <Lightbulb className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+              <span className="font-bold text-stone-900 dark:text-stone-100 shrink-0 font-mono">↳ Note:</span>
               <div>
-                <p className="font-semibold text-sky-300 mb-1">เหตุผลทางฟิสิกส์เบื้องหลังคณิตศาสตร์:</p>
+                <p className="font-semibold text-stone-800 dark:text-stone-200 mb-0.5">เหตุผลทางฟิสิกส์เบื้องหลังคณิตศาสตร์:</p>
                 <FormattedMathText text={step.physicalIntuitionTh} />
               </div>
             </div>
@@ -99,11 +103,11 @@ export const DerivationStepItem: React.FC<DerivationStepItemProps> = ({ step, to
 
         {/* Math Op Box */}
         {showMathOp && step.mathOperationTh && (
-          <div className="p-3 rounded-lg bg-purple-950/30 border border-purple-800/40 text-xs md:text-sm text-purple-200 animate-in fade-in duration-150">
+          <div className="p-3.5 rounded border border-stone-300 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/60 text-xs md:text-sm text-stone-700 dark:text-stone-300 font-serif leading-relaxed animate-in fade-in duration-150">
             <div className="flex items-start gap-2">
-              <Wrench className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+              <span className="font-bold text-stone-900 dark:text-stone-100 shrink-0 font-mono">↳ Tool:</span>
               <div>
-                <p className="font-semibold text-purple-300 mb-1">เทคนิคการคำนวณและอินทิเกรต:</p>
+                <p className="font-semibold text-stone-800 dark:text-stone-200 mb-0.5">เครื่องมือทางแคลคูลัสที่ใช้:</p>
                 <FormattedMathText text={step.mathOperationTh} />
               </div>
             </div>

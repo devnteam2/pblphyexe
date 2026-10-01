@@ -8,13 +8,7 @@ import { DerivationAccordionEngine } from '@/components/derivation/DerivationAcc
 import { ScaffoldedProblemCard } from '@/components/problems/ScaffoldedProblemCard';
 import { POSN_PROBLEMS } from '@/data/problemsData';
 import { useStudentStore } from '@/store/useStudentStore';
-import {
-  Clock,
-  CheckCircle2,
-  BookOpen,
-  ArrowLeft,
-  Award,
-} from 'lucide-react';
+import { CheckCircle2, ArrowLeft } from 'lucide-react';
 
 interface LessonReaderViewProps {
   lesson: Lesson;
@@ -36,81 +30,68 @@ export const LessonReaderView: React.FC<LessonReaderViewProps> = ({
   );
 
   return (
-    <article className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-200">
-      {/* Top Breadcrumb & Action bar */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800/80">
+    <article className="max-w-3xl mx-auto space-y-8 animate-in fade-in duration-150 font-serif">
+      {/* Top Academic Breadcrumb */}
+      <div className="flex items-center justify-between pb-3 border-b border-[var(--hairline-border)]">
         <button
           onClick={onBackToRoadmap}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>กลับสู่แผนผังหลักสูตร</span>
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>§ ย้อนกลับไปสารบัญ</span>
         </button>
 
         <button
           onClick={() => toggleLessonCompletion(lesson.slug)}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-serif border transition-all ${
             isCompleted
-              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
-              : 'bg-zinc-900 text-slate-400 border-slate-800 hover:text-slate-200'
+              ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border-emerald-400 dark:border-emerald-700 font-semibold'
+              : 'bg-[var(--surface-card)] text-[var(--ink-secondary)] border-[var(--hairline-border)] hover:text-[var(--ink-primary)]'
           }`}
         >
-          <CheckCircle2 className={`w-4 h-4 ${isCompleted ? 'text-emerald-400' : 'text-slate-500'}`} />
-          <span>{isCompleted ? 'เรียนจบบทนี้แล้ว' : 'ทำเครื่องหมายว่าเรียนจบ'}</span>
+          <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted ? 'text-emerald-600' : 'text-stone-400'}`} />
+          <span>{isCompleted ? 'ศึกษาจบบทนี้แล้ว' : 'ทำเครื่องหมายว่าศึกษาจบ'}</span>
         </button>
       </div>
 
-      {/* Lesson Header */}
-      <header className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border"
-            style={{
-              borderColor: `${topic.colorAccent}40`,
-              backgroundColor: `${topic.colorAccent}15`,
-              color: topic.colorAccent,
-            }}
-          >
-            {topic.titleTh.split('.')[0]}
-          </span>
-          <span className="text-xs text-slate-400 flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5 text-slate-500" />
-            เวลาอ่านประมาณ {lesson.readTimeMinutes} นาที
-          </span>
+      {/* Formal Section Header */}
+      <header className="space-y-3 pt-2">
+        <div className="flex items-center gap-2 text-xs font-mono text-stone-500 uppercase tracking-wider">
+          <span>{topic.titleTh.split('.')[0]}</span>
+          <span>•</span>
+          <span>EST. READ {lesson.readTimeMinutes} MIN</span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink-primary)] tracking-tight leading-snug">
           <FormattedMathText text={lesson.titleTh} />
         </h1>
 
-        <p className="text-sm md:text-base text-slate-400 leading-relaxed">
+        <p className="text-sm md:text-base text-[var(--ink-secondary)] leading-relaxed italic border-l-2 border-stone-400 dark:border-stone-700 pl-3">
           <FormattedMathText text={lesson.summaryTh} />
         </p>
       </header>
 
-      {/* Theory Narrative Section */}
-      <div className="rounded-xl border border-slate-800 bg-[#090D16] p-5 md:p-7 leading-relaxed text-sm md:text-base text-slate-200 space-y-4">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400 border-b border-slate-800 pb-2">
-          <BookOpen className="w-4 h-4" />
-          เนื้อหาทฤษฎี & สาระสำคัญ (Core Physics Theory)
+      {/* Theory Narrative Section (Typeset like a printed paper) */}
+      <section className="rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] p-6 md:p-8 leading-relaxed text-sm md:text-base text-[var(--ink-primary)] space-y-4 shadow-2xs">
+        <div className="text-xs font-mono font-bold uppercase tracking-wider text-stone-500 pb-2 border-b border-[var(--hairline-border)]">
+          § 1. Theoretical Foundations (หลักการทฤษฎีและสมการตั้งต้น)
         </div>
-        <div className="whitespace-pre-line text-slate-300 leading-loose">
+        <div className="whitespace-pre-line leading-relaxed text-[var(--ink-primary)]">
           <FormattedMathText text={lesson.theoryMarkdownTh.trim()} />
         </div>
-      </div>
+      </section>
 
       {/* Interactive Derivations */}
       {lesson.derivations && lesson.derivations.length > 0 && (
-        <section className="space-y-4 pt-2">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-6 rounded-full bg-gradient-to-b from-sky-400 to-purple-500" />
-            <h2 className="text-lg md:text-xl font-bold text-white">
-              การพิสูจน์แบบบรรทัดต่อบรรทัด (Line-by-Line Derivations)
+        <section className="space-y-4 pt-4 border-t border-[var(--hairline-border)]">
+          <div>
+            <span className="font-mono text-xs font-bold text-stone-500 uppercase tracking-wider">
+              § 2. Step-by-Step Derivations
+            </span>
+            <h2 className="text-lg md:text-xl font-bold text-[var(--ink-primary)] mt-1">
+              การพิสูจน์แคลคูลัสแบบ First Principles
             </h2>
           </div>
-          <p className="text-xs md:text-sm text-slate-400">
-            แตะที่แต่ละขั้นตอนเพื่อดูคำอธิบายทางกายภาพ (Physical Intuition) และเทคนิคทางแคลคูลัส
-          </p>
 
           <div className="space-y-6">
             {lesson.derivations.map((deriv) => (
@@ -122,21 +103,18 @@ export const LessonReaderView: React.FC<LessonReaderViewProps> = ({
 
       {/* Scaffolded POSN Problems Practice */}
       {relatedProblems.length > 0 && (
-        <section className="space-y-4 pt-4 border-t border-slate-800/80">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-2.5 h-6 rounded-full bg-gradient-to-b from-amber-400 to-rose-500" />
-              <h2 className="text-lg md:text-xl font-bold text-white">
-                โจทย์ฝึกซ้อม สอวน. ฟิสิกส์ ที่ตรงกับบทนี้
-              </h2>
-            </div>
-            <span className="text-xs text-amber-400 font-semibold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-              3-Tier Scaffolding
+        <section className="space-y-4 pt-6 border-t border-[var(--hairline-border)]">
+          <div>
+            <span className="font-mono text-xs font-bold text-stone-500 uppercase tracking-wider">
+              § 3. Olympiad Problem Scaffolding
             </span>
+            <h2 className="text-lg md:text-xl font-bold text-[var(--ink-primary)] mt-1">
+              โจทย์ฝึกซ้อม สอวน. ฟิสิกส์ ประจำบท
+            </h2>
+            <p className="text-xs text-[var(--ink-secondary)] mt-0.5">
+              ฝึกวิเคราะห์โมเดลทางกายภาพทีละขั้น โดยใช้บันไดความคิด 3 ระดับ
+            </p>
           </div>
-          <p className="text-xs md:text-sm text-slate-400">
-            ฝึกคิดเป็นขั้นตอนโดยใช้ระบบคำใบ้ 3 ระดับ ก่อนตัดสินใจเปิดดูเฉลยแคลคูลัสเต็มรูปแบบ
-          </p>
 
           <div className="space-y-6">
             {relatedProblems.map((problem) => (
@@ -146,24 +124,18 @@ export const LessonReaderView: React.FC<LessonReaderViewProps> = ({
         </section>
       )}
 
-      {/* Completion Banner */}
-      <div className="p-5 rounded-xl bg-gradient-to-r from-sky-950/40 to-purple-950/40 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <Award className="w-4 h-4 text-emerald-400" />
-            <span>จบเนื้อหาบทเรียนนี้แล้ว</span>
-          </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
-            ก้าวต่อไป: ทบทวนคำใบ้และแก้โจทย์ซ้ำอีกรอบจนคล่องแคล่ว
-          </p>
-        </div>
+      {/* Chapter Completion Rule */}
+      <footer className="pt-6 border-t border-[var(--hairline-border)] text-center pb-8">
+        <p className="text-xs text-[var(--ink-tertiary)] font-serif italic mb-3">
+          จบเนื้อหาประจำบทนี้ • ปฏิบัติตามหลักการ First Principles ในการแก้โจทย์เสมอ
+        </p>
         <button
           onClick={onBackToRoadmap}
-          className="px-5 py-2.5 rounded-lg text-xs font-bold bg-sky-500 text-black hover:bg-sky-400 transition-colors shrink-0"
+          className="px-4 py-2 rounded text-xs font-serif font-medium bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 hover:opacity-90 shadow-2xs transition-all"
         >
-          กลับไปเลือกบทถัดไปบน Roadmap
+          กลับสู่สารบัญเพื่อศึกษาบทถัดไป
         </button>
-      </div>
+      </footer>
     </article>
   );
 };

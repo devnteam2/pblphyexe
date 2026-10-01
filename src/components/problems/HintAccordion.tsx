@@ -4,7 +4,7 @@
 import React from 'react';
 import { ProblemHint } from '@/types/problem';
 import { FormattedMathText, LatexRenderer } from '@/components/math/LatexRenderer';
-import { Lock, Unlock, HelpCircle, Compass, Cpu, Wand2 } from 'lucide-react';
+import { Lock, Unlock } from 'lucide-react';
 
 interface HintAccordionProps {
   hints: [ProblemHint, ProblemHint, ProblemHint];
@@ -17,100 +17,92 @@ export const HintAccordion: React.FC<HintAccordionProps> = ({
   unlockedTiers,
   onUnlockTier,
 }) => {
-  const getTierIcon = (tier: 1 | 2 | 3) => {
+  const getStageHeader = (tier: 1 | 2 | 3) => {
     switch (tier) {
       case 1:
-        return <Compass className="w-4 h-4 text-sky-400" />;
+        return 'Stage 1: Physical Model & Coordinate Reference (การสร้างแบบจำลองทางกายภาพ)';
       case 2:
-        return <Cpu className="w-4 h-4 text-amber-400" />;
+        return 'Stage 2: Governing Differential Equations (กฎและสมการอนุพันธ์หลัก)';
       case 3:
-        return <Wand2 className="w-4 h-4 text-purple-400" />;
-    }
-  };
-
-  const getTierBadge = (tier: 1 | 2 | 3) => {
-    switch (tier) {
-      case 1:
-        return { label: 'Tier 1: โมเดลทางกายภาพ (Physical Model & FBD)', color: 'border-sky-500/30 bg-sky-950/20 text-sky-300' };
-      case 2:
-        return { label: 'Tier 2: กฎและสมการหลัก (Governing Equations)', color: 'border-amber-500/30 bg-amber-950/20 text-amber-300' };
-      case 3:
-        return { label: 'Tier 3: เทคนิคคณิตศาสตร์ (Mathematical Trick)', color: 'border-purple-500/30 bg-purple-950/20 text-purple-300' };
+        return 'Stage 3: Integration Technique & Calculus Tool (เทคนิคการอินทิเกรต)';
     }
   };
 
   return (
-    <div className="space-y-3 my-4">
-      <div className="flex items-center justify-between text-xs text-slate-400 pb-1">
-        <span className="flex items-center gap-1.5 font-semibold text-slate-300">
-          <HelpCircle className="w-4 h-4 text-sky-400" />
-          ระบบคำใบ้ 3 ระดับ (Scaffolded Hints)
+    <div className="space-y-3 my-5 font-serif">
+      <div className="flex items-center justify-between text-xs text-[var(--ink-secondary)] pb-1 border-b border-[var(--hairline-border)]">
+        <span className="font-bold uppercase tracking-wider text-[var(--ink-primary)]">
+          Scaffolding Stages (บันไดความคิด 3 ระดับ)
         </span>
-        <span>
-          ปลดล็อกแล้ว: <span className="font-bold text-sky-400">{unlockedTiers.length}/3</span>
+        <span className="font-mono text-[11px]">
+          ปลดล็อก: {unlockedTiers.length}/3
         </span>
       </div>
 
       {hints.map((hint) => {
         const isUnlocked = unlockedTiers.includes(hint.tier);
         const canUnlock = hint.tier === 1 || unlockedTiers.includes((hint.tier - 1) as 1 | 2);
-        const badge = getTierBadge(hint.tier);
 
         return (
           <div
             key={hint.tier}
-            className={`rounded-xl border transition-all ${
+            className={`rounded border transition-all ${
               isUnlocked
-                ? 'bg-zinc-950/90 border-slate-700/80 shadow-md'
-                : 'bg-zinc-950/40 border-slate-800/60'
+                ? 'bg-[var(--surface-card)] border-stone-400 dark:border-stone-700 shadow-2xs'
+                : 'bg-stone-50/50 dark:bg-stone-900/20 border-stone-200 dark:border-stone-800/80'
             }`}
           >
             {/* Header */}
             <div className="p-3.5 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <div className={`p-1.5 rounded-lg border ${badge.color}`}>
-                  {getTierIcon(hint.tier)}
-                </div>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs font-bold text-stone-500 w-5">
+                  [0{hint.tier}]
+                </span>
                 <div>
-                  <h4 className="text-xs md:text-sm font-semibold text-slate-200">
-                    {badge.label}
+                  <h4 className="text-xs md:text-sm font-bold text-[var(--ink-primary)]">
+                    {getStageHeader(hint.tier)}
                   </h4>
-                  <p className="text-xs text-slate-400">{hint.titleTh}</p>
+                  <p className="text-[11px] text-[var(--ink-secondary)]">{hint.titleTh}</p>
                 </div>
               </div>
 
               {isUnlocked ? (
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 bg-emerald-950/30 border border-emerald-500/30 px-2 py-0.5 rounded">
+                <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 px-2 py-0.5 rounded">
                   <Unlock className="w-3 h-3" />
-                  ปลดล็อกแล้ว
+                  Unlocked
                 </span>
               ) : (
                 <button
                   onClick={() => onUnlockTier(hint.tier)}
                   disabled={!canUnlock}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded text-xs font-serif transition-all ${
                     canUnlock
-                      ? 'bg-sky-500/10 text-sky-300 border border-sky-500/40 hover:bg-sky-500/20 active:scale-95'
-                      : 'bg-zinc-900 text-slate-600 border border-slate-800 cursor-not-allowed'
+                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 hover:opacity-90 shadow-2xs'
+                      : 'bg-stone-100 dark:bg-stone-900 text-stone-400 dark:text-stone-600 border border-stone-200 dark:border-stone-800 cursor-not-allowed'
                   }`}
                 >
                   <Lock className="w-3 h-3" />
-                  <span>{canUnlock ? 'ดูคำใบ้นี้' : `ต้องปลดล็อก Tier ${hint.tier - 1} ก่อน`}</span>
+                  <span>{canUnlock ? 'เปิดคำใบ้นี้' : `ต้องปลดล็อก Stage ${hint.tier - 1} ก่อน`}</span>
                 </button>
               )}
             </div>
 
             {/* Hint Content (If Unlocked) */}
             {isUnlocked && (
-              <div className="px-4 pb-4 pt-1 border-t border-slate-800/80 text-xs md:text-sm text-slate-300 animate-in fade-in duration-200">
-                <p className="leading-relaxed">
+              <div className="px-4 pb-4 pt-2 border-t border-stone-200 dark:border-stone-800 text-xs md:text-sm text-[var(--ink-primary)] leading-relaxed animate-in fade-in duration-150">
+                <p>
                   <FormattedMathText text={hint.contentTh} />
                 </p>
 
                 {hint.latexSnippets && hint.latexSnippets.length > 0 && (
                   <div className="mt-2.5 space-y-1.5">
                     {hint.latexSnippets.map((snippet, idx) => (
-                      <LatexRenderer key={idx} math={snippet} displayMode={true} className="text-sky-300 bg-black/60" />
+                      <LatexRenderer
+                        key={idx}
+                        math={snippet}
+                        displayMode={true}
+                        className="bg-stone-50/80 dark:bg-stone-950/80 border-stone-300 dark:border-stone-800 text-stone-900 dark:text-stone-100"
+                      />
                     ))}
                   </div>
                 )}

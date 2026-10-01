@@ -14,7 +14,7 @@ interface StudentStoreState extends UserProgressState {
   revealSolution: (problemId: string) => void;
   recordSelfCheck: (problemId: string, selectedIndex: number, isCorrect: boolean) => void;
   toggleProblemMastery: (problemId: string) => void;
-  setThemePreference: (theme: 'oled_black' | 'dark_slate') => void;
+  setThemePreference: (theme: 'archival_paper' | 'slate_blackboard') => void;
   setFontSizeScale: (scale: 'normal' | 'large') => void;
   resetProgress: () => void;
 }
@@ -35,7 +35,7 @@ export const useStudentStore = create<StudentStoreState>()(
       problemProgress: {},
       currentStreakDays: 1,
       lastActiveDate: new Date().toISOString().split('T')[0],
-      themePreference: 'oled_black',
+      themePreference: 'archival_paper',
       fontSizeScale: 'normal',
       isHydrated: false,
 

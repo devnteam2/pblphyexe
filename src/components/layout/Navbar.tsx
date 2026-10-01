@@ -4,16 +4,15 @@
 import React, { useSyncExternalStore } from 'react';
 import { useStudentStore } from '@/store/useStudentStore';
 import {
-  Atom,
-  BookMarked,
   Wifi,
   WifiOff,
-  CheckCircle2,
+  Sun,
+  Moon,
+  BookMarked,
 } from 'lucide-react';
 
 interface NavbarProps {
   onOpenFormulaSheet: () => void;
-  onOpenBookmarks: () => void;
   activeTab: 'roadmap' | 'problems' | 'saved';
   setActiveTab: (tab: 'roadmap' | 'problems' | 'saved') => void;
 }
@@ -28,7 +27,7 @@ function subscribeOnline(callback: () => void) {
 }
 
 function getOnlineSnapshot() {
-  return navigator.onLine;
+  return typeof navigator !== 'undefined' ? navigator.onLine : true;
 }
 
 function getServerOnlineSnapshot() {
@@ -40,111 +39,121 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
 }) => {
-  const { problemProgress, bookmarkedDerivationIds } = useStudentStore();
+  const { bookmarkedDerivationIds, themePreference, setThemePreference } =
+    useStudentStore();
   const isOnline = useSyncExternalStore(
     subscribeOnline,
     getOnlineSnapshot,
     getServerOnlineSnapshot
   );
 
-  const totalMasteredProblems = Object.values(problemProgress).filter(
-    (p) => p.isMarkedMastered
-  ).length;
+  const toggleTheme = () => {
+    const next = themePreference === 'archival_paper' ? 'slate_blackboard' : 'archival_paper';
+    setThemePreference(next);
+  };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/90 bg-[#000000]/95 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Brand */}
+    <header className="sticky top-0 z-40 w-full border-b border-[var(--hairline-border)] bg-[var(--bg-monograph)]/95 backdrop-blur-md transition-colors duration-200">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-15 flex items-center justify-between gap-4">
+        {/* Academic Brand */}
         <div
           onClick={() => setActiveTab('roadmap')}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-3 cursor-pointer group select-none"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-purple-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(56,189,248,0.4)] group-hover:scale-105 transition-transform">
-            <Atom className="w-6 h-6 animate-[spin_10s_linear_infinite]" />
+          <div className="w-8 h-8 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] flex items-center justify-center font-serif text-sm font-bold text-[var(--ink-primary)] shadow-2xs">
+            §
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-base md:text-lg text-white tracking-tight">
-                Open<span className="text-sky-400">POSN</span>
+            <div className="flex items-center gap-2">
+              <span className="font-serif font-bold text-base md:text-lg text-[var(--ink-primary)] tracking-tight">
+                OpenPOSN
               </span>
-              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase">
-                Free PWA
+              <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded border border-stone-300 dark:border-stone-700 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400">
+                Monograph
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-medium hidden sm:block">
-              สอวน. ฟิสิกส์ เพื่อทุกคน • First-Principles Physics
+            <p className="text-[10px] text-[var(--ink-tertiary)] font-serif hidden sm:block">
+              สอวน. ฟิสิกส์ เพื่อทุกคน • First-Principles Physics Monograph
             </p>
           </div>
         </div>
 
-        {/* Desktop Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 bg-zinc-950/80 p-1 rounded-xl border border-slate-800">
+        {/* Academic Section Tabs */}
+        <nav className="hidden md:flex items-center gap-1 p-1 rounded-md border border-[var(--hairline-border)] bg-[var(--surface-card)]">
           <button
             onClick={() => setActiveTab('roadmap')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all ${
               activeTab === 'roadmap'
-                ? 'bg-sky-500 text-black shadow-sm'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
+                : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
             }`}
           >
-            แผนผังหลักสูตร (Roadmap)
+            § สารบัญเนื้อหา (Syllabus)
           </button>
           <button
             onClick={() => setActiveTab('problems')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all ${
               activeTab === 'problems'
-                ? 'bg-sky-500 text-black shadow-sm'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
+                : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
             }`}
           >
-            คลังโจทย์ สอวน. (Past Exams)
+            คลังข้อสอบ สอวน. (Exam Bank)
           </button>
           <button
             onClick={() => setActiveTab('saved')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all flex items-center gap-1.5 ${
               activeTab === 'saved'
-                ? 'bg-sky-500 text-black shadow-sm'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
+                : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
             }`}
           >
-            <span>สูตรที่บันทึก</span>
+            <span>บทพิสูจน์ที่บันทึก</span>
             {bookmarkedDerivationIds.length > 0 && (
-              <span className="w-4 h-4 rounded-full bg-purple-500 text-white text-[10px] flex items-center justify-center font-bold">
+              <span className="w-4 h-4 rounded-full bg-amber-700 text-white text-[9px] flex items-center justify-center font-bold">
                 {bookmarkedDerivationIds.length}
               </span>
             )}
           </button>
         </nav>
 
-        {/* Right Status Group */}
+        {/* Controls */}
         <div className="flex items-center gap-2">
-          {/* Formula Sheet Trigger */}
+          {/* Formula Index Modal Trigger */}
           <button
             onClick={onOpenFormulaSheet}
-            className="p-2 sm:px-3 sm:py-1.5 rounded-lg border border-slate-800 bg-zinc-950 hover:bg-zinc-900 text-sky-400 text-xs font-medium flex items-center gap-1.5 transition-colors"
-            title="เปิดคลังสูตรและทฤษฎีบท"
+            className="p-1.5 sm:px-2.5 sm:py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center gap-1.5 transition-colors"
+            title="ดัชนีสูตรและทฤษฎีบท"
           >
-            <BookMarked className="w-4 h-4" />
-            <span className="hidden sm:inline">คลังสูตร</span>
+            <BookMarked className="w-3.5 h-3.5 text-stone-500" />
+            <span className="hidden sm:inline">ดัชนีสูตร (Formulae)</span>
           </button>
 
-          {/* Mastered Problem Counter */}
-          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-950 border border-slate-800 text-xs text-slate-300">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            <span>ผ่านแล้ว {totalMasteredProblems} ข้อ</span>
-          </div>
-
-          {/* Offline / Online Status */}
-          <div
-            className={`px-2 py-1 rounded-md text-[11px] font-medium border flex items-center gap-1 ${
-              isOnline
-                ? 'bg-emerald-950/40 text-emerald-300 border-emerald-500/30'
-                : 'bg-amber-950/40 text-amber-300 border-amber-500/40 animate-pulse'
-            }`}
-            title={isOnline ? 'เชื่อมต่อออนไลน์' : 'ออฟไลน์ (ใช้งานได้ 100% จากแคช)'}
+          {/* Theme Switcher: Archival Paper vs Slate Blackboard */}
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] transition-colors"
+            title={themePreference === 'archival_paper' ? 'เปลี่ยนเป็น Slate Blackboard Mode' : 'เปลี่ยนเป็น Archival Paper Mode'}
+            aria-label="Toggle Theme"
           >
-            {isOnline ? <Wifi className="w-3 h-3 text-emerald-400" /> : <WifiOff className="w-3 h-3 text-amber-400" />}
-            <span className="hidden lg:inline">{isOnline ? 'Online' : 'Offline Ready'}</span>
+            {themePreference === 'archival_paper' ? (
+              <Moon className="w-4 h-4 text-stone-600" />
+            ) : (
+              <Sun className="w-4 h-4 text-amber-400" />
+            )}
+          </button>
+
+          {/* Offline Indicator */}
+          <div
+            className={`px-2 py-0.5 rounded text-[11px] font-mono border flex items-center gap-1 ${
+              isOnline
+                ? 'border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400'
+                : 'border-amber-500 text-amber-700 dark:text-amber-400'
+            }`}
+            title={isOnline ? 'เชื่อมต่อออนไลน์' : 'ทำงานแบบออฟไลน์ 100%'}
+          >
+            {isOnline ? <Wifi className="w-3 h-3 text-stone-500" /> : <WifiOff className="w-3 h-3 text-amber-600" />}
+            <span className="hidden lg:inline">{isOnline ? 'Online' : 'Offline PWA'}</span>
           </div>
         </div>
       </div>

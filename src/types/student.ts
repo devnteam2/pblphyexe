@@ -1,5 +1,7 @@
 // src/types/student.ts
 
+export type AcademicTheme = 'archival_paper' | 'slate_blackboard';
+
 export interface ProblemState {
   unlockedHintTiers: (1 | 2 | 3)[];
   isSolutionRevealed: boolean;
@@ -15,6 +17,6 @@ export interface UserProgressState {
   problemProgress: Record<string, ProblemState>;
   currentStreakDays: number;
   lastActiveDate: string;
-  themePreference: 'oled_black' | 'dark_slate';
+  themePreference: AcademicTheme;
   fontSizeScale: 'normal' | 'large';
 }

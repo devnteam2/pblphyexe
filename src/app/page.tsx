@@ -3,7 +3,6 @@
 
 import React, { useState } from 'react';
 import { CURRICULUM_TOPICS } from '@/data/curriculumData';
-import { POSN_PROBLEMS } from '@/data/problemsData';
 import { TopicId } from '@/types/curriculum';
 import { Navbar } from '@/components/layout/Navbar';
 import { MobileNav } from '@/components/layout/MobileNav';
@@ -12,17 +11,12 @@ import { LessonReaderView } from '@/components/lesson/LessonReaderView';
 import { ProblemBankView } from '@/components/problems/ProblemBankView';
 import { SavedDerivationsView } from '@/components/saved/SavedDerivationsView';
 import { FormulaSheetModal } from '@/components/formula/FormulaSheetModal';
+import { TheTrapDiagram } from '@/components/academic/TheTrapDiagram';
 import { useStudentStore } from '@/store/useStudentStore';
-import {
-  Sparkles,
-  BookOpen,
-  CheckCircle2,
-  BrainCircuit,
-  ArrowRight,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
-  const { completedLessonSlugs, problemProgress } = useStudentStore();
+  const { completedLessonSlugs, themePreference } = useStudentStore();
   const [activeTab, setActiveTab] = useState<'roadmap' | 'problems' | 'saved'>('roadmap');
   const [selectedTopicId, setSelectedTopicId] = useState<TopicId>('math-tools');
   const [selectedLessonSlug, setSelectedLessonSlug] = useState<string | null>(null);
@@ -33,21 +27,11 @@ export default function Home() {
     ? activeTopic.lessons.find((l) => l.slug === selectedLessonSlug) || activeTopic.lessons[0]
     : null;
 
-  const totalLessonsCount = CURRICULUM_TOPICS.reduce(
-    (acc, t) => acc + t.lessons.length,
-    0
-  );
-  const totalCompletedLessons = completedLessonSlugs.length;
-  const totalMasteredProblems = Object.values(problemProgress).filter(
-    (p) => p.isMarkedMastered
-  ).length;
-
   return (
-    <div className="min-h-screen bg-black text-slate-100 flex flex-col font-sans pb-20 md:pb-8 selection:bg-sky-500/30 selection:text-sky-300">
-      {/* Top App Bar */}
+    <div className={`min-h-screen transition-colors duration-200 ${themePreference === 'slate_blackboard' ? 'theme-blackboard' : ''} bg-[var(--bg-monograph)] text-[var(--ink-primary)] flex flex-col font-serif pb-20 md:pb-8`}>
+      {/* Top Academic Header */}
       <Navbar
         onOpenFormulaSheet={() => setIsFormulaSheetOpen(true)}
-        onOpenBookmarks={() => setActiveTab('saved')}
         activeTab={activeTab}
         setActiveTab={(tab) => {
           setActiveTab(tab);
@@ -57,53 +41,37 @@ export default function Home() {
         }}
       />
 
-      {/* Main App Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 md:py-8">
-        {/* TAB 1: ROADMAP / LESSON VIEW */}
+      {/* Main Content Pane */}
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 md:py-8">
+        {/* TAB 1: ROADMAP / ACADEMIC READING VIEW */}
         {activeTab === 'roadmap' && (
           <div>
             {!activeLesson ? (
               <div className="space-y-8 animate-in fade-in duration-150">
-                {/* Hero / Mission Banner */}
-                <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-gradient-to-br from-[#070b14] via-[#04060b] to-[#0a0614] p-6 md:p-8 shadow-2xl">
-                  {/* Subtle Background Glows */}
-                  <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-sky-500/10 blur-3xl pointer-events-none" />
-                  <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-purple-500/10 blur-3xl pointer-events-none" />
-
-                  <div className="relative z-10 max-w-3xl space-y-3">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-semibold">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>หลักสูตร สอวน. ฟิสิกส์ ฉบับแคลคูลัส ฟรี 100% ไม่มีค่าใช้จ่าย</span>
+                {/* Academic Monograph Frontispiece Header */}
+                <header className="border-b border-[var(--hairline-border)] pb-8 pt-2">
+                  <div className="max-w-3xl space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[var(--ink-tertiary)] uppercase">
+                      <span>OPENPOSN PHYSICS MONOGRAPH SERIES</span>
+                      <span>•</span>
+                      <span>100% OPEN-ACCESS</span>
                     </div>
 
-                    <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                      สลายกำแพงกวดวิชา สู่เส้นทางผู้แทนโอลิมปิกวิชาการ
+                    <h1 className="text-2xl sm:text-4xl font-bold font-serif text-[var(--ink-primary)] tracking-tight leading-snug">
+                      สอวน. ฟิสิกส์ เพื่อทุกคน: บทเรียนและการพิสูจน์จาก First Principles
                     </h1>
 
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      เรียนรู้ฟิสิกส์จาก <span className="text-sky-300 font-semibold">First Principles</span> แบบบรรทัดต่อบรรทัด 
-                      ด้วยการพิสูจน์แคลคูลัสที่กระจ่างชัด พร้อมระบบคำใบ้ 3 ระดับ (Scaffolded Hints) ที่สอนให้คุณคิดแก้ปัญหา ไม่ใช่แค่ท่องจำสูตร
+                    <p className="text-sm md:text-base text-[var(--ink-secondary)] font-serif leading-relaxed">
+                      ตำราและระบบวิเคราะห์โจทย์ฟิสิกส์โอลิมปิก (ค่าย 1 และ ค่าย 2) ฉบับแคลคูลัส 
+                      ออกแบบขึ้นเพื่อฝึกให้นักเรียนสร้างโมเดลทางกายภาพจากหลักการพื้นฐาน ไม่ใช่การจับคู่ตัวเลขกับสูตรสำเร็จ
                     </p>
-
-                    {/* Quick Metric Bar */}
-                    <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-slate-400">
-                      <div className="flex items-center gap-1.5">
-                        <BookOpen className="w-4 h-4 text-sky-400" />
-                        <span>เรียนจบ: <strong className="text-white">{totalCompletedLessons}/{totalLessonsCount}</strong> บท</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                        <span>พิชิตโจทย์: <strong className="text-white">{totalMasteredProblems}/{POSN_PROBLEMS.length}</strong> ข้อ</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <BrainCircuit className="w-4 h-4 text-purple-400" />
-                        <span>แคลคูลัส First Principles</span>
-                      </div>
-                    </div>
                   </div>
-                </div>
+                </header>
 
-                {/* Linear Roadmap Module Graph */}
+                {/* The Trap (กับดักทางความคิด) Diagnostic Section */}
+                <TheTrapDiagram />
+
+                {/* Table of Contents / Roadmap Tracker */}
                 <RoadmapTracker
                   topics={CURRICULUM_TOPICS}
                   activeTopicId={selectedTopicId}
@@ -112,19 +80,19 @@ export default function Home() {
                   }}
                 />
 
-                {/* Selected Topic Lessons Detailed Preview */}
-                <div className="rounded-2xl border border-slate-800 bg-[#07090e] p-5 md:p-6 space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                {/* Selected Chapter Lessons */}
+                <div className="rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] p-5 md:p-6 space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-[var(--hairline-border)]">
                     <div>
-                      <span className="text-[10px] font-bold text-sky-400 uppercase tracking-widest block">
-                        บทเรียนในโมดูลที่เลือก
+                      <span className="text-[11px] font-mono font-bold text-stone-500 uppercase tracking-widest block">
+                        CHAPTER SUBSECTIONS
                       </span>
-                      <h3 className="text-base md:text-lg font-bold text-white">
+                      <h3 className="text-base font-bold text-[var(--ink-primary)]">
                         {activeTopic.titleTh}
                       </h3>
                     </div>
-                    <span className="text-xs text-slate-400">
-                      {activeTopic.lessons.length} บทเรียน
+                    <span className="text-xs text-[var(--ink-secondary)] font-mono">
+                      {activeTopic.lessons.length} Subsection
                     </span>
                   </div>
 
@@ -135,31 +103,30 @@ export default function Home() {
                         <div
                           key={lesson.id}
                           onClick={() => setSelectedLessonSlug(lesson.slug)}
-                          className="group p-4 rounded-xl border border-slate-800/80 bg-zinc-950/80 hover:border-sky-500/60 hover:bg-zinc-900/60 cursor-pointer transition-all flex items-center justify-between gap-4"
+                          className="group p-4 rounded border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/40 hover:border-stone-400 dark:hover:border-stone-600 cursor-pointer transition-all flex items-center justify-between gap-4"
                         >
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-xs font-bold text-slate-500">
-                                บทที่ {lesson.order}
+                              <span className="font-mono text-xs font-bold text-stone-500">
+                                § {lesson.order}.0
                               </span>
                               {isDone && (
-                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-1.5 py-0.2 rounded">
-                                  <CheckCircle2 className="w-3 h-3" />
-                                  เรียนจบแล้ว
+                                <span className="text-[11px] font-mono font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 px-1.5 rounded">
+                                  Studied
                                 </span>
                               )}
                             </div>
-                            <h4 className="text-sm md:text-base font-bold text-white group-hover:text-sky-300 transition-colors">
+                            <h4 className="text-sm md:text-base font-bold text-[var(--ink-primary)] group-hover:underline underline-offset-2">
                               {lesson.titleTh}
                             </h4>
-                            <p className="text-xs text-slate-400 line-clamp-1">
+                            <p className="text-xs text-[var(--ink-secondary)] line-clamp-1 font-serif">
                               {lesson.summaryTh}
                             </p>
                           </div>
 
                           <div className="flex items-center gap-2 shrink-0">
-                            <span className="text-xs font-semibold text-sky-400 bg-sky-500/10 px-3 py-1.5 rounded-lg border border-sky-500/20 group-hover:bg-sky-500 group-hover:text-black transition-all flex items-center gap-1">
-                              <span>เริ่มเรียน</span>
+                            <span className="text-xs font-serif text-[var(--ink-secondary)] group-hover:text-[var(--ink-primary)] transition-colors flex items-center gap-1 font-medium">
+                              <span>อ่านบทนี้</span>
                               <ArrowRight className="w-3.5 h-3.5" />
                             </span>
                           </div>
