@@ -11,7 +11,6 @@ import { LessonReaderView } from '@/components/lesson/LessonReaderView';
 import { ProblemBankView } from '@/components/problems/ProblemBankView';
 import { SavedDerivationsView } from '@/components/saved/SavedDerivationsView';
 import { FormulaSheetModal } from '@/components/formula/FormulaSheetModal';
-import { TheTrapDiagram } from '@/components/academic/TheTrapDiagram';
 import { useStudentStore } from '@/store/useStudentStore';
 import { ArrowRight } from 'lucide-react';
 
@@ -67,9 +66,6 @@ export default function Home() {
                     </p>
                   </div>
                 </header>
-
-                {/* The Trap (กับดักทางความคิด) Diagnostic Section */}
-                <TheTrapDiagram />
 
                 {/* Table of Contents / Roadmap Tracker */}
                 <RoadmapTracker

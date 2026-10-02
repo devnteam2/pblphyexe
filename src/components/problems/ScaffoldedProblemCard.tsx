@@ -168,13 +168,12 @@ export const ScaffoldedProblemCard: React.FC<ScaffoldedProblemCardProps> = ({ pr
                 <div className="space-y-4 pt-2">
                   {problem.fullSolution.steps.map((st) => (
                     <div key={st.stepNumber} className="border-l-2 border-stone-300 dark:border-stone-700 pl-4 py-1 space-y-1">
-                      <div className="text-xs font-bold text-[var(--ink-primary)] font-mono">
-                        ขั้นตอนที่ {st.stepNumber}: {st.stepTitleTh}
+                      <div className="text-xs font-bold text-[var(--ink-primary)] font-serif">
+                        ขั้นตอนที่ {st.stepNumber}: <FormattedMathText text={st.stepTitleTh} />
                       </div>
                       <LatexRenderer
                         math={st.latexMath}
                         displayMode={true}
-                        className="bg-white dark:bg-stone-950 border-stone-200 dark:border-stone-800"
                       />
                       <p className="text-xs text-[var(--ink-secondary)] leading-relaxed">
                         <FormattedMathText text={st.explanationTh} />
@@ -184,22 +183,21 @@ export const ScaffoldedProblemCard: React.FC<ScaffoldedProblemCardProps> = ({ pr
                 </div>
 
                 {/* Final Answer */}
-                <div className="p-4 rounded border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 text-center">
+                <div className="p-4 rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)] text-center">
                   <div className="text-xs font-mono font-bold uppercase tracking-wider text-stone-600 dark:text-stone-400 mb-1">
-                    คำตอบสุดท้ายที่ถูกต้อง
+                    คำตอบสุดท้ายที่ถูกต้อง (Terminal Result)
                   </div>
                   <LatexRenderer
                     math={problem.fullSolution.finalAnswerLatex}
                     displayMode={true}
-                    className="border-stone-300 dark:border-stone-700 text-[var(--ink-primary)] bg-white dark:bg-stone-950 font-bold"
                   />
                 </div>
 
-                {/* The Trap Caution Box */}
+                {/* Examination Remarks Caution Box */}
                 {problem.fullSolution.examTrapWarningTh && (
-                  <div className="p-3.5 rounded border border-rose-300 dark:border-rose-900 bg-rose-50/70 dark:bg-rose-950/20 text-xs text-rose-900 dark:text-rose-200">
+                  <div className="p-3.5 rounded border border-amber-300 dark:border-amber-800/80 bg-amber-50/70 dark:bg-amber-950/20 text-xs text-amber-900 dark:text-amber-200">
                     <span className="font-bold uppercase tracking-wider font-mono block mb-1">
-                      ⚠️ THE TRAP (ข้อผิดพลาดยอดฮิตในห้องสอบ):
+                      ข้อสังเกตและจุดที่ควรระวังในห้องสอบ (Examination Remarks):
                     </span>
                     <FormattedMathText text={problem.fullSolution.examTrapWarningTh} />
                   </div>

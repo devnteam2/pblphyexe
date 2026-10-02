@@ -26,14 +26,14 @@ export const LatexRenderer: React.FC<LatexRendererProps> = ({
       });
     } catch (err) {
       console.error('KaTeX rendering error:', err);
-      return `<span class="text-rose-400 font-mono text-xs">${math}</span>`;
+      return `<span class="text-rose-600 font-mono text-xs">${math}</span>`;
     }
   }, [math, displayMode]);
 
   if (displayMode) {
     return (
       <div
-        className={`latex-display-block overflow-x-auto py-2.5 px-3 my-2 rounded-lg bg-zinc-950/70 border border-slate-800/80 text-center select-all scrollbar-thin scrollbar-thumb-slate-700 ${className}`}
+        className={`latex-display-block overflow-x-auto py-3 px-4 my-2.5 rounded border text-center select-all scrollbar-thin transition-colors ${className}`}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );

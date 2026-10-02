@@ -25,13 +25,18 @@
 }
 
 :root {
-  /* Archival Paper Light Theme (TeX Parchment) */
+  /* Archival Paper Light Theme (TeX Monograph Parchment) */
   --bg-monograph: #FBF9F4;
   --surface-card: #FFFFFF;
-  --hairline-border: #E7E5E0;
+  --surface-muted: #F5F3ED;
+  --hairline-border: #E5E2DA;
+  --hairline-subtle: #ECE9E1;
   --ink-primary: #1C1917;
   --ink-secondary: #57534E;
   --ink-tertiary: #8C827A;
+  --math-block-bg: #FFFFFF;
+  --math-block-border: #DCD8CE;
+  --math-block-text: #1C1917;
   --academic-prussian: #1E3A8A;
   --academic-crimson: #991B1B;
   --academic-forest: #166534;
@@ -42,10 +47,15 @@
   /* Slate Blackboard Night Theme */
   --bg-monograph: #0F1115;
   --surface-card: #161920;
+  --surface-muted: #1A1E27;
   --hairline-border: #272B35;
+  --hairline-subtle: #20242E;
   --ink-primary: #F2F0EB;
   --ink-secondary: #94A3B8;
   --ink-tertiary: #64748B;
+  --math-block-bg: #141720;
+  --math-block-border: #2B303C;
+  --math-block-text: #F2F0EB;
   --academic-prussian: #60A5FA;
   --academic-crimson: #F87171;
   --academic-forest: #4ADE80;
@@ -61,7 +71,7 @@ body {
   line-height: 1.7;
 }
 
-/* Formal TeX Typography classes */
+/* Formal TeX Typography */
 .tex-font {
   font-family: 'Computer Modern', var(--font-noto-serif-thai), serif;
 }
@@ -87,22 +97,32 @@ body {
   color: #FFFFFF;
 }
 
-/* Zero layout shift math styling */
+/* Zero layout shift math styling & crisp high-contrast equations */
 .katex {
-  font-size: 1.05em;
+  font-size: 1.08em;
   text-rendering: auto;
+  color: inherit !important;
+}
+
+.katex * {
+  border-color: currentColor;
 }
 
 .katex-display {
-  margin: 0.8em 0 !important;
+  margin: 0.7em 0 !important;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.35rem 0;
 }
 
+/* Display block math container: Crisp paper or chalkboard background */
 .latex-display-block {
   min-height: 2.8rem;
   contain-intrinsic-size: 2.8rem;
+  background-color: var(--math-block-bg);
+  border-color: var(--math-block-border);
+  color: var(--math-block-text);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 /* Academic Paper scrollbar */
