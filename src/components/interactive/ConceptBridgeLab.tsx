@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { InteractiveLabId } from '@/data/lessonBridges';
+import { PreCampVisualLabs, PreCampLabId } from './PreCampVisualLabs';
 import { Sliders } from 'lucide-react';
 
 interface ConceptBridgeLabProps {
@@ -19,6 +20,22 @@ export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => 
   // Resonance lab state
   const [gamma, setGamma] = useState<number>(0.36);
   const [freqRatio, setFreqRatio] = useState<number>(0.85);
+
+  const preCampLabs: PreCampLabId[] = [
+    'incline-wedge',
+    'projectile-collision',
+    'circular-equilibrium',
+    'bernoulli-pipe',
+    'temperature-box',
+    'electric-capacitor',
+    'rc-circuit-box',
+    'magnetic-wire',
+    'optics-ray-tracer',
+  ];
+
+  if (preCampLabs.includes(labId as PreCampLabId)) {
+    return <PreCampVisualLabs labId={labId as PreCampLabId} />;
+  }
 
   if (labId === 'derivative-slope') {
     const t0 = 2.0;
