@@ -10,13 +10,15 @@ const notoSerifThai = Noto_Serif_Thai({
   display: "swap",
 });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
   title: "OpenPOSN — สอวน. ฟิสิกส์ เพื่อทุกคน (Academic Monograph & First Principles)",
   description: "An open-access academic physics monograph and first-principles calculus derivation engine for the Thailand POSN Physics Olympiad.",
-  manifest: "/manifest.json",
+  manifest: `${basePath}/manifest.json`,
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: `${basePath}/icon.svg`,
+    apple: `${basePath}/icon.svg`,
   },
   appleWebApp: {
     capable: true,
@@ -42,14 +44,14 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="/fonts/KaTeX_Main-Regular.woff2"
+          href={`${basePath}/fonts/KaTeX_Main-Regular.woff2`}
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
         />
         <link
           rel="preload"
-          href="/fonts/KaTeX_Math-Italic.woff2"
+          href={`${basePath}/fonts/KaTeX_Math-Italic.woff2`}
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

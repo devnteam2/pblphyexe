@@ -15,8 +15,9 @@ export function ServiceWorkerRegister() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      const swPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/sw.js`;
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch((err) => {
+        navigator.serviceWorker.register(swPath).catch((err) => {
           console.warn('Service worker registration failed:', err);
         });
       });
