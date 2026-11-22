@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const MOMENTUM_TOPIC: Topic = {
   id: 'momentum-variable-mass',
+  track: 'camp-1-2',
   titleTh: '4. โมเมนตัม จุดศูนย์กลางมวล และระบบมวลแปรผัน (Momentum & Variable Mass)',
   subtitleTh: 'Center of Mass Integration, Open Systems, Rockets & Momentum Flux (K&K Ch. 4)',
   iconName: 'ArrowRightLeft',

@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const OSCILLATIONS_TOPIC: Topic = {
   id: 'shm-differential-eq',
+  track: 'camp-1-2',
   titleTh: '8. การสั่นฮาร์มอนิก โหมดปกติ การหน่วง และเรโซแนนซ์ (Oscillations, Modes & Resonance)',
   subtitleTh: 'SHM ODEs, Coupled Normal Modes, Damped & Driven Resonance (K&K Sec. 6.4 & Ch. 11)',
   iconName: 'Repeat',

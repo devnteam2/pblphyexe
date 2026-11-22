@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const NON_INERTIAL_CENTRAL_FORCE_TOPIC: Topic = {
   id: 'non-inertial-central-force',
+  track: 'camp-1-2',
   titleTh: '7. กรอบอ้างอิงไม่เฉื่อยและแรงสู่ศูนย์กลาง (Non-Inertial Frames & Central Forces)',
   subtitleTh: 'Fictitious, Centrifugal & Coriolis Forces, Effective Potential & Kepler Orbits (K&K Ch. 9–10)',
   iconName: 'Orbit',

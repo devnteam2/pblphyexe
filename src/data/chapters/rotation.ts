@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const ROTATION_TOPIC: Topic = {
   id: 'rotation-dynamics',
+  track: 'camp-1-2',
   titleTh: '6. พลศาสตร์การหมุน วัตถุแข็งเกร็ง และไจโรสโคป (Rotational Dynamics & Rigid Bodies)',
   subtitleTh: 'Moments of Inertia, Chasles Theorem, Rolling & Gyroscopes (K&K Ch. 7–8)',
   iconName: 'RotateCw',

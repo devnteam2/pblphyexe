@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const NEWTON_TOPIC: Topic = {
   id: 'newton-constraints',
+  track: 'camp-1-2',
   titleTh: '3. กฎของนิวตัน สมการข้อจำกัด และระบบต่อเนื่อง (Newtonian Dynamics & Constraints)',
   subtitleTh: '6-Step Protocol, Wedge/Pulley Constraints, Bifurcations & Continuous Media (K&K Ch. 2–3)',
   iconName: 'Compass',

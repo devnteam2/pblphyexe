@@ -1,6 +1,12 @@
 // src/types/curriculum.ts
 
+export type CurriculumTrack = 'pre-camp-1' | 'camp-1-2';
+
 export type TopicId =
+  | 'pre-mechanics'
+  | 'pre-fluids-thermo'
+  | 'pre-em'
+  | 'pre-optics'
   | 'math-tools'
   | 'kinematics-calculus'
   | 'newton-constraints'
@@ -10,7 +16,7 @@ export type TopicId =
   | 'non-inertial-central-force'
   | 'shm-differential-eq';
 
-export type DifficultyLevel = 'Camp1_Foundation' | 'Camp1_Advanced' | 'Camp2_Core';
+export type DifficultyLevel = 'PreCamp1_Entrance' | 'Camp1_Foundation' | 'Camp1_Advanced' | 'Camp2_Core';
 
 export interface PhysicalAssumption {
   id: string;
@@ -59,6 +65,7 @@ export interface Lesson {
 
 export interface Topic {
   id: TopicId;
+  track: CurriculumTrack;
   titleTh: string;
   subtitleTh: string;
   iconName: string;

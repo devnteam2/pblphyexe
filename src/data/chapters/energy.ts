@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const ENERGY_TOPIC: Topic = {
   id: 'work-energy-potentials',
+  track: 'camp-1-2',
   titleTh: '5. งาน พลังงาน หลุมศักย์ และการชน (Work, Energy & Collisions)',
   subtitleTh: '3D Work Integrals, Stability, Reduced Mass & C-Frame Collisions (K&K Ch. 5–6)',
   iconName: 'Zap',

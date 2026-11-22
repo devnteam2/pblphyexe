@@ -1,8 +1,10 @@
 // src/data/problemsData.ts
 import { POSNProblem } from '@/types/problem';
+import { PRE_CAMP1_PROBLEMS } from './preCamp1ProblemsData';
 import { KK_PROBLEMS } from './kkProblemsData';
 
 export const POSN_PROBLEMS: POSNProblem[] = [
+  ...PRE_CAMP1_PROBLEMS,
   {
     id: 'prob-math-taylor-1',
     code: 'POSN-C1-2565-M02',

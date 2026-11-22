@@ -3,6 +3,7 @@ import { Topic } from '@/types/curriculum';
 
 export const KINEMATICS_TOPIC: Topic = {
   id: 'kinematics-calculus',
+  track: 'camp-1-2',
   titleTh: '2. จลนศาสตร์แคลคูลัสและพิกัดเชิงขั้ว (Calculus & Polar Kinematics)',
   subtitleTh: 'Formal Integration, Drag Dynamics & Polar Coordinate Kinematics (K&K Ch. 1)',
   iconName: 'Activity',

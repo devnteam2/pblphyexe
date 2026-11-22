@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { CURRICULUM_TOPICS } from '@/data/curriculumData';
-import { TopicId } from '@/types/curriculum';
+import { CurriculumTrack, TopicId } from '@/types/curriculum';
 import { Navbar } from '@/components/layout/Navbar';
 import { MobileNav } from '@/components/layout/MobileNav';
 import { FormattedMathText } from '@/components/math/LatexRenderer';
@@ -15,27 +15,41 @@ import { FormulaSheetModal } from '@/components/formula/FormulaSheetModal';
 import { RigidBodySimulationView } from '@/components/simulation/RigidBodySimulationView';
 import { QuickReviewDeck } from '@/components/review/QuickReviewDeck';
 import { useStudentStore } from '@/store/useStudentStore';
-import { ArrowRight, Brain, PlayCircle } from 'lucide-react';
+import { ArrowRight, Brain, Flame, GraduationCap, PlayCircle } from 'lucide-react';
 
 export default function Home() {
   const { completedLessonSlugs, themePreference, fontSizeScale } = useStudentStore();
   const [activeTab, setActiveTab] = useState<'roadmap' | 'problems' | 'saved' | 'simulation'>('roadmap');
-  const [selectedTopicId, setSelectedTopicId] = useState<TopicId>('math-tools');
+  const [activeTrack, setActiveTrack] = useState<CurriculumTrack>('pre-camp-1');
+  const [selectedTopicId, setSelectedTopicId] = useState<TopicId>('pre-mechanics');
   const [selectedLessonSlug, setSelectedLessonSlug] = useState<string | null>(null);
   const [isFormulaSheetOpen, setIsFormulaSheetOpen] = useState<boolean>(false);
   const [showQuickReview, setShowQuickReview] = useState<boolean>(false);
 
-  const activeTopic = CURRICULUM_TOPICS.find((t) => t.id === selectedTopicId) || CURRICULUM_TOPICS[0];
+  const trackTopics = CURRICULUM_TOPICS.filter((t) => t.track === activeTrack);
+  const activeTopic = trackTopics.find((t) => t.id === selectedTopicId) || trackTopics[0];
   const activeLesson = selectedLessonSlug
     ? activeTopic.lessons.find((l) => l.slug === selectedLessonSlug) || activeTopic.lessons[0]
     : null;
 
-  const allLessonsFlat = CURRICULUM_TOPICS.flatMap((topic) =>
+  const trackLessonsFlat = trackTopics.flatMap((topic) =>
     topic.lessons.map((lesson) => ({ topic, lesson }))
   );
+  const completedInTrackCount = trackLessonsFlat.filter((entry) =>
+    completedLessonSlugs.includes(entry.lesson.slug)
+  ).length;
   const nextStudyTarget =
-    allLessonsFlat.find((entry) => !completedLessonSlugs.includes(entry.lesson.slug)) ||
-    allLessonsFlat[0];
+    trackLessonsFlat.find((entry) => !completedLessonSlugs.includes(entry.lesson.slug)) ||
+    trackLessonsFlat[0];
+
+  const handleSelectTrack = (track: CurriculumTrack) => {
+    setActiveTrack(track);
+    const firstTopic = CURRICULUM_TOPICS.find((t) => t.track === track);
+    if (firstTopic) {
+      setSelectedTopicId(firstTopic.id);
+    }
+    setSelectedLessonSlug(null);
+  };
 
   const handleContinueLearning = () => {
     if (!nextStudyTarget) return;
@@ -85,16 +99,78 @@ export default function Home() {
                     </h1>
 
                     <p className="text-sm md:text-base text-[var(--ink-secondary)] font-serif leading-relaxed">
-                      ตำราและระบบวิเคราะห์โจทย์ฟิสิกส์โอลิมปิก (ค่าย 1 และ ค่าย 2) ฉบับแคลคูลัส 
-                      ปูพื้นฐานตั้งแต่สูตร ม.ปลาย สู่ First Principles ทีละขั้น ไม่ต้องกลัวคณิตศาสตร์
+                      เลือกเส้นทางตามเป้าหมายของคุณ: เริ่มปูพื้นฐานเตรียม{' '}
+                      <strong className="text-[var(--ink-primary)]">สอบเข้าค่าย 1 (28 หัวข้อทางการ สอวน.)</strong>{' '}
+                      แบบเข้าใจง่ายไม่ต้องพึ่งแคลคูลัสหนัก หรือก้าวต่อสู่ระดับ{' '}
+                      <strong className="text-[var(--ink-primary)]">ค่าย 1 → ค่าย 2</strong>{' '}
+                      ด้วยกลศาสตร์แคลคูลัสเต็มรูปแบบ
                     </p>
                   </div>
 
+                  {/* Dual-Track Selector Cards */}
+                  <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleSelectTrack('pre-camp-1')}
+                      className={`p-4 rounded-lg border text-left transition-all ${
+                        activeTrack === 'pre-camp-1'
+                          ? 'bg-[var(--surface-card)] border-stone-800 dark:border-stone-200 ring-1 ring-stone-800 dark:ring-stone-200 shadow-xs'
+                          : 'bg-[var(--surface-muted)] border-[var(--hairline-border)] opacity-80 hover:opacity-100'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                          <Flame className="w-3.5 h-3.5" />
+                          TRACK 01 • RECOMMENDED FOR BEGINNERS
+                        </span>
+                        {activeTrack === 'pre-camp-1' && (
+                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900">
+                            ACTIVE
+                          </span>
+                        )}
+                      </div>
+                      <h2 className="text-sm md:text-base font-bold text-[var(--ink-primary)]">
+                        เตรียมสอบเข้าค่าย 1 (Pre-Camp 1 Entrance)
+                      </h2>
+                      <p className="text-xs text-[var(--ink-secondary)] mt-1 leading-relaxed">
+                        เนื้อหา 28 หัวข้อตามประกาศ สอวน. (กลศาสตร์ ของไหล ความร้อน ไฟฟ้า แม่เหล็ก แสง) เน้นภาพจริงและพีชคณิต ไม่ต้องใช้แคลคูลัสหนัก!
+                      </p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleSelectTrack('camp-1-2')}
+                      className={`p-4 rounded-lg border text-left transition-all ${
+                        activeTrack === 'camp-1-2'
+                          ? 'bg-[var(--surface-card)] border-stone-800 dark:border-stone-200 ring-1 ring-stone-800 dark:ring-stone-200 shadow-xs'
+                          : 'bg-[var(--surface-muted)] border-[var(--hairline-border)] opacity-80 hover:opacity-100'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                          <GraduationCap className="w-3.5 h-3.5" />
+                          TRACK 02 • ADVANCED CALCULUS MECHANICS
+                        </span>
+                        {activeTrack === 'camp-1-2' && (
+                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900">
+                            ACTIVE
+                          </span>
+                        )}
+                      </div>
+                      <h2 className="text-sm md:text-base font-bold text-[var(--ink-primary)]">
+                        เตรียมค่าย 1 → ค่าย 2 (Camp 1 &amp; 2 Intensive)
+                      </h2>
+                      <p className="text-xs text-[var(--ink-secondary)] mt-1 leading-relaxed">
+                        คณิตศาสตร์โอลิมปิกและกลศาสตร์แคลคูลัสเชิงลึก 8 บท ตามตำรา สอวน. &amp; Kleppner–Kolenkow (พิกัดเชิงขั้ว จรวด ไจโรสโคป วงโคจร เรโซแนนซ์)
+                      </p>
+                    </button>
+                  </div>
+
                   {/* Study Companion Quick Actions (Mobile-first Resume + Flashcard Review) */}
-                  <div className="mt-5 p-3.5 sm:p-4 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+                  <div className="mt-4 p-3.5 sm:p-4 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
                     <div className="space-y-0.5">
                       <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[var(--ink-tertiary)] block">
-                        STUDY COMPANION • {completedLessonSlugs.length}/{allLessonsFlat.length} บทเรียน
+                        STUDY COMPANION ({activeTrack === 'pre-camp-1' ? 'สอบเข้าค่าย 1' : 'ค่าย 1 → 2'}) • {completedInTrackCount}/{trackLessonsFlat.length} บทเรียน
                       </span>
                       <p className="text-xs sm:text-sm font-semibold text-[var(--ink-primary)] line-clamp-1">
                         ถัดไป: <FormattedMathText text={nextStudyTarget?.lesson.titleTh || ''} />
@@ -108,7 +184,7 @@ export default function Home() {
                         className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-serif font-semibold hover:opacity-90 inline-flex items-center justify-center gap-1.5 shadow-2xs"
                       >
                         <PlayCircle className="w-3.5 h-3.5" />
-                        <span>{completedLessonSlugs.length === 0 ? 'เริ่มปูพื้นฐานบทแรก' : 'เรียนต่อทันที'}</span>
+                        <span>{completedInTrackCount === 0 ? 'เริ่มปูพื้นฐานบทแรก' : 'เรียนต่อทันที'}</span>
                       </button>
 
                       <button
@@ -133,8 +209,8 @@ export default function Home() {
 
                 {/* Table of Contents / Roadmap Tracker */}
                 <RoadmapTracker
-                  topics={CURRICULUM_TOPICS}
-                  activeTopicId={selectedTopicId}
+                  topics={trackTopics}
+                  activeTopicId={activeTopic.id}
                   onSelectTopic={(topicId) => {
                     setSelectedTopicId(topicId);
                   }}

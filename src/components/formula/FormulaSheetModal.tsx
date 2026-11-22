@@ -235,6 +235,63 @@ const FORMULA_DATABASE: FormulaItem[] = [
     latex: 'A(\\omega) = \\frac{F_0/m}{\\sqrt{(\\omega_0^2 - \\omega^2)^2 + (\\gamma\\omega)^2}}, \\quad \\tan\\phi = \\frac{\\gamma\\omega}{\\omega_0^2 - \\omega^2}, \\quad \\Delta\\omega_{\\text{FWHM}} = \\gamma',
     noteTh: 'ที่จุดพ้อง $\\omega = \\omega_0$ มุมเฟสตามหลังคือ $\\phi = \\pi/2$ และดูดซับกำลังงานเฉลี่ยสูงสุด',
   },
+  // --- Pre-Camp 1 Items 10–17: Fluids & Thermodynamics ---
+  {
+    nameTh: 'ความดันของไหลสถิต & สมการ Bernoulli (ข้อ 10–11)',
+    category: 'Fluids & Thermo',
+    latex: 'P = P_0 + \\rho g h, \\qquad \\frac{1}{2}\\rho v^2 + \\rho g h + P = \\text{คงที่}',
+    noteTh: 'ใช้คู่กับสมการความต่อเนื่อง $A_1 v_1 = A_2 v_2$ เพื่อหาอัตราเร็วพุ่ง $v = \\sqrt{2gh}$',
+  },
+  {
+    nameTh: 'การนำความร้อน & การขยายตัวเชิงความร้อน (ข้อ 12–13)',
+    category: 'Fluids & Thermo',
+    latex: 'J = -K\\frac{\\Delta T}{\\Delta x}, \\qquad L = L_0\\{1 + \\alpha(T - T_0)\\}',
+    noteTh: 'ความร้อนไหลจากอุณหภูมิสูงไปต่ำเสมอ อัตราความร้อนรวม $\\frac{\\Delta Q}{\\Delta t} = J A$',
+  },
+  {
+    nameTh: 'แก๊สอุดมคติ, Equipartition & กฎข้อที่ 1 เทอร์โมฯ (ข้อ 14–17)',
+    category: 'Fluids & Thermo',
+    latex: 'PV = nRT, \\qquad U = \\frac{f}{2}nRT \\; (\\frac{1}{2}k_BT\\text{ / DOF}), \\qquad \\Delta U = \\Delta Q - \\Delta W',
+    noteTh: 'อะตอมเดี่ยว $f=3$, สองอะตอม $f=5$ และงานความดันคงที่ $\\Delta W = P\\Delta V = nR\\Delta T$',
+  },
+  // --- Pre-Camp 1 Items 18–25: Electricity & Magnetism ---
+  {
+    nameTh: 'ความหนาแน่นพลังงานไฟฟ้า & ตัวเก็บประจุ C (ข้อ 18)',
+    category: 'Electricity & Magnetism',
+    latex: 'u_E = \\frac{1}{2}\\varepsilon_0 E^2, \\qquad Q = CV, \\qquad U_C = \\frac{1}{2}CV^2',
+    noteTh: 'งานของแรงไฟฟ้า $W_{\\text{elec}} = q(V_A - V_B)$ และตัวเก็บประจุแผ่นขนาน $C = \\frac{\\varepsilon_0 A}{d}$',
+  },
+  {
+    nameTh: 'ไฟฟ้ากระแสตรง, ความร้อนจูล & วงจร R-C (ข้อ 19–22)',
+    category: 'Electricity & Magnetism',
+    latex: 'V = iR, \\qquad P = i^2 R, \\qquad t=0^+: \\; V_C=0 \\; | \\; t\\to\\infty: \\; i_C=0',
+    noteTh: 'ตัวเก็บประจุลัดวงจรในจังหวะสับสวิตช์แรก ($t=0^+$) และเปิดวงจรเมื่อชาร์จเต็ม ($t\\to\\infty$)',
+  },
+  {
+    nameTh: 'สนามแม่เหล็กวงลวด, ฟาราเดย์-เลนซ์ & พลังงานแม่เหล็ก (ข้อ 23–24)',
+    category: 'Electricity & Magnetism',
+    latex: 'B = \\frac{\\mu_0 i}{2r}, \\qquad |\\mathcal{E}| = \\frac{\\Delta\\Phi_B}{\\Delta t}, \\qquad u_B = \\frac{1}{2}\\frac{B^2}{\\mu_0}',
+    noteTh: 'กฎเลนซ์ต้านการเปลี่ยนฟลักซ์เสมอ และตัวเหนี่ยวนำ $L$ ทำตัวตรงข้าม $C$ ($i_L(0^+)=0$, $V_L(\\infty)=0$)',
+  },
+  {
+    nameTh: 'พลังงานคลื่นแม่เหล็กไฟฟ้า & อัตราเร็วแสง Maxwell (ข้อ 25)',
+    category: 'Electricity & Magnetism',
+    latex: 'u_{\\text{EM}} = \\frac{1}{2}\\varepsilon_0 E^2 + \\frac{1}{2}\\frac{B^2}{\\mu_0}, \\qquad \\varepsilon_0 \\equiv \\frac{1}{\\mu_0 c^2}',
+    noteTh: 'ใช้ค่าคงที่นิยาม $c \\equiv 299\\,792\\,458\\text{ m/s}$ และ $\\mu_0 \\equiv 4\\pi\\times 10^{-7}\\text{ H/m}$',
+  },
+  // --- Pre-Camp 1 Items 26–28: Geometric Optics ---
+  {
+    nameTh: 'สมการกระจกโค้งและเลนส์บาง (ข้อ 26–28)',
+    category: 'Geometric Optics',
+    latex: '\\frac{1}{v} + \\frac{1}{u} = \\frac{1}{f}, \\qquad m = -\\frac{v}{u}, \\qquad u_{\\text{next}} = d - v_{\\text{prev}}',
+    noteTh: 'ฝั่งที่แสงผ่านจริงเป็นบวก ($+$); ฝั่งเสมือนเป็นลบ ($-$) และในระบบผสมให้ไล่ทีละชิ้น',
+  },
+  {
+    nameTh: 'กฎของสเนลล์และกฎของบริวสเตอร์ (ข้อ 27)',
+    category: 'Geometric Optics',
+    latex: 'n_1\\sin\\theta_1 = n_2\\sin\\theta_2, \\qquad \\tan\\theta_B = \\frac{n_2}{n_1}',
+    noteTh: 'มุมบริวสเตอร์ $\\theta_B$ เกิดเมื่อรังสีสะท้อนตั้งฉากกับรังสีหักเห ($\\theta_B + \\theta_2 = 90^\\circ$)',
+  },
 ];
 
 export const FormulaSheetModal: React.FC<FormulaSheetModalProps> = ({ isOpen, onClose }) => {
@@ -245,6 +302,9 @@ export const FormulaSheetModal: React.FC<FormulaSheetModalProps> = ({ isOpen, on
 
   const categories = [
     'All',
+    'Fluids & Thermo',
+    'Electricity & Magnetism',
+    'Geometric Optics',
     'Math Tools',
     'Kinematics',
     'Newton & Constraints',

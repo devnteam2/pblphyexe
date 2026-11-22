@@ -1,5 +1,6 @@
 // src/data/curriculumData.ts
 import { Topic } from '@/types/curriculum';
+import { PRE_CAMP1_TOPICS } from './chapters/preCamp1';
 import { KINEMATICS_TOPIC } from './chapters/kinematics';
 import { NEWTON_TOPIC } from './chapters/newton';
 import { MOMENTUM_TOPIC } from './chapters/momentum';
@@ -9,8 +10,10 @@ import { NON_INERTIAL_CENTRAL_FORCE_TOPIC } from './chapters/nonInertialCentralF
 import { OSCILLATIONS_TOPIC } from './chapters/oscillations';
 
 export const CURRICULUM_TOPICS: Topic[] = [
+  ...PRE_CAMP1_TOPICS,
   {
     id: 'math-tools',
+    track: 'camp-1-2',
     titleTh: '1. เครื่องมือคณิตศาสตร์สำหรับฟิสิกส์โอลิมปิก',
     subtitleTh: 'Single & Multivariable Calculus, Vectors, Coordinate Systems & Error Analysis',
     iconName: 'Binary',
