@@ -160,8 +160,13 @@ export const ScaffoldedProblemCard: React.FC<ScaffoldedProblemCardProps> = ({ pr
                   <div className="font-bold text-[var(--ink-primary)]">
                     ภาพรวมแนวคิด & การตั้งพิกัด:
                   </div>
-                  <p>{problem.fullSolution.approachOverviewTh}</p>
-                  <p className="text-[11px] font-mono">↳ พิกัด: {problem.fullSolution.coordinateSystemSetupTh}</p>
+                  <p className="font-serif">
+                    <FormattedMathText text={problem.fullSolution.approachOverviewTh} />
+                  </p>
+                  <p className="text-[11px] font-serif">
+                    <span className="font-mono">↳ พิกัด: </span>
+                    <FormattedMathText text={problem.fullSolution.coordinateSystemSetupTh} />
+                  </p>
                 </div>
 
                 {/* Line by line solution steps */}

@@ -20,18 +20,21 @@ export const SavedDerivationsView: React.FC<SavedDerivationsViewProps> = ({ onGo
   ).filter((d) => bookmarkedDerivationIds.includes(d.id));
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <div className="space-y-6 font-serif">
+      <div className="flex items-center justify-between pb-4 border-b border-[var(--hairline-border)]">
         <div>
-          <h2 className="text-base md:text-lg font-bold text-white flex items-center gap-2">
-            <Bookmark className="w-5 h-5 text-amber-400 fill-amber-400" />
+          <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-[var(--ink-tertiary)] block">
+            § BOOKMARKED PROOFS
+          </span>
+          <h2 className="text-lg md:text-xl font-bold text-[var(--ink-primary)] flex items-center gap-2">
+            <Bookmark className="w-5 h-5 text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400" />
             <span>สูตรและการพิสูจน์ที่บันทึกไว้ (Saved Derivations)</span>
           </h2>
-          <p className="text-xs text-slate-400">
-            ทบทวนขั้นตอน First-Principles ที่คุณบันทึกไว้สำหรับเตรียมสอบ
+          <p className="text-xs md:text-sm text-[var(--ink-secondary)]">
+            ทบทวนขั้นตอน First-Principles ที่คุณบันทึกไว้สำหรับเตรียมสอบ สอวน.
           </p>
         </div>
-        <span className="text-xs px-2.5 py-1 rounded-full bg-zinc-900 border border-slate-800 text-slate-300 font-semibold">
+        <span className="text-xs px-3 py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-primary)] font-mono font-semibold">
           {bookmarkedBlocks.length} รายการ
         </span>
       </div>
@@ -43,22 +46,22 @@ export const SavedDerivationsView: React.FC<SavedDerivationsViewProps> = ({ onGo
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 px-4 rounded-2xl border border-dashed border-slate-800 bg-zinc-950/40">
-          <div className="w-12 h-12 rounded-full bg-zinc-900 border border-slate-800 flex items-center justify-center text-slate-500 mx-auto mb-3">
-            <Bookmark className="w-6 h-6" />
+        <div className="text-center py-16 px-4 rounded-lg border border-dashed border-[var(--hairline-border)] bg-[var(--surface-card)]">
+          <div className="w-12 h-12 rounded-full bg-[var(--surface-muted)] border border-[var(--hairline-border)] flex items-center justify-center text-[var(--ink-tertiary)] mx-auto mb-3">
+            <Bookmark className="w-5 h-5" />
           </div>
-          <h3 className="text-sm font-bold text-slate-300 mb-1">
+          <h3 className="text-sm md:text-base font-bold text-[var(--ink-primary)] mb-1">
             ยังไม่มีสูตรที่บันทึกไว้
           </h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mb-4">
+          <p className="text-xs md:text-sm text-[var(--ink-secondary)] max-w-sm mx-auto mb-5 leading-relaxed">
             กดปุ่ม &quot;บันทึกสูตร&quot; ที่มุมขวาบนของแต่ละขั้นตอนการพิสูจน์ เพื่อเก็บไว้ทบทวนก่อนเข้าห้องสอบ สอวน.
           </p>
           <button
             onClick={onGoToRoadmap}
-            className="px-4 py-2 rounded-lg text-xs font-semibold bg-sky-500 text-black hover:bg-sky-400 transition-colors inline-flex items-center gap-1.5"
+            className="px-4 py-2 rounded text-xs font-serif font-semibold bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 hover:opacity-90 transition-opacity inline-flex items-center gap-1.5 shadow-2xs"
           >
             <BookOpen className="w-4 h-4" />
-            ไปที่แผนผังบทเรียน
+            ไปที่สารบัญบทเรียน
           </button>
         </div>
       )}

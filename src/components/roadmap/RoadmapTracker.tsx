@@ -5,6 +5,7 @@ import React from 'react';
 import { Topic, TopicId } from '@/types/curriculum';
 import { useStudentStore } from '@/store/useStudentStore';
 import { POSN_PROBLEMS } from '@/data/problemsData';
+import { FormattedMathText } from '@/components/math/LatexRenderer';
 import { ChevronRight } from 'lucide-react';
 
 interface RoadmapTrackerProps {
@@ -61,10 +62,10 @@ export const RoadmapTracker: React.FC<RoadmapTrackerProps> = ({
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div>
                   <span className="font-mono text-[11px] font-bold text-stone-500 uppercase tracking-widest block">
-                    CHAPTER 0{idx + 1}
+                    CHAPTER {String(idx + 1).padStart(2, '0')}
                   </span>
                   <h3 className="text-sm font-bold text-[var(--ink-primary)] group-hover:underline decoration-stone-400 underline-offset-2">
-                    {top.titleTh}
+                    <FormattedMathText text={top.titleTh} />
                   </h3>
                 </div>
 
@@ -72,7 +73,7 @@ export const RoadmapTracker: React.FC<RoadmapTrackerProps> = ({
               </div>
 
               <p className="text-xs text-[var(--ink-secondary)] line-clamp-2 mb-3">
-                {top.descriptionTh}
+                <FormattedMathText text={top.descriptionTh} />
               </p>
 
               {/* Progress Footer */}

@@ -1,11 +1,13 @@
 // src/types/curriculum.ts
 
-export type TopicId = 
+export type TopicId =
   | 'math-tools'
   | 'kinematics-calculus'
   | 'newton-constraints'
+  | 'momentum-variable-mass'
   | 'work-energy-potentials'
   | 'rotation-dynamics'
+  | 'non-inertial-central-force'
   | 'shm-differential-eq';
 
 export type DifficultyLevel = 'Camp1_Foundation' | 'Camp1_Advanced' | 'Camp2_Core';

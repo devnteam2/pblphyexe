@@ -13,8 +13,8 @@ import {
 
 interface NavbarProps {
   onOpenFormulaSheet: () => void;
-  activeTab: 'roadmap' | 'problems' | 'saved';
-  setActiveTab: (tab: 'roadmap' | 'problems' | 'saved') => void;
+  activeTab: 'roadmap' | 'problems' | 'saved' | 'simulation';
+  setActiveTab: (tab: 'roadmap' | 'problems' | 'saved' | 'simulation') => void;
 }
 
 function subscribeOnline(callback: () => void) {
@@ -39,8 +39,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
 }) => {
-  const { bookmarkedDerivationIds, themePreference, setThemePreference } =
-    useStudentStore();
+  const {
+    bookmarkedDerivationIds,
+    themePreference,
+    setThemePreference,
+    fontSizeScale,
+    setFontSizeScale,
+  } = useStudentStore();
   const isOnline = useSyncExternalStore(
     subscribeOnline,
     getOnlineSnapshot,
@@ -50,6 +55,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   const toggleTheme = () => {
     const next = themePreference === 'archival_paper' ? 'slate_blackboard' : 'archival_paper';
     setThemePreference(next);
+  };
+
+  const toggleFontSize = () => {
+    setFontSizeScale(fontSizeScale === 'normal' ? 'large' : 'normal');
   };
 
   return (
@@ -91,6 +100,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             § สารบัญเนื้อหา (Syllabus)
           </button>
           <button
+            onClick={() => setActiveTab('simulation')}
+            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all flex items-center gap-1.5 ${
+              activeTab === 'simulation'
+                ? 'bg-sky-900 text-white dark:bg-sky-100 dark:text-sky-950 shadow-2xs font-bold'
+                : 'text-sky-700 dark:text-sky-400 hover:text-sky-900 dark:hover:text-sky-200'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
+            <span>ห้องทดลองการหมุน (Simulation Lab)</span>
+          </button>
+          <button
             onClick={() => setActiveTab('problems')}
             className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all ${
               activeTab === 'problems'
@@ -127,6 +147,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <BookMarked className="w-3.5 h-3.5 text-stone-500" />
             <span className="hidden sm:inline">ดัชนีสูตร (Formulae)</span>
+          </button>
+
+          {/* Font Size Comfort Toggle (A / A+) for Phone & Late-night Reading */}
+          <button
+            onClick={toggleFontSize}
+            className={`px-2 py-1 rounded border text-xs font-serif font-bold transition-colors ${
+              fontSizeScale === 'large'
+                ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 border-stone-900 dark:border-stone-100'
+                : 'border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
+            }`}
+            title={fontSizeScale === 'large' ? 'กลับขนาดตัวอักษรปกติ' : 'ขยายขนาดตัวอักษรให้อ่านสบายตาบนมือถือ'}
+            aria-label="Toggle reading font size"
+          >
+            {fontSizeScale === 'large' ? 'A+' : 'A'}
           </button>
 
           {/* Theme Switcher: Archival Paper vs Slate Blackboard */}

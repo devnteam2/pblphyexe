@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.theme-blackboard, .theme-blackboard *));
 
 @font-face {
   font-family: 'Computer Modern';
@@ -99,9 +100,14 @@ body {
 
 /* Zero layout shift math styling & crisp high-contrast equations */
 .katex {
-  font-size: 1.08em;
+  font-size: 1.06em;
+  line-height: 1.25;
   text-rendering: auto;
   color: inherit !important;
+}
+
+.latex-inline-math {
+  vertical-align: baseline;
 }
 
 .katex * {
@@ -142,4 +148,48 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ink-tertiary);
+}
+
+/* Comfortable Mobile Reading Size Scale (A+) */
+.font-scale-large article {
+  font-size: 1.09rem;
+}
+
+.font-scale-large article p,
+.font-scale-large article li,
+.font-scale-large article blockquote {
+  font-size: 1.06rem;
+  line-height: 1.85;
+}
+
+/* Touch-friendly range slider for Concept Bridge Micro-Labs */
+.bridge-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--hairline-border);
+  outline: none;
+}
+
+.bridge-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ink-primary);
+  border: 2px solid var(--surface-card);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.bridge-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ink-primary);
+  border: 2px solid var(--surface-card);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }

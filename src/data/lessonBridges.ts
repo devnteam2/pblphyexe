@@ -1,0 +1,460 @@
+// src/data/lessonBridges.ts
+import { TopicId } from '@/types/curriculum';
+
+export type InteractiveLabId =
+  | 'derivative-slope'
+  | 'integral-work'
+  | 'potential-well'
+  | 'shm-resonance';
+
+export interface ConceptBridge {
+  levelTag: string;
+  basicLabelTh: string;
+  basicFormulaLatex: string;
+  advancedLabelTh: string;
+  advancedFormulaLatex: string;
+  whyItBreaksTh: string;
+  howItEvolvesTh: string;
+  everydayAnalogyTh: string;
+  interactiveLabId?: InteractiveLabId;
+  quickRecall: {
+    questionTh: string;
+    answerTh: string;
+  };
+}
+
+export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
+  // =========================================================================
+  // Chapter 1: Math Tools
+  // =========================================================================
+  'single-variable-calculus-physics': {
+    levelTag: 'พื้นฐาน ม.ปลาย → แคลคูลัสตัวแปรเดียว',
+    basicLabelTh: 'ความเร็วเฉลี่ย ม.ปลาย (อัตราเร็วคงที่)',
+    basicFormulaLatex: 'v_{\\text{avg}} = \\frac{\\Delta x}{\\Delta t} = \\frac{s}{t}',
+    advancedLabelTh: 'ความเร็วขณะใดขณะหนึ่ง (อนุพันธ์เทียบเวลา)',
+    advancedFormulaLatex: 'v(t) = \\lim_{\\Delta t \\to 0}\\frac{x(t+\\Delta t) - x(t)}{\\Delta t} = \\frac{dx}{dt}',
+    whyItBreaksTh:
+      'สูตร $v = s/t$ บอกได้แค่ค่าเฉลี่ยตลอดช่วงเวลา หากรถกำลังเบรกหรือเหยียบคันเร่ง ความเร็วเปลี่ยนทุกเสี้ยววินาที ค่าที่ได้จะไม่ตรงกับเข็มไมล์รถ ณ ขณะนั้น',
+    howItEvolvesTh:
+      'เริ่มจากการแบ่งช่วงเวลา $\\Delta t$ ให้แคบลงเรื่อยๆ เส้นตัดกราฟ (Secant) ของ $x(t)$ จะหมุนเข้าใกล้เส้นสัมผัส (Tangent) ความชัน ณ จุดเดียวก็คือ $v(t) = \\frac{dx}{dt}$ และการรวมพื้นที่ใต้กราฟย้อนกลับคือ $x(t) = x_0 + \\int v(t)\\,dt$',
+    everydayAnalogyTh:
+      'ขับรถจากกรุงเทพฯ ไปชลบุรีเฉลี่ยได้ $60\\text{ km/h}$ ($s/t$) ไม่ได้แปลว่าคุณไม่ได้ขับเร็ว $110\\text{ km/h}$ ($dx/dt$) ตอนแซงรถบรรทุก!',
+    interactiveLabId: 'derivative-slope',
+    quickRecall: {
+      questionTh: 'ในกราฟตำแหน่ง-เวลา $x(t)$ ค่า $v = \\frac{\\Delta x}{\\Delta t}$ ต่างจาก $v(t) = \\frac{dx}{dt}$ อย่างไร?',
+      answerTh: '$\\frac{\\Delta x}{\\Delta t}$ คือความชันเส้นเชื่อมสองจุด (ความเร็วเฉลี่ย) ส่วน $\\frac{dx}{dt}$ คือความชันเส้นสัมผัสที่ $\\Delta t \\to 0$ (ความเร็วณ วินาทีนั้นพอดี)',
+    },
+  },
+  'multivariable-calculus-operators': {
+    levelTag: 'ฟังก์ชัน 1 ตัวแปร → หลายตัวแปรและเกรเดียนต์',
+    basicLabelTh: 'ความชันกราฟ 1 มิติ (ขึ้น-ลงทางเดียว)',
+    basicFormulaLatex: 'm = \\frac{df}{dx}',
+    advancedLabelTh: 'อนุพันธ์ย่อย & เกรเดียนต์บนพื้นผิว 3 มิติ',
+    advancedFormulaLatex: '\\vec{\\nabla} f = \\frac{\\partial f}{\\partial x}\\hat{i} + \\frac{\\partial f}{\\partial y}\\hat{j} + \\frac{\\partial f}{\\partial z}\\hat{k}',
+    whyItBreaksTh:
+      'ในโลกจริง อุณหภูมิ ความดัน หรือพลังงานศักย์ $U(x,y,z)$ ขึ้นกับตำแหน่งทั้ง 3 แกนพร้อมกัน การดิฟแค่เทียบ $x$ ตัวเดียวไม่สามารถบอกทิศทางที่แรงผลักใน 3 มิติได้',
+    howItEvolvesTh:
+      'ตรึงแกน $y, z$ ให้อยู่นิ่งก่อนแล้วดูความชันตามแกน $x$ ($\\partial f / \\partial x$) จากนั้นทำซ้ำกับแกน $y$ และ $z$ แล้วนำมาประกอบเป็นเวกเตอร์ $\\vec{\\nabla} f$ ซึ่งจะชี้ไปในทิศที่ชันขึ้นเร็วที่สุดเสมอ',
+    everydayAnalogyTh:
+      'เหมือนยืนอยู่บนไหล่เขา: ก้าวไปทางทิศเหนือชันนิดเดียว ($\\partial h/\\partial y$) แต่ก้าวไปทางทิศตะวันออกชันมาก ($\\partial h/\\partial x$) เวกเตอร์ $\\vec{\\nabla} h$ คือลูกศรชี้ตรงขึ้นยอดเขาที่ชันที่สุด!',
+    quickRecall: {
+      questionTh: 'เวกเตอร์แรง $\\vec{F} = -\\vec{\\nabla} U$ ชี้ไปทางไหนเทียบกับพื้นผิวระดับพลังงานศักย์เท่ากัน?',
+      answerTh: 'ตั้งฉากกับเส้นระดับพลังงานเท่า และชี้ลงไปในทิศที่พลังงานศักย์ $U$ ลดลงเร็วที่สุดเสมอ (เหมือนลูกบอลกลิ้งลงเนิน)',
+    },
+  },
+  'vector-algebra-coordinate-systems': {
+    levelTag: 'แกน x-y คงที่ → พิกัดเชิงขั้วที่หมุนตามวัตถุ',
+    basicLabelTh: 'เวกเตอร์ 1 หน่วยแกนฉาก (ทิศไม่เคยเปลี่ยน)',
+    basicFormulaLatex: '\\frac{d\\hat{i}}{dt} = 0, \\quad \\frac{d\\hat{j}}{dt} = 0',
+    advancedLabelTh: 'เวกเตอร์ฐานเชิงขั้วที่หมุนได้',
+    advancedFormulaLatex: '\\frac{d\\hat{r}}{dt} = \\dot{\\theta}\\hat{\\theta}, \\quad \\frac{d\\hat{\\theta}}{dt} = -\\dot{\\theta}\\hat{r}',
+    whyItBreaksTh:
+      'เมื่อดาวเทียมโคจรหรือลูกตุ้มแกว่งเป็นวงกลม การใช้แกน $x, y$ ทำให้อนุพันธ์ของ $\\sin\\theta, \\cos\\theta$ พันกันยุ่งเหยิง ทั้งที่ฟิสิกส์จริงขึ้นกับแค่ "รัศมี" และ "มุม"',
+    howItEvolvesTh:
+      'ให้แกน $\\hat{r}$ ชี้ตามตัววัตถุออกนอกและ $\\hat{\\theta}$ ตั้งฉากในทิศทวนเข็มนาฬิกา แม้ขนาดของ $\\hat{r}$ จะเป็น $1$ เสมอ แต่ **ทิศทาง** ของมันหมุนไปพร้อมมุม $\\theta$ จึงมีอนุพันธ์ตั้งฉากกับตัวเองเท่ากับ $\\dot{\\theta}\\hat{\\theta}$',
+    everydayAnalogyTh:
+      'เข็มวินาทีนาฬิกายาวเท่าเดิมตลอดเวลา (ขนาดคงที่) แต่ปลายเข็มก็ยังมีความเร็วตั้งฉากกับตัวเข็มเพราะมันกำลังหมุน!',
+    interactiveLabId: 'derivative-slope',
+    quickRecall: {
+      questionTh: 'เหตุใดอนุพันธ์ของเวกเตอร์หนึ่งหน่วย $\\hat{r}$ จึงไม่เป็นศูนย์ แม้ขนาด $|\\hat{r}| = 1$ คงที่?',
+      answerTh: 'เพราะเวกเตอร์มีทั้งขนาดและทิศทาง: เมื่อมุม $\\theta$ เปลี่ยน ทิศของ $\\hat{r}$ หมุนตาม ทำให้เกิดการเปลี่ยนแปลงเวกเตอร์ $\\Delta\\hat{r} \\approx \\Delta\\theta\\,\\hat{\\theta}$',
+    },
+  },
+  'dimensional-analysis-error-propagation': {
+    levelTag: 'บวกลบเลขคลาดเคลื่อน → ทฤษฎีความคลาดเคลื่อนและมิติ',
+    basicLabelTh: 'เช็กหน่วยพื้นฐาน & บวกค่าคลาดเคลื่อนตรงๆ',
+    basicFormulaLatex: '\\Delta A_{\\text{worst}} = |y\\Delta x| + |x\\Delta y|',
+    advancedLabelTh: 'กฎความคลาดเคลื่อนแบบ Quadrature & มิติ $[M^a L^b T^c]$',
+    advancedFormulaLatex: '\\left(\\frac{\\sigma_A}{A}\\right)^2 = \\left(\\frac{\\sigma_x}{x}\\right)^2 + \\left(\\frac{\\sigma_y}{y}\\right)^2',
+    whyItBreaksTh:
+      'ในการทดลองจริง ความคลาดเคลื่อนแบบสุ่มของ $x$ และ $y$ ไม่ได้พลาดไปทางเดียวกันสุดโต่งพร้อมกันตลอด การจับบวกกันตรงๆ จึงประเมินค่าผิดพลาดสูงเกินจริง',
+    howItEvolvesTh:
+      'ใช้ Total Differential $dA = \\frac{\\partial A}{\\partial x}dx + \\frac{\\partial A}{\\partial y}dy$ ร่วมกับความไม่สัมพันธ์ของความแปรปรวน ($\\overline{dx\\,dy}=0$) จึงได้ผลรวมแบบพีทาโกรัส (Quadrature)',
+    everydayAnalogyTh:
+      'ถ้าสุ่มทอยลูกเต๋า 2 ลูก โอกาสที่ทั้งคู่จะออกแต้มสูงสุดพร้อมกันมีน้อยกว่ามาก เช่นเดียวกับการวัด 2 แกนที่คลาดเคลื่อนคนละทิศทางจึงหักล้างกันบางส่วน',
+    quickRecall: {
+      questionTh: 'ถ้า $y = a x^n$ ความคลาดเคลื่อนสัมพัทธ์ $\\sigma_y/y$ สัมพันธ์กับ $\\sigma_x/x$ อย่างไร?',
+      answerTh: '$\\frac{\\sigma_y}{y} = |n|\\frac{\\sigma_x}{x}$ (เลขชี้กำลัง $n$ กลายเป็นตัวคูณความคลาดเคลื่อนสัมพัทธ์!)',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 2: Kinematics with Calculus
+  // =========================================================================
+  'calculus-kinematics-drag-force': {
+    levelTag: 'ความเร่งคงที่ ม.ปลาย → ความเร่งแปรผัน & แรงต้านอากาศ',
+    basicLabelTh: 'สูตรสุวัต (ใช้ได้เฉพาะความเร่งคงที่)',
+    basicFormulaLatex: 'v = u + at, \\quad s = ut + \\frac{1}{2}at^2',
+    advancedLabelTh: 'การอินทิเกรตเชิงอนุพันธ์เมื่อ $a(t)$ หรือ $a(v)$ เปลี่ยนตลอด',
+    advancedFormulaLatex: 'm\\frac{dv}{dt} = mg - bv \\implies v(t) = \\frac{mg}{b}(1 - e^{-bt/m})',
+    whyItBreaksTh:
+      'ทันทีที่หยดน้ำตกหรือรถแล่นในอากาศ แรงต้านอากาศ $-bv$ ยิ่งแรงขึ้นเมื่อความเร็วสูงขึ้น ความเร่งจึงค่อยๆ ลดลงจาก $g$ จนเหลือ $0$ — สูตร $v=u+at$ จึงใช้ไม่ได้เลย',
+    howItEvolvesTh:
+      'เขียน $a = \\frac{dv}{dt}$ แล้วแยกตัวแปรที่มี $v$ ไว้ฝั่งเดียวกับ $dv$ เพื่ออินทิเกรตหาความชันที่ค่อยๆ ลดลงเป็น $1 - e^{-t/\\tau}$ และหากโจทย์ถามระยะทาง $x$ ให้ใช้กฎลูกโซ่ $a = v\\frac{dv}{dx}$ เพื่อตัดตัวแปรเวลาทิ้ง!',
+    everydayAnalogyTh:
+      'เม็ดฝนตกจากเมฆสูง 2 กิโลเมตรแต่ไม่ทะลุหัวคนเดินถนน ก็เพราะแรงต้านอากาศทำให้ความเร่งลดลงจนเข้าสู่ความเร็วปลายคงที่ $v_t = mg/b$',
+    interactiveLabId: 'derivative-slope',
+    quickRecall: {
+      questionTh: 'เมื่อทราบ $a(x)$ เป็นฟังก์ชันของตำแหน่ง และต้องการหาความเร็ว $v(x)$ ควรใช้สมการแคลคูลัสรูปใด?',
+      answerTh: 'ใช้กฎลูกโซ่ $a(x) = v\\frac{dv}{dx}$ แล้วอินทิเกรตทั้งสองข้าง: $\\frac{1}{2}(v^2 - v_0^2) = \\int_{x_0}^x a(x\')\\,dx\'$',
+    },
+  },
+  'polar-coordinates-rotating-vectors': {
+    levelTag: 'วงกลมอัตราเร็วคงที่ → ความเร่งเชิงขั้ว 2D เต็มรูป',
+    basicLabelTh: 'ความเร่งสู่ศูนย์กลาง ม.ปลาย (รัศมี $R$ คงที่)',
+    basicFormulaLatex: 'a_c = \\frac{v^2}{R} = \\omega^2 R',
+    advancedLabelTh: 'ความเร่งพิกัดเชิงขั้วเมื่อรัศมี $r(t)$ เปลี่ยนได้',
+    advancedFormulaLatex: '\\vec{a} = (\\ddot{r} - r\\dot{\\theta}^2)\\hat{r} + (r\\ddot{\\theta} + 2\\dot{r}\\dot{\\theta})\\hat{\\theta}',
+    whyItBreaksTh:
+      'ถ้าวัตถุขยับเข้า-ออกตามแนวรัศมีพร้อมกับหมุนไปรอบๆ (เช่น ลูกปัดไถลบนซี่ล้อหมุน หรือดาวเคราะห์โคจรวงรี) รัศมี $r$ ไม่คงที่ ความเร่งจึงมีทั้งการยืดหด $\\ddot{r}$ และเทอมคอริโอลิส $2\\dot{r}\\dot{\\theta}$ โผล่ขึ้นมา',
+    howItEvolvesTh:
+      'ดิฟเวกเตอร์ $\\vec{r} = r(t)\\hat{r}(t)$ ทีละขั้นด้วย Product Rule: ครั้งแรกได้ $\\vec{v} = \\dot{r}\\hat{r} + r\\dot{\\theta}\\hat{\\theta}$ ครั้งที่สองได้ความเร่ง 4 เทอม สังเกตว่า $a_r$ มี $-r\\dot{\\theta}^2$ แฝงอยู่ ดังนั้น $v_r \\neq \\int a_r\\,dt$',
+    everydayAnalogyTh:
+      'นักสเก็ตน้ำแข็งหุบแขนเข้าหาตัว ($\\dot{r} < 0$) เพื่อหมุนเร็วขึ้น เช่นเดียวกับเด็กที่เดินออกจากจุดศูนย์กลางม้าหมุนแล้วรู้สึกเหมือนมีแรงผลักเอียงไปด้านข้าง ($2\\dot{r}\\dot{\\theta}$)',
+    quickRecall: {
+      questionTh: 'ในพิกัดเชิงขั้ว เหตุใดความเร่งตามแนวรัศมี $a_r = \\ddot{r} - r\\dot{\\theta}^2$ ถึงมีค่าไม่เท่ากับ $\\frac{dv_r}{dt}$?',
+      answerTh: 'เพราะ $\\vec{v} = v_r\\hat{r} + v_\\theta\\hat{\\theta}$: เมื่อ $\\hat{\\theta}$ หมุนไป มันเบนความเร็วตามแนวสัมผัส $r\\dot{\\theta}\\hat{\\theta}$ เข้าสู่แนวรัศมี จึงเกิดเทอม $-r\\dot{\\theta}^2$!',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 3: Newton & Constraints
+  // =========================================================================
+  'pulley-wedge-kinematic-constraints': {
+    levelTag: 'F = ma ก้อนเดียว → ระบบหลายวัตถุ & สมการข้อจำกัด',
+    basicLabelTh: 'เชือกเดี่ยวรอกตายตัว ($a_1 = a_2$)',
+    basicFormulaLatex: 'F = ma, \\quad a_1 = a_2',
+    advancedLabelTh: 'สมการความยาวเชือกคงที่ & ลิ่มเคลื่อนที่ในกรอบเฉื่อย',
+    advancedFormulaLatex: '\\sum \\vec{T}_i \\cdot \\vec{a}_i = 0, \\quad \\ddot{y} = (\\ddot{x} - \\ddot{X})\\tan\\theta',
+    whyItBreaksTh:
+      'เมื่อมีรอกขยับได้หรือบล็อกไถลบนลิ่มที่ขยับหนีได้ ตัวแปรความเร่งมีมากกว่าจำนวนสมการ $F=ma$ จึงแก้ไม่ออกจนกว่าจะหาสมการเชื่อมโยงเรขาคณิต',
+    howItEvolvesTh:
+      'ตั้งพิกัดจากจุดตรึงใน **กรอบเฉื่อยเท่านั้น** (เช่น เพดานหรือพื้นโลก) เขียนสมการความยาวเชือก $L$ หรือความชันลิ่ม $\\tan\\theta$ แล้วดิฟเทียบเวลา 2 ครั้ง หรือใช้หลักงานเสมือน $\\sum \\vec{T}_i\\cdot\\vec{a}_i = 0$ เช็กคำตอบภายใน 5 วินาที',
+    everydayAnalogyTh:
+      'ถ้าดึงเชือกผ่านรอกทดแรงลง 2 เมตร ตัวรอกจะขยับขึ้นเพียง 1 เมตร — ความสัมพันธ์ระยะทางนี้บังคับให้ความเร็วและความเร่งต้องมีอัตราส่วน $2:1$ เสมอ',
+    quickRecall: {
+      questionTh: 'เวลาตั้งพิกัดของรอกและมวลเพื่อดิฟหาสมการข้อจำกัด (Constraint) ควรวัดพิกัดจากจุดไหน?',
+      answerTh: 'วัดจากจุดอ้างอิงที่อยู่นิ่งในกรอบเฉื่อยเสมอ (เช่น เพดานหรือพื้นโต๊ะ) ห้ามวัดจากรอกที่กำลังมีความเร่ง',
+    },
+  },
+  'polar-dynamics-bifurcation': {
+    levelTag: 'ลูกตุ้มแกว่งตรง → เพนดูลัมกรวย & Bifurcation',
+    basicLabelTh: 'สมดุลวงกลมระดับ (สมมติว่ากางออกอยู่แล้ว)',
+    basicFormulaLatex: 'T\\sin\\alpha = m\\omega^2 (l\\sin\\alpha)',
+    advancedLabelTh: 'การแยกสาขาและอัตราเร็วเชิงมุมวิกฤต',
+    advancedFormulaLatex: '\\sin\\alpha\\,(T - m\\omega^2 l) = 0 \\implies \\omega_c = \\sqrt{\\frac{g}{l}}',
+    whyItBreaksTh:
+      'หากนักเรียนตัด $\\sin\\alpha$ ทิ้งทั้งสองข้างทันที จะเผลอคิดว่าเชือกกางออกที่ความเร็วรอบใดๆ ก็ได้ ทั้งที่จริงถ้าหมุนช้าเกินไปลูกตุ้มจะห้อยดิ่งไม่ขยับเลย!',
+    howItEvolvesTh:
+      'ย้ายข้างแล้วแยกตัวประกอบ $\\sin\\alpha\\,(T - m\\omega^2 l) = 0$ เพื่อเก็บคำตอบ $\\alpha = 0$ ไว้ จากนั้นตรวจเงื่อนไข $\\cos\\alpha = \\frac{g}{l\\omega^2} \\le 1$ จึงค้นพบจุดเปลี่ยนผ่าน $\\omega_c = \\sqrt{g/l}$',
+    everydayAnalogyTh:
+      'หมุนเชือกผูกยางลบช้าๆ ยางลบก็ยังห้อยอยู่ข้างล่าง ต้องหมุนเร็วเกินขีดจำกัดวิกฤตเมื่อไรจึงจะเหวี่ยงกางออกไปด้านข้างได้!',
+    quickRecall: {
+      questionTh: 'ถ้าหมุนเพนดูลัมกรวยความยาว $l$ ด้วย $\\omega < \\sqrt{g/l}$ เชือกจะทำมุมเท่าใดกับแนวดิ่ง?',
+      answerTh: '$\\alpha = 0^\\circ$ (ห้อยดิ่งตรงลงมา) เพราะเงื่อนไขกางออก $\\cos\\alpha = g/(l\\omega^2)$ มีค่ามากกว่า $1$ ซึ่งไม่มีคำตอบจริง',
+    },
+  },
+  'continuous-mass-tension-capstan': {
+    levelTag: 'เชือกมวลเบา → เชือกมีมวล, เชือกหมุน & แคปสแตน',
+    basicLabelTh: 'แรงตึงเชือกคงที่ตลอดเส้น (เชือกเบา)',
+    basicFormulaLatex: 'T = \\text{constant}, \\quad f_s \\le \\mu_s N',
+    advancedLabelTh: 'การตัดชิ้นส่วนย่อย $dm$ & สมการอนุพันธ์แรงตึง',
+    advancedFormulaLatex: 'dT = -\\lambda\\omega^2 r\\,dr \\;\\text{ หรือ }\\; dT = \\mu T\\,d\\theta \\implies T_B = T_A e^{\\mu\\theta}',
+    whyItBreaksTh:
+      'เมื่อเชือกหนักหมุนควงหรือพันรอบเสา แรงตึงแต่ละจุดไม่เท่ากัน จุดใกล้แกนต้องแบกรับแรงสู่ศูนย์กลางของเชือกด้านนอกทั้งหมด ส่วนเชือกพันเสาก็ถ่ายแรงเสียดทานสะสมทวีคูณตามมุม',
+    howItEvolvesTh:
+      'ตัดชิ้นส่วนเล็กๆ กว้าง $dr$ หรือมุม $d\\theta$ ออกมาวาด FBD ใช้ $\\sin(d\\theta/2) \\approx d\\theta/2$ ตัดเทอมเล็กอันดับสองทิ้ง จะได้สมการเชิงอนุพันธ์อันดับหนึ่งที่อินทิเกรตได้ตรงไปตรงมา',
+    everydayAnalogyTh:
+      'ลูกเรือแค่คนเดียวสามารถพันเชือกรอบเสาท่าเรือแค่ 2–3 รอบ ($e^{\\mu\\theta}$) เพื่อหยุดเรือบรรทุกขนาดใหญ่ได้โดยไม่หลุดมือ',
+    quickRecall: {
+      questionTh: 'ในเชือกมวลสม่ำเสมอหมุนควงในระนาบระดับ จุดใดมีแรงตึงเชือกสูงสุดและต่ำสุด?',
+      answerTh: 'สูงสุดที่จุดยึดหมุน ($r=0$, เท่ากับ $\\frac{1}{2}M\\omega^2 L$) และลดลงแบบพาราโบลาจนเป็นศูนย์ที่ปลายอิสระ ($r=L$)',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 4: Momentum & Variable Mass
+  // =========================================================================
+  'center-of-mass-systems': {
+    levelTag: 'ค่าเฉลี่ยจุดมวล → อินทิกรัลจุดศูนย์กลางมวลต่อเนื่อง',
+    basicLabelTh: 'จุดศูนย์กลางมวลของก้อนมวลแยกกัน',
+    basicFormulaLatex: 'X_{\\text{cm}} = \\frac{\\sum m_i x_i}{\\sum m_i}',
+    advancedLabelTh: 'สมการอินทิกรัล CM & แรงภายนอกของระบบ',
+    advancedFormulaLatex: '\\vec{R}_{\\text{cm}} = \\frac{1}{M}\\int \\vec{r}\\,dm, \\quad \\vec{F}_{\\text{ext}} = M\\vec{A}_{\\text{cm}}',
+    whyItBreaksTh:
+      'วัตถุทรงตันต่อเนื่อง เช่น ครึ่งทรงกลม กรวย หรือแท่งที่ความหนาแน่นไม่สม่ำเสมอ มีอนันต์จุดจึงใช้เครื่องหมาย $\\sum$ เฉยๆ ไม่ได้',
+    howItEvolvesTh:
+      'ใช้เทคนิค Clever Slicing ของ K&K: หั่นวัตถุตั้งฉากกับแกนสมมาตรเป็นแผ่นจานบางหนา $dz$ เพื่อให้ทุกจุดบนแผ่นนั้นมีพิกัด $z$ เท่ากันหมด แล้วเปลี่ยน $\\sum \\to \\int$',
+    everydayAnalogyTh:
+      'หาจุดสมดุลของรูปสามเหลี่ยมกระดาษแข็งโดยแบ่งเป็นแถบขนานฐานทีละเส้น ยิ่งฐานกว้างน้ำหนักถ่วงก็ยิ่งมาก จุด CM จึงเอนเอียงไปทางฐาน ($1/3$ ของความสูง)',
+    interactiveLabId: 'integral-work',
+    quickRecall: {
+      questionTh: 'เหตุใดแรงภายในระบบ (Internal Forces) จึงไม่ทำให้จุดศูนย์กลางมวลของระบบมีความเร่งเลย?',
+      answerTh: 'เพราะกฎข้อที่ 3 ของนิวตันบังคับให้แรงคู่กิริยา-ปฏิกิริยาทุกคู่ในระบบมีขนาดเท่ากันและทิศตรงข้าม ($\\vec{f}_{ij} + \\vec{f}_{ji} = 0$) จึงหักล้างกันหมด',
+    },
+  },
+  'variable-mass-rocket-momentum-flux': {
+    levelTag: 'p = mv คงที่ → จรวด, มวลแปรผัน & โมเมนตัมฟลักซ์',
+    basicLabelTh: 'กฎนิวตัน & อนุรักษ์โมเมนตัม (มวลคงที่)',
+    basicFormulaLatex: 'F = m\\frac{dv}{dt}, \\quad \\sum p_i = \\sum p_f',
+    advancedLabelTh: 'ขอบเขตระบบปิดสำหรับมวลแปรผัน & สมการจรวด',
+    advancedFormulaLatex: 'M\\frac{dv}{dt} = -u\\frac{dM}{dt} + F_{\\text{ext}} \\implies \\Delta v = u\\ln\\left(\\frac{M_0}{M_f}\\right) - gt_f',
+    whyItBreaksTh:
+      'นักเรียนมักท่อง $F = \\frac{d(mv)}{dt} = m\\dot{v} + v\\dot{m}$ แต่สมการนี้ **ผิด** กับระบบเปิด (เช่น รถบรรทุกทรายรั่วจะกลายเป็นเร่งเองโดยไม่มีแรง!)',
+    howItEvolvesTh:
+      'เลือก **ระบบปิด** ที่ติดตามมวลชุดเดียวกันทั้งก่อนและหลัง $\\Delta t$ เสมอ ($P(t+\\Delta t) - P(t) = F_{\\text{ext}}\\Delta t$) เพื่อรวมโมเมนตัมของไอเสีย $\\Delta m(v - u)$ ด้วย ทำให้พจน์ความเร็ว $v$ ของผู้สังเกตตัดหายไปอย่างถูกต้อง',
+    everydayAnalogyTh:
+      'ถ้าถือกระสอบทรายแล้วโยนถุงทรายตกพื้นตรงๆ ($u=0$) คุณไม่ได้พุ่งไปข้างหน้า! คุณจะพุ่งก็ต่อเมื่อออกแรงถีบถุงทรายให้กระเด็นไปข้างหลัง ($u > 0$) เท่านั้น',
+    interactiveLabId: 'integral-work',
+    quickRecall: {
+      questionTh: 'หากรถไฟแล่นบนรางลื่นโดยไร้แรงขับ แล้วเปิดรูให้น้ำรั่วลงพื้นตามแนวดิ่ง ความเร็วรถไฟจะเพิ่มขึ้นหรือไม่?',
+      answerTh: 'ไม่เพิ่มและไม่ลด (คงที่เท่าเดิม!) เพราะน้ำที่หยดออกไปยังมีโมเมนตัมต่อหน่วยมวลเท่าเดิมติดตัวไปด้วย จึงไม่มีแรงขับสัมพัทธ์ ($u = 0$)',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 5: Work, Energy & Collisions
+  // =========================================================================
+  'work-energy-conservative-fields': {
+    levelTag: 'W = Fs คงที่ → อินทิกรัลตามเส้น 3D & สนามอนุรักษ์',
+    basicLabelTh: 'งานจากแรงคงที่ในแนวตรง ม.ปลาย',
+    basicFormulaLatex: 'W = F s\\cos\\theta = \\Delta E_k',
+    advancedLabelTh: 'อินทิกรัลตามเส้น 3 มิติ & เกณฑ์ทดสอบ Curl',
+    advancedFormulaLatex: 'W_{ba} = \\int_{\\vec{r}_a}^{\\vec{r}_b} \\vec{F}\\cdot d\\vec{r} = K_b - K_a, \\quad \\vec{\\nabla}\\times\\vec{F} = \\vec{0}',
+    whyItBreaksTh:
+      'ในโจทย์จริงแรงเปลี่ยนทั้งขนาดและทิศทางตามเส้นทางโค้ง เช่น สปริง ดาวเคราะห์ หรือรางรถไฟเหาะ สูตร $W = Fs$ ใช้ได้เฉพาะเมื่อทั้ง $\\vec{F}$ และเส้นทางเป็นเส้นตรงคงที่',
+    howItEvolvesTh:
+      'หั่นเส้นทางโค้งออกเป็นช่วงเวกเตอร์สั้นๆ $d\\vec{r}$ ซึ่งแรงแทบคงที่ในแต่ละก้าว แล้วนำผลคูณสเกลาร์ $\\vec{F}\\cdot d\\vec{r}$ มาบวกสะสมกันเป็น $\\int \\vec{F}\\cdot d\\vec{r}$ ซึ่งพิสูจน์ได้จาก $\\vec{F}=m\\frac{d\\vec{v}}{dt}$ ว่าเท่ากับ $\\Delta K$ เสมอ',
+    everydayAnalogyTh:
+      'เดินขึ้นบันไดวนขึ้นตึก 10 ชั้น แม้ระยะทางเดินเป็นวงกลมยาวมาก แรงโน้มถ่วงก็ทำงานแค่ความสูงดิ่งที่เปลี่ยนไป ($\\Delta h$) เหมือนรวมงานก้าวเล็กๆ ทั้งหมดในแนวดิ่ง',
+    interactiveLabId: 'integral-work',
+    quickRecall: {
+      questionTh: 'แรงปฏิกิริยาตั้งฉาก $\\vec{N}$ จากรางโค้งที่ตรึงนิ่งทำงานเท่าใดต่ออนุภาค และถ้ารางกำลังเคลื่อนที่ล่ะ?',
+      answerTh: 'ถ้ารางอยู่นิ่ง $W_N = 0$ เสมอเพราะ $\\vec{N}\\perp d\\vec{r}$ แต่ถ้ารางกำลังเคลื่อนที่ (เช่น ลิ่มขยับหนี) $\\vec{N}$ **ทำงานได้** เพราะทิศการกระจัดจริงไม่ได้ตั้งฉากกับ $\\vec{N}$!',
+    },
+  },
+  'conservative-forces-potential-wells': {
+    levelTag: 'E_p = mgh → หลุมศักย์ U(x), Taylor SHM & มวลลดทอน',
+    basicLabelTh: 'พลังงานศักย์พื้นราบ & กฎของฮุก',
+    basicFormulaLatex: 'U = mgh \\;\\text{ หรือ }\\; \\frac{1}{2}kx^2',
+    advancedLabelTh: 'การกระจายเทย์เลอร์รอบจุดต่ำสุดของหลุมศักย์ใดๆ',
+    advancedFormulaLatex: 'U(x) \\approx U(x_0) + \\frac{1}{2}U\'\'(x_0)(x - x_0)^2 \\implies \\omega = \\sqrt{\\frac{U\'\'(x_0)}{\\mu}}',
+    whyItBreaksTh:
+      'แรงยึดเหนี่ยวระหว่างอะตอม แรงดึงดูด หรือสนามไฟฟ้า ไม่ได้มีรูป $\\frac{1}{2}kx^2$ เป๊ะๆ แต่กราฟพลังงานศักย์มักโค้งเป็นหลุมรูปทรงซับซ้อน',
+    howItEvolvesTh:
+      'เมื่อขยับวัตถุออกจากก้นหลุม ($U\'(x_0) = 0$) เพียงเล็กน้อย กราฟโค้งเรียบทุกชนิดเมื่อขยายดูใกล้ๆ จะดูเหมือน "พาราโบลา" (Taylor อันดับ 2) ซึ่งมีพฤติกรรมเหมือนสปริงอุดมคติที่ค่า $k_{\\text{eff}} = U\'\'(x_0)$!',
+    everydayAnalogyTh:
+      'ก้นชามก๋วยเตี๋ยวหรืออ่างล้างหน้าไม่ว่าจะเป็นทรงกลมหรือวงรี ตรงบริเวณจุดต่ำสุดจะมีรูปร่างโค้งคล้ายชามพาราโบลาเหมือนกัน ลูกแก้วจึงกลิ้งกลับไปมาแบบ SHM เสมอ',
+    interactiveLabId: 'potential-well',
+    quickRecall: {
+      questionTh: 'เงื่อนไข 2 ข้อที่บอกว่าจุด $x_0$ เป็นจุดสมดุลเสถียร (Stable Equilibrium) บนกราฟ $U(x)$ คืออะไร?',
+      answerTh: '(1) ความชันเป็นศูนย์ $U\'(x_0) = 0$ (แรงสุทธิ $= 0$) และ (2) กราฟโค้งหงาย $U\'\'(x_0) > 0$ (ก้นหลุมศักย์)',
+    },
+  },
+  'collisions-cframe-lframe': {
+    levelTag: 'ชน 1 มิติ ม.ปลาย → ชน 2 มิติในกรอบ C-Frame',
+    basicLabelTh: 'การชน 1 มิติ (สมการโมเมนตัม + พลังงาน)',
+    basicFormulaLatex: 'm_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2',
+    advancedLabelTh: 'การแปลง C-Frame สู่ L-Frame & มุมกระเจิงสูงสุด',
+    advancedFormulaLatex: '\\tan\\theta_1 = \\frac{\\sin\\Theta}{(m_1/m_2) + \\cos\\Theta}, \\quad \\sin\\theta_{1,\\max} = \\frac{m_2}{m_1}',
+    whyItBreaksTh:
+      'การแก้โจทย์ชน 2 มิติด้วยสูตรในห้องทดลอง (L-Frame) มีสมการตรีโกณมิติซ้อนกัน 3 สมการ (แกน x, y และพลังงาน) จนคำนวณหาขอบเขตมุมไม่ได้ง่ายๆ',
+    howItEvolvesTh:
+      'กระโดดขึ้นไปนั่งบนจุดศูนย์กลางมวล (C-Frame): ในกรอบนี้โมเมนตัมรวมเป็น $0$ ดังนั้นก่อนชนและหลังชนทั้งคู่แค่วิ่งสวนทางกัน $180^\\circ$ ด้วยอัตราเร็วเดิม! หลังชนจึงแค่หมุนทิศมุม $\\Theta$ แล้วบวก $\\vec{V}_{\\text{cm}}$ กลับคืน',
+    everydayAnalogyTh:
+      'มองลูกบิลเลียดชนกันจากกล้องโดรนที่บินตามจุดกึ่งกลางมวล จะเห็นลูกบิลเลียดแค่วิ่งเข้าหากันแล้วกระดอนออกตรงข้ามกันง่ายนิดเดียว',
+    quickRecall: {
+      questionTh: 'เมื่อลูกมวลหนักมาก $m_1$ ชนเป้าหมายมวลเบา $m_2$ ที่หยุดนิ่ง ($m_1 > m_2$) เหตุใดลูกหนัก $m_1$ จึงไม่มีทางกระดอนถอยหลัง ($>90^\\circ$)?',
+      answerTh: 'เพราะความเร็ว CM ($V$) มากกว่าความเร็วกระดอนกลับในกรอบ CM ($v\'_1$) เสมอ ดังนั้น $\\sin\\theta_{1,\\max} = v\'_1/V = m_2/m_1 < 1$',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 6: Rotational Dynamics
+  // =========================================================================
+  'moment-of-inertia-calculus-rolling': {
+    levelTag: 'จุดมวลหมุน mr^2 → อินทิกรัล I, แกนขนาน & ศูนย์กระทบ',
+    basicLabelTh: 'โมเมนต์ความเฉื่อยจุดมวล & ทอร์ก ม.ปลาย',
+    basicFormulaLatex: 'I = m r^2, \\quad \\tau = I\\alpha',
+    advancedLabelTh: 'อินทิกรัลรูปทรงต่อเนื่อง, แกนขนาน & ลูกตุ้มกายภาพ',
+    advancedFormulaLatex: 'I = \\int r_{\\perp}^2\\,dm, \\quad I = I_0 + Md^2, \\quad l_{\\text{perc}} = \\frac{I_P}{ML}',
+    whyItBreaksTh:
+      'แท่งไม้ แผ่นจาน และทรงกลม มีเนื้อวัตถุอยู่ห่างจากแกนหมุนไม่เท่ากัน จึงใช้สูตร $mR^2$ ไม่ได้ และถ้าจับหมุนรอบจุดขอบก็ยิ่งเฉื่อยมากกว่าจุดศูนย์กลาง',
+    howItEvolvesTh:
+      'แบ่งวัตถุเป็นชิ้นมวลย่อย $dm$ ที่มีระยะ $r$ เดียวกันแล้วอินทิเกรต $\\int r^2\\,dm$ เพื่อหา $I_{\\text{cm}}$ ส่วนการย้ายแกนใช้ทฤษฎีบทแกนขนาน $I_0 + Md^2$ ได้ทันทีโดยไม่ต้องอินทิเกรตใหม่!',
+    everydayAnalogyTh:
+      'เวลาจับไม้เบสบอลหรือไม้แบดมินตันตีลูกที่ "Sweet Spot" ($l_{\\text{perc}}$) มือที่ด้ามจับจะไม่รู้สึกสะท้านเลย เพราะการเหวี่ยงหมุนหักล้างแรงกระตุกที่จุดจับพอดี',
+    interactiveLabId: 'integral-work',
+    quickRecall: {
+      questionTh: 'เหตุใดทฤษฎีบทแกนตั้งฉาก $I_z = I_x + I_y$ จึงใช้ได้เฉพาะกับแผ่นบาง 2 มิติ (Planar Lamina)?',
+      answerTh: 'เพราะใช้ความสัมพันธ์ $r_z^2 = x^2 + y^2$ ซึ่งตัดพิกัด $z = 0$ ทิ้ง: สำหรับทรง 3 มิติ $I_x + I_y = \\int (2z^2 + x^2 + y^2)\\,dm \\neq I_z$',
+    },
+  },
+  'chasles-theorem-rolling-motion': {
+    levelTag: 'กลิ้งพื้นเอียง ม.ปลาย → ทฤษฎีบทของชาส์ล & เงื่อนไขไถล',
+    basicLabelTh: 'อนุรักษ์พลังงานกลิ้งอย่างง่าย',
+    basicFormulaLatex: 'mgh = \\frac{1}{2}mv^2 + \\frac{1}{2}I\\omega^2',
+    advancedLabelTh: 'แยกการเลื่อนที่ของ CM + การหมุนรอบ CM & เช็กไถล',
+    advancedFormulaLatex: 'M\\vec{A}_{\\text{cm}} = \\vec{F}_{\\text{ext}}, \\quad \\tau_{\\text{cm}} = I_0\\alpha, \\quad f_s \\le \\mu_s N',
+    whyItBreaksTh:
+      'อนุรักษ์พลังงานบอกแค่ความเร็ว แต่ไม่สามารถบอก "ความตึงเชือก" หรือ "แรงเสียดทานสถิต $f_s$" ที่ป้องกันไม่ให้ไถล และการใช้จุดหมุนที่กำลังเร่งมักทำให้สมการ $\\tau = I\\alpha$ ผิดโดยไม่รู้ตัว!',
+    howItEvolvesTh:
+      'ใช้กฎของ Chasles ที่เป็นจริงเสมอทุกสถานการณ์: เขียน $\\sum F = M a_{\\text{cm}}$ ควบคู่กับ $\\tau_{\\text{cm}} = I_0\\alpha$ รอบ CM แล้วค่อยแทน $a = \\alpha R$ เพื่อหาค่าแรงเสียดทานสถิตจริงก่อนเทียบกับ $\\mu_s N$',
+    everydayAnalogyTh:
+      'ทรงกลมตัน แหวน และท่อกลวงมวลเท่ากันกลิ้งแข่งกันลงเนิน ทรงกลมตันชนะเสมอเพราะมวลอยู่ใกล้แกนหมุนมากกว่า จึงประหยัดพลังงานหมุนมาแปลงเป็นความเร็วได้มากกว่า!',
+    quickRecall: {
+      questionTh: 'ในโจทย์วัตถุกลิ้งโดยไม่ไถล แรงเสียดทานสถิต $f_s$ มีค่าเท่ากับ $\\mu_s N$ เสมอหรือไม่?',
+      answerTh: 'ไม่ใช่! $f_s$ เป็นแรงข้อจำกัดที่ปรับค่าเท่าที่จำเป็น ($f_s \\le \\mu_s N$) ต้องแก้หา $f_s$ จากสมการนิวตันก่อนเสมอ และใช้ $f_s = \\mu_s N$ เฉพาะจุด "จวนจะไถล"',
+    },
+  },
+  '3d-rigid-body-gyroscope': {
+    levelTag: 'L = Iω ในระนาบ 2D → ไจโรสโคป & ทอร์ก 3 มิติ',
+    basicLabelTh: 'โมเมนตัมเชิงมุม 2 มิติ (ชี้ทิศเดียวกับแกน)',
+    basicFormulaLatex: 'L = I\\omega, \\quad \\tau = I\\alpha',
+    advancedLabelTh: 'การเปลี่ยนทิศทางของเวกเตอร์ $\\vec{L}$ ใน 3 มิติ',
+    advancedFormulaLatex: '\\vec{\\tau} = \\frac{d\\vec{L}}{dt} \\implies \\Omega = \\frac{Mgl}{I_0\\omega_s}',
+    whyItBreaksTh:
+      'พอเห็นลูกข่างเอียงทำท่าจะล้ม แรงโน้มถ่วงไม่ได้ดึงมันตกลงพื้น แต่ลูกข่างกลับหมุนควงเป็นวงกลมขนานพื้น! สูตรสเกลาร์ $\\tau = I\\alpha$ อธิบายไม่ได้เพราะมันคิดแค่การหมุนเร็วขึ้น/ช้าลง ไม่ได้คิดการ **เบนทิศ** ของ $\\vec{L}$',
+    howItEvolvesTh:
+      'กฎที่แท้จริงคือสมการเวกเตอร์ $d\\vec{L} = \\vec{\\tau}\\,dt$: เมื่อทอร์ก $\\vec{\\tau}$ จากน้ำหนักตั้งฉากกับโมเมนตัมเชิงมุม $\\vec{L}_s$ เสมอ ขนาดของ $\\vec{L}_s$ จึงไม่เพิ่มหรือลด แต่ปลายเวกเตอร์ $\\vec{L}_s$ ถูกดึงให้เลี้ยวขวางไปเรื่อยๆ ด้วยอัตราเร็ว $\\Omega$',
+    everydayAnalogyTh:
+      'เหมือนรถที่วิ่งตรงด้วยความเร็วสูงแล้วมีแรงสู่ศูนย์กลางดึง **ตั้งฉาก** กับความเร็ว — รถไม่ได้วิ่งเร็วขึ้น แต่จะ **เลี้ยวโค้ง** แทน!',
+    quickRecall: {
+      questionTh: 'ถ้าปั่นมู่เล่ของไจโรสโคปให้เร็วขึ้น 2 เท่า ($\\omega_s \\to 2\\omega_s$) อัตราเร็วในการหมุนควง $\\Omega$ จะเป็นอย่างไร?',
+      answerTh: 'ลดลงครึ่งหนึ่ง ($\\Omega = \\frac{Mgl}{I_0\\omega_s} \\propto \\frac{1}{\\omega_s}$): ยิ่งปั่นไจโรเร็ว มันยิ่งหมุนควงช้าและนิ่งมั่นคงขึ้น!',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 7: Non-Inertial & Central Force
+  // =========================================================================
+  'accelerating-rotating-frames': {
+    levelTag: 'กรอบเฉื่อย ม.ปลาย → กรอบเร่ง, คอริโอลิส & ฟูโกต์',
+    basicLabelTh: 'กฎนิวตันเฉพาะในกรอบอยู่นิ่ง',
+    basicFormulaLatex: '\\vec{F}_{\\text{real}} = m\\vec{a}_{\\text{inertial}}',
+    advancedLabelTh: 'แรงเทียมในกรอบเร่งและกรอบหมุน',
+    advancedFormulaLatex: 'm\\vec{a}_{\\text{rot}} = \\vec{F}_{\\text{real}} - 2m(\\vec{\\Omega}\\times\\vec{v}_{\\text{rot}}) - m\\vec{\\Omega}\\times(\\vec{\\Omega}\\times\\vec{r})',
+    whyItBreaksTh:
+      'เมื่อคุณอยู่ในรถที่เร่งเครื่องหรือบนโลกที่หมุนรอบตัวเอง กฎ $F=ma$ ดูเหมือนใช้งานไม่ได้ (น้ำในถังโค้งขึ้นขอบ, ลูกตุ้มแกว่งเอียงหลัง, พายุหมุนวน) จนกว่าจะคิดแรงเทียมจากความเร่งของกรอบ',
+    howItEvolvesTh:
+      'ใช้กฎการแปลงอนุพันธ์ในกรอบหมุน $\\left(\\frac{d}{dt}\\right)_{\\text{in}} = \\left(\\frac{d}{dt}\\right)_{\\text{rot}} + \\vec{\\Omega}\\times$ ซ้ำ 2 ครั้ง จะเกิดทั้งแรงหนีศูนย์กลาง (ผลักออกนอกแกน) และแรงคอริโอลิส (เบี่ยงทิศวัตถุที่กำลังวิ่ง)',
+    everydayAnalogyTh:
+      'เวลานั่งรถเมล์แล้วคนขับเหยียบเบรกกระทันหัน คุณรู้สึกเหมือนมีใครผลักไปข้างหน้า แรงนั้นคือ "แรงเฉื่อยเทียม" $-m\\vec{A}$ ที่มีขนาดและธรรมชาติเหมือนสนามโน้มถ่วงเอียง!',
+    quickRecall: {
+      questionTh: 'เหตุใดแรงคอริโอลิส $-2m(\\vec{\\Omega}\\times\\vec{v}_{\\text{rot}})$ จึง **ไม่ทำงาน** ในกรอบหมุนเลยแม้แต่นิดเดียว?',
+      answerTh: 'เพราะทิศของ $\\vec{\\Omega}\\times\\vec{v}_{\\text{rot}}$ ตั้งฉากกับความเร็ว $\\vec{v}_{\\text{rot}}$ ตลอดเวลา ผลคูณสเกลาร์ $\\vec{F}_{\\text{cor}} \\cdot \\vec{v}_{\\text{rot}} = 0$!',
+    },
+  },
+  'central-force-effective-potential-kepler': {
+    levelTag: 'วงโคจรวงกลม ม.ปลาย → ศักย์ยังผล & วงรี Vis-Viva',
+    basicLabelTh: 'วงโคจรวงกลมพื้นฐาน (GMm/r^2 = mv^2/r)',
+    basicFormulaLatex: 'v = \\sqrt{\\frac{GM}{r}}, \\quad T^2 \\propto r^3',
+    advancedLabelTh: 'ศักย์ยังผล 1 มิติ & สมการพลังงานวงโคจรวงรี',
+    advancedFormulaLatex: 'U_{\\text{eff}}(r) = \\frac{L^2}{2\\mu r^2} - \\frac{GMm}{r}, \\quad v^2 = GM\\left(\\frac{2}{r} - \\frac{1}{a}\\right)',
+    whyItBreaksTh:
+      'วงโคจรดาวหางและดาวเทียมที่ยิงเปลี่ยนวงโคจรเป็น **วงรี** ไม่ใช่วงกลม จึงใช้ $mv^2/r$ ตลอดทางไม่ได้ เพราะอัตราเร็วและรัศมีเปลี่ยนแปลงตลอดเวลา',
+    howItEvolvesTh:
+      'เนื่องจาก $\\vec{\\tau} = 0$ โมเมนตัมเชิงมุม $L = \\mu r^2 \\dot{\\theta}$ คงที่ จึงกำจัด $\\dot{\\theta}$ ทิ้งจากสมการพลังงาน เหลือแค่ปัญหา 1 มิติของ $r(t)$ ในหลุมศักย์ยังผล $U_{\\text{eff}}(r)$ ที่อ่านจุดใกล้สุด-ไกลสุดและเสถียรภาพได้ทันที',
+    everydayAnalogyTh:
+      'เทอม $\\frac{L^2}{2\\mu r^2}$ ทำหน้าที่เหมือน "กำแพงพลังงานที่มองไม่เห็น" คอยสะท้อนดาวเคราะห์กลับออกมาเมื่อเข้าใกล้ดวงอาทิตย์มากเกินไป ทำให้ไม่พุ่งชนดวงอาทิตย์!',
+    interactiveLabId: 'potential-well',
+    quickRecall: {
+      questionTh: 'พลังงานรวม $E = -\\frac{GMm}{2a}$ ของวงโคจรวงรีขึ้นอยู่กับความรี (Eccentricity $\\epsilon$) หรือไม่?',
+      answerTh: 'ไม่ขึ้นกับ $\\epsilon$ เลย! วงกลมกับวงรีที่ยืดยาวมากแต่มีความยาวแกนเอก $2a$ เท่ากัน จะมีพลังงานรวม $E$ และคาบโคจร $T$ เท่ากันเป๊ะ!',
+    },
+  },
+
+  // =========================================================================
+  // Chapter 8: Oscillations & Resonance
+  // =========================================================================
+  'shm-odes-and-energy-method': {
+    levelTag: 'T = 2π√(m/k) → สมการอนุพันธ์ SHM & วิธี dE/dt = 0',
+    basicLabelTh: 'สูตรคาบสปริงและลูกตุ้ม ม.ปลาย',
+    basicFormulaLatex: 'T = 2\\pi\\sqrt{\\frac{m}{k}}, \\quad T = 2\\pi\\sqrt{\\frac{L}{g}}',
+    advancedLabelTh: 'สมการอนุพันธ์อันดับ 2 & ทางลัดดิฟพลังงานรวม',
+    advancedFormulaLatex: '\\frac{dE}{dt} = 0 \\implies \\ddot{x} + \\omega^2 x = 0',
+    whyItBreaksTh:
+      'เมื่อมีทั้งลูกตุ้มกลิ้ง ผสมสปริง หลายแกน หรือของเหลวในท่อตัวยู การเขียน FBD แตกแรงทั้งหมดเพื่อหาค่า $k_{\\text{eff}}$ มักติดแรงเสียดทานสถิตและแรงตึงเชือกที่ไม่รู้ค่า',
+    howItEvolvesTh:
+      'เขียนพลังงานกลรวม $E = K + U$ (ที่อนุรักษ์และไม่ขึ้นกับแรงภายใน) แล้วดิฟเทียบเวลาให้ $\\frac{dE}{dt} = 0$ และตัด $\\dot{x}$ ทิ้ง จะได้สมการ $\\ddot{x} + \\omega^2 x = 0$ ออกมาทันทีใน 3 บรรทัด!',
+    everydayAnalogyTh:
+      'เหมือนการส่องดูแค่ "กระเป๋าเงินรวม" ($E = K+U$) แทนที่จะคอยตามดูรายรับ-รายจ่ายของแรงภายในทุกตัว — เงินไหลเข้าจลน์เท่ากับไหลออกจากศักย์เสมอ',
+    interactiveLabId: 'potential-well',
+    quickRecall: {
+      questionTh: 'ทำไมวิธี $\\frac{dE}{dt} = 0$ จึงตัดแรงตึงเชือกและแรงเสียดทานสถิตในการกลิ้งไม่ไถลออกไปได้หมด?',
+      answerTh: 'เพราะแรงข้อจำกัดอุดมคติเหล่านี้ **ไม่ทำงาน** จึงไม่โผล่ในสมการพลังงาน $E = K + U$ ตั้งแต่แรก!',
+    },
+  },
+  'coupled-oscillators-normal-modes': {
+    levelTag: 'ตัวสั่นเดี่ยว → ตัวสั่นคู่ควบ (Normal Modes & Beats)',
+    basicLabelTh: 'มวลติดสปริงอิสระ 1 ตัว',
+    basicFormulaLatex: '\\ddot{x} + \\omega_0^2 x = 0',
+    advancedLabelTh: 'พิกัดปกติ $q_1, q_2$ สำหรับระบบคู่ควบ 2 มวล',
+    advancedFormulaLatex: 'q_{1,2} = x_a \\pm x_b \\implies \\omega_1 = \\sqrt{\\frac{g}{l}}, \\; \\omega_2 = \\sqrt{\\frac{g}{l} + \\frac{2k}{m}}',
+    whyItBreaksTh:
+      'ทันทีที่ผูกสปริงเชื่อมระหว่างลูกตุ้ม 2 อัน สมการของมวล $a$ จะมีตัวแปร $x_b$ ปนอยู่ ทำให้แก้แยกทีละก้อนไม่ได้และพลังงานไหลกลับไปกลับมาตลอด',
+    howItEvolvesTh:
+      'เปลี่ยนตัวแปรไปสู่ **โหมดสมมาตร** ($q_1 = x_a + x_b$ ที่แกว่งไปทางเดียวกันจนสปริงไม่ยืด) และ **โหมดต้านสมมาตร** ($q_2 = x_a - x_b$ ที่แกว่งสวนทางกัน) สมการทั้งสองจะขาดออกจากกันอย่างสิ้นเชิงและแก้เป็น SHM ธรรมดาได้ทันที',
+    everydayAnalogyTh:
+      'แขวนลูกตุ้ม 2 อันบนเชือกขึงราวตากผ้าเดียวกัน: ถ้าผลักแค่อันซ้าย ไม่นานอันซ้ายจะหยุดนิ่งแล้วส่งพลังงานทั้งหมดไปให้อันขวาแกว่งแทน สลับกันไปมาเป็นจังหวะบีตส์!',
+    quickRecall: {
+      questionTh: 'ถ้าลูกตุ้มคู่ควบด้วยสปริงอ่อน 2 อันถูกดึงออก **ไปทางเดียวกันเท่ากัน** ($x_a(0)=x_b(0)$) แล้วปล่อย จะเกิดการถ่ายเทพลังงานไปมาหรือไม่?',
+      answerTh: 'ไม่เกิด! เพราะเราปลุกเฉพาะโหมดสมมาตร $q_1$ เพียงโหมดเดียว สปริงไม่เคยถูกยืดหด ทั้งคู่จึงแกว่งพร้อมกันด้วยความถี่ $\\sqrt{g/l}$ ตลอดไป',
+    },
+  },
+  'damped-driven-resonance': {
+    levelTag: 'SHM อุดมคติ → การหน่วง (Q) & เรโซแนนซ์เชิงซ้อน',
+    basicLabelTh: 'การสั่นที่ไม่มีวันหยุด (แอมพลิจูดคงที่)',
+    basicFormulaLatex: 'x(t) = A\\cos(\\omega_0 t + \\phi)',
+    advancedLabelTh: 'สมการตัวสั่นมีแรงหน่วงและแรงขับภายนอก',
+    advancedFormulaLatex: '\\ddot{x} + \\gamma\\dot{x} + \\omega_0^2 x = \\frac{F_0}{m}\\cos\\omega t, \\quad Q = \\frac{\\omega_0}{\\gamma}',
+    whyItBreaksTh:
+      'โลกจริงมีแรงเสียดทานทำให้การสั่นค่อยๆ เบาลงจนดับ (Damped) และหากมีแรงกระตุ้นภายนอกความถี่ $\\omega$ การแกว่งอาจระเบิดแอมพลิจูดสูงลิ่วเมื่อความถี่ตรงกัน (Resonance)',
+    howItEvolvesTh:
+      'ขยายสมการจริงเข้าสู่ระนาบเชิงซ้อนด้วย $z(t) = A e^{i(\\omega t - \\phi)}$ เพื่อเปลี่ยน $\\frac{d}{dt} \\to i\\omega$ ทำให้หาทั้งแอมพลิจูด $A(\\omega)$ มุมเฟสตามหลัง $\\phi$ และความกว้างแถบความถี่ FWHM $= \\gamma$ ได้ด้วยพีชคณิตง่ายๆ',
+    everydayAnalogyTh:
+      'ไกวชิงช้าเด็ก: ถ้าผลักตามจังหวะธรรมชาติของชิงช้า ($\\omega = \\omega_0$, เฟสตามหลังแรง $90^\\circ$ คือผลักตอนชิงช้าเคลื่อนไปข้างหน้าสุดแรง) พลังงานจะสะสมสูงสุดจนแกว่งสูงลิ่ว!',
+    interactiveLabId: 'shm-resonance',
+    quickRecall: {
+      questionTh: 'ที่จุดสั่นพ้องพอดี ($\\omega = \\omega_0$) มุมเฟสตามหลัง $\\phi$ ระหว่างการกระจัด $x(t)$ กับแรงขับ $F(t)$ มีค่าเท่าใด และทำไม?',
+      answerTh: '$\\phi = 90^\\circ$ ($\\pi/2$): ทำให้แรงขับมีเฟสตรงกับ **ความเร็ว** $\\dot{x}(t)$ เป๊ะ กำลังงานเฉลี่ย $\\overline{F\\dot{x}}$ จึงไหลเข้าสู่ระบบได้สูงสุด!',
+    },
+  },
+};
+
+export function getBridgeForLesson(slug: string, topicId: TopicId): ConceptBridge {
+  if (LESSON_BRIDGES[slug]) {
+    return LESSON_BRIDGES[slug];
+  }
+  const fallbackByTopic: Record<TopicId, string> = {
+    'math-tools': 'single-variable-calculus-physics',
+    'kinematics-calculus': 'calculus-kinematics-drag-force',
+    'newton-constraints': 'pulley-wedge-kinematic-constraints',
+    'momentum-variable-mass': 'variable-mass-rocket-momentum-flux',
+    'work-energy-potentials': 'work-energy-conservative-fields',
+    'rotation-dynamics': 'moment-of-inertia-calculus-rolling',
+    'non-inertial-central-force': 'central-force-effective-potential-kepler',
+    'shm-differential-eq': 'shm-odes-and-energy-method',
+  };
+  return LESSON_BRIDGES[fallbackByTopic[topicId]] ?? LESSON_BRIDGES['single-variable-calculus-physics'];
+}

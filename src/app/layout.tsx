@@ -54,12 +54,6 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
-          integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="min-h-full flex flex-col font-serif antialiased">
         {children}

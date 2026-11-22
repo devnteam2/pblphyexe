@@ -62,7 +62,9 @@ export const HintAccordion: React.FC<HintAccordionProps> = ({
                   <h4 className="text-xs md:text-sm font-bold text-[var(--ink-primary)]">
                     {getStageHeader(hint.tier)}
                   </h4>
-                  <p className="text-[11px] text-[var(--ink-secondary)]">{hint.titleTh}</p>
+                  <p className="text-[11px] text-[var(--ink-secondary)]">
+                    <FormattedMathText text={hint.titleTh} />
+                  </p>
                 </div>
               </div>
 

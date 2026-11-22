@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { LatexRenderer } from '@/components/math/LatexRenderer';
+import { FormattedMathText, LatexRenderer } from '@/components/math/LatexRenderer';
 import { BookMarked, X, Search } from 'lucide-react';
 
 interface FormulaSheetModalProps {
@@ -86,9 +86,154 @@ const FORMULA_DATABASE: FormulaItem[] = [
   },
   {
     nameTh: 'วิธีอนุรักษ์พลังงานหาคาบ SHM (Energy Method)',
-    category: 'SHM',
+    category: 'Oscillations & Resonance',
     latex: '\\frac{dE}{dt} = 0 \\iff \\frac{d}{dt}(E_k + E_p) = 0',
     noteTh: 'ดิฟสมการพลังงานกลรวมเทียบเวลาเพื่อดึงสมการเชิงอนุพันธ์อันดับสอง',
+  },
+  // --- K&K Ch. 1: Polar Kinematics ---
+  {
+    nameTh: 'อนุพันธ์เวกเตอร์ฐานเชิงขั้ว (Rotating Unit Vectors)',
+    category: 'Kinematics',
+    latex: '\\frac{d\\hat{r}}{dt} = \\dot{\\theta}\\hat{\\theta}, \\qquad \\frac{d\\hat{\\theta}}{dt} = -\\dot{\\theta}\\hat{r}',
+    noteTh: 'อนุพันธ์ของเวกเตอร์ที่ขนาดคงที่ตั้งฉากกับตัวมันเองในทิศมุม $\\theta$ เพิ่มขึ้น',
+  },
+  {
+    nameTh: 'ความเร็วและความเร่งในพิกัดเชิงขั้ว (Polar Velocity & Accel.)',
+    category: 'Kinematics',
+    latex: '\\vec{v} = \\dot{r}\\hat{r} + r\\dot{\\theta}\\hat{\\theta}, \\qquad \\vec{a} = (\\ddot{r} - r\\dot{\\theta}^2)\\hat{r} + (r\\ddot{\\theta} + 2\\dot{r}\\dot{\\theta})\\hat{\\theta}',
+    noteTh: 'ระวังว่า $v_r \\neq \\int a_r\\,dt$ และเทอม $2\\dot{r}\\dot{\\theta}$ คือความเร่งคอริโอลิส',
+  },
+  // --- K&K Ch. 2–3: Constraints & Continuous Media ---
+  {
+    nameTh: 'สมการข้อจำกัดลิ่มเคลื่อนที่ (Wedge Constraint & Acceleration)',
+    category: 'Newton & Constraints',
+    latex: '\\ddot{y} = (\\ddot{x} - \\ddot{X})\\tan\\theta, \\qquad A_X = \\frac{mg\\sin\\theta\\cos\\theta}{M + m\\sin^2\\theta}',
+    noteTh: 'ใช้พิกัด $(x,y,X)$ เทียบกรอบเฉื่อยแล้วตรวจสอบลิมิต $M \\to \\infty$ และ $\\theta \\to \\pi/2$',
+  },
+  {
+    nameTh: 'ขีดจำกัดวิกฤตเพนดูลัมกรวย (Conical Pendulum Bifurcation)',
+    category: 'Newton & Constraints',
+    latex: '\\cos\\alpha = \\frac{g}{l\\omega^2}, \\qquad \\omega_c = \\sqrt{\\frac{g}{l}}',
+    noteTh: 'กางออก ($\\alpha > 0$) ได้เมื่อ $\\omega > \\omega_c$ เท่านั้น ห้ามหารตัด $\\sin\\alpha$ โดยไม่แยกกรณี',
+  },
+  {
+    nameTh: 'แรงตึงเชือกที่หมุนควง (Whirling Rope Tension)',
+    category: 'Newton & Constraints',
+    latex: 'T(r) = \\frac{M\\omega^2}{2L}(L^2 - r^2)',
+    noteTh: 'พาราโบลาคว่ำ สูงสุดที่จุดหมุน $r = 0$ และเป็นศูนย์ที่ปลายอิสระ $r = L$',
+  },
+  {
+    nameTh: 'สมการแคปสแตน (Capstan Friction Equation)',
+    category: 'Newton & Constraints',
+    latex: 'T_B = T_A e^{\\mu\\theta}',
+    noteTh: 'แรงตึงขยายตัวแบบเอกซ์โพเนนเชียลตามมุม $\\theta$ (เรเดียน) ที่เชือกพันรอบเสา',
+  },
+  // --- K&K Ch. 4: Momentum & Variable Mass ---
+  {
+    nameTh: 'จุดศูนย์กลางมวลแบบต่อเนื่อง (Continuous Center of Mass)',
+    category: 'Momentum & Variable Mass',
+    latex: '\\vec{R}_{\\text{cm}} = \\frac{1}{M}\\int \\vec{r}\\,dm, \\qquad \\vec{F}_{\\text{ext}} = M\\vec{A}_{\\text{cm}}',
+    noteTh: 'ครึ่งทรงกลมตันมี $Z_{\\text{cm}} = \\frac{3}{8}R$ และครึ่งทรงกลมกลวงมี $Z_{\\text{cm}} = \\frac{1}{2}R$',
+  },
+  {
+    nameTh: 'สมการจรวดของซิโอลคอฟสกี (Rocket Equation)',
+    category: 'Momentum & Variable Mass',
+    latex: 'M\\frac{dv}{dt} = -u\\frac{dM}{dt} - Mg \\implies v_f - v_0 = u\\ln\\left(\\frac{M_0}{M_f}\\right) - gt_f',
+    noteTh: 'ต้องใช้วิธีระบบปิด (Closed-System Boundary) ห้ามใช้สูตรผิดๆ อย่าง $F = m\\dot{v} + v\\dot{m}$',
+  },
+  {
+    nameTh: 'แรงจากกระแสโมเมนตัม (Momentum Flux Force)',
+    category: 'Momentum & Variable Mass',
+    latex: '\\vec{F} = \\frac{d\\vec{P}}{dt} = \\frac{dm}{dt}\\Delta\\vec{v} = (\\rho A v)\\Delta\\vec{v}',
+    noteTh: 'ใช้กับสายน้ำพุ่งชนกำแพง กังหัน และโจทย์โซ่ตกลงบนตาชั่ง ($N = 3\\lambda g x$)',
+  },
+  // --- K&K Ch. 5–6: Work, Energy, Collisions ---
+  {
+    nameTh: 'ทฤษฎีบทงาน-พลังงาน 3 มิติ (3D Work-Energy Theorem)',
+    category: 'Work & Energy',
+    latex: 'W_{ba} = \\int_{\\vec{r}_a}^{\\vec{r}_b} \\vec{F}\\cdot d\\vec{r} = \\frac{1}{2}mv_b^2 - \\frac{1}{2}mv_a^2',
+    noteTh: 'จริงสำหรับแรงทุกชนิด แรงตั้งฉากจากรางอยู่นิ่งไม่ทำงาน ($\\vec{N}\\cdot d\\vec{r}=0$)',
+  },
+  {
+    nameTh: 'เกณฑ์สนามแรงอนุรักษ์ (Conservative Field Curl Test)',
+    category: 'Work & Energy',
+    latex: '\\vec{F} = -\\vec{\\nabla} U \\iff \\vec{\\nabla} \\times \\vec{F} = \\vec{0}',
+    noteTh: 'ตรวจสอบในระนาบ 2 มิติด้วยเงื่อนไข $\\frac{\\partial F_y}{\\partial x} = \\frac{\\partial F_x}{\\partial y}$',
+  },
+  {
+    nameTh: 'ทางลัดพลังงานกำลังสอง (Quadratic Energy Form)',
+    category: 'Work & Energy',
+    latex: 'E = \\frac{1}{2}B\\dot{q}^2 + \\frac{1}{2}A q^2 \\implies \\omega = \\sqrt{\\frac{A}{B}}',
+    noteTh: 'เขียนพลังงานของตัวแปรอิสระ $q$ ใกล้สมดุลแล้วอ่าน $\\omega$ ได้ทันทีโดยไม่ต้องดิฟ',
+  },
+  {
+    nameTh: 'มวลลดทอนของระบบสองอนุภาค (Reduced Mass)',
+    category: 'Work & Energy',
+    latex: '\\mu = \\frac{m_1 m_2}{m_1 + m_2}, \\qquad K_{\\text{rel}} = \\frac{1}{2}\\mu v_{\\text{rel}}^2',
+    noteTh: 'ลดรูปปัญหาระบบสองวัตถุอิสระให้อยู่ในรูปอนุภาคเดี่ยวที่มีมวล $\\mu$',
+  },
+  {
+    nameTh: 'การชนยืดหยุ่น C-Frame สู่ L-Frame (Scattering Angle)',
+    category: 'Work & Energy',
+    latex: '\\tan\\theta_1 = \\frac{\\sin\\Theta}{(m_1/m_2) + \\cos\\Theta}, \\qquad \\sin\\theta_{1,\\max} = \\frac{m_2}{m_1} \\; (m_1 > m_2)',
+    noteTh: 'ใน C-Frame อัตราเร็วไม่เปลี่ยนหลังชนยืดหยุ่น เหลือแค่หมุนมุมกระเจิง $\\Theta$',
+  },
+  // --- K&K Ch. 7–8: Rigid Bodies & Gyroscope ---
+  {
+    nameTh: 'ทฤษฎีบทของชาส์ล 2 มิติ (Chasles Decomposition)',
+    category: 'Rotation',
+    latex: '\\vec{F}_{\\text{ext}} = M\\vec{A}_{\\text{cm}}, \\quad \\tau_{\\text{cm}} = I_0\\alpha, \\quad K = \\frac{1}{2}MV^2 + \\frac{1}{2}I_0\\omega^2',
+    noteTh: 'สมการ $\\tau_{\\text{cm}} = I_0\\alpha$ ใช้ได้เสมอแม้จุด CM กำลังมีความเร่ง!',
+  },
+  {
+    nameTh: 'ลูกตุ้มกายภาพและศูนย์การกระทบ (Physical Pendulum & Percussion)',
+    category: 'Rotation',
+    latex: 'T = 2\\pi\\sqrt{\\frac{I_P}{MgL}}, \\qquad l_{\\text{perc}} = \\frac{I_P}{ML} = L + \\frac{I_0}{ML}',
+    noteTh: 'เมื่อตีวัตถุที่ระยะ $l_{\\text{perc}}$ จากจุดหมุน แรงดลปฏิกิริยาที่จุดหมุนจะเป็นศูนย์',
+  },
+  {
+    nameTh: 'การหมุนควงของไจโรสโคป (Gyroscopic Precession)',
+    category: 'Rotation',
+    latex: '\\vec{\\tau} = \\frac{d\\vec{L}}{dt} \\implies \\Omega = \\frac{Mgl}{I_0\\omega_s}',
+    noteTh: 'ใช้ได้ในขีดจำกัดปั่นเร็วมาก $\\omega_s \\gg \\Omega$ ทอร์กที่ตั้งฉากทำให้ $\\vec{L}$ เบนทิศในแนวระดับ',
+  },
+  // --- K&K Ch. 9–10: Non-Inertial & Central Forces ---
+  {
+    nameTh: 'แรงเทียมในกรอบหมุน: คอริโอลิสและหนีศูนย์กลาง (Rotating Frame Forces)',
+    category: 'Non-Inertial & Orbits',
+    latex: 'm\\vec{a}_{\\text{rot}} = \\vec{F}_{\\text{real}} - 2m(\\vec{\\Omega}\\times\\vec{v}_{\\text{rot}}) - m\\vec{\\Omega}\\times(\\vec{\\Omega}\\times\\vec{r})',
+    noteTh: 'แรงคอริโอลิสตั้งฉากกับ $\\vec{v}_{\\text{rot}}$ จึงไม่ทำงาน; น้ำในถังหมุนโค้งเป็น $z = \\frac{\\Omega^2 r^2}{2g}$',
+  },
+  {
+    nameTh: 'ศักย์ยังผลและกฎพื้นที่ของเคปเลอร์ (Effective Potential)',
+    category: 'Non-Inertial & Orbits',
+    latex: 'U_{\\text{eff}}(r) = \\frac{L^2}{2\\mu r^2} + U(r), \\qquad \\frac{dA}{dt} = \\frac{L}{2\\mu} = \\text{const}',
+    noteTh: 'ลดรูปวงโคจร 2 มิติลงสู่กราฟศักย์ 1 มิติด้วยกำแพงหนีศูนย์กลาง $L^2/(2\\mu r^2)$',
+  },
+  {
+    nameTh: 'สมการ Vis-Viva และกฎข้อที่ 3 ของเคปเลอร์ (Elliptic Orbits)',
+    category: 'Non-Inertial & Orbits',
+    latex: 'E = -\\frac{GMm}{2a}, \\quad v^2 = GM\\left(\\frac{2}{r} - \\frac{1}{a}\\right), \\quad T^2 = \\frac{4\\pi^2}{GM}a^3',
+    noteTh: 'พลังงานวงโคจรวงรีขึ้นกับแกนกึ่งเอก $a = (r_p + r_a)/2$ เพียงอย่างเดียว',
+  },
+  // --- K&K Ch. 6.4 & 11: Oscillations & Resonance ---
+  {
+    nameTh: 'โหมดปกติของลูกตุ้มคู่ควบ (Coupled Pendulum Normal Modes)',
+    category: 'Oscillations & Resonance',
+    latex: '\\omega_1 = \\sqrt{\\frac{g}{l}}, \\qquad \\omega_2 = \\sqrt{\\frac{g}{l} + \\frac{2k}{m}}, \\qquad t_{\\text{swap}} = \\frac{\\pi}{\\omega_2 - \\omega_1}',
+    noteTh: 'ตั้งพิกัดปกติ $q_1 = x_a+x_b$ (แกว่งพร้อม) และ $q_2 = x_a-x_b$ (แกว่งสวนทาง)',
+  },
+  {
+    nameTh: 'ตัวสั่นแบบหน่วงและค่า Q-Factor (Damped Oscillator & Q)',
+    category: 'Oscillations & Resonance',
+    latex: '\\ddot{x} + \\gamma\\dot{x} + \\omega_0^2 x = 0, \\quad \\omega_1 = \\sqrt{\\omega_0^2 - \\frac{\\gamma^2}{4}}, \\quad Q = \\frac{\\omega_0}{\\gamma}',
+    noteTh: 'หาก $\\gamma/2 < \\omega_0$ แอมพลิจูดลดลงตาม $e^{-\\gamma t/2}$ และพลังงานสลายตาม $e^{-\\gamma t}$',
+  },
+  {
+    nameTh: 'การสั่นพ้องแบบซ้อนเชิงซ้อน (Driven Resonance & FWHM)',
+    category: 'Oscillations & Resonance',
+    latex: 'A(\\omega) = \\frac{F_0/m}{\\sqrt{(\\omega_0^2 - \\omega^2)^2 + (\\gamma\\omega)^2}}, \\quad \\tan\\phi = \\frac{\\gamma\\omega}{\\omega_0^2 - \\omega^2}, \\quad \\Delta\\omega_{\\text{FWHM}} = \\gamma',
+    noteTh: 'ที่จุดพ้อง $\\omega = \\omega_0$ มุมเฟสตามหลังคือ $\\phi = \\pi/2$ และดูดซับกำลังงานเฉลี่ยสูงสุด',
   },
 ];
 
@@ -98,7 +243,17 @@ export const FormulaSheetModal: React.FC<FormulaSheetModalProps> = ({ isOpen, on
 
   if (!isOpen) return null;
 
-  const categories = ['All', 'Math Tools', 'Kinematics', 'Newton & Constraints', 'Work & Energy', 'Rotation', 'SHM'];
+  const categories = [
+    'All',
+    'Math Tools',
+    'Kinematics',
+    'Newton & Constraints',
+    'Momentum & Variable Mass',
+    'Work & Energy',
+    'Rotation',
+    'Non-Inertial & Orbits',
+    'Oscillations & Resonance',
+  ];
 
   const filtered = FORMULA_DATABASE.filter((item) => {
     const matchCat = selectedCat === 'All' || item.category === selectedCat;
@@ -189,7 +344,7 @@ export const FormulaSheetModal: React.FC<FormulaSheetModalProps> = ({ isOpen, on
                   </div>
                 </div>
                 <div className="text-[11px] text-[var(--ink-secondary)] pt-2 border-t border-[var(--hairline-border)]">
-                  ↳ {item.noteTh}
+                  ↳ <FormattedMathText text={item.noteTh} />
                 </div>
               </div>
             ))}
