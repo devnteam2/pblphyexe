@@ -175,7 +175,7 @@ $$y = x\\tan\\theta - \\frac{g x^2}{2u^2\\cos^2\\theta}$$
             takeawayTh: 'ใช้เอกลักษณ์ $2\\cos\\alpha\\sin(\\alpha - \\beta) = \\sin(2\\alpha - \\beta) - \\sin\\beta$ จะเห็นทันทีว่ายิงได้ไกลสุดบนพื้นเอียงเมื่อ $2\\alpha - \\beta = 90^\\circ$ (แบ่งครึ่งมุมระหว่างพื้นเอียงกับแนวดิ่ง)!',
           },
         ],
-        relatedProblemIds: ['prob-pre-mech-2'],
+        relatedProblemIds: ['prob-pre-mech-proj-1'],
       },
       {
         id: 'lesson-pre-mech-2',
@@ -336,7 +336,7 @@ $$I_{\\text{cm}} \\Omega = \\text{ทอร์กรอบแกนหมุน}
             takeawayTh: 'โจทย์สมดุลสถิตทุกข้อในรอบเข้าค่าย 1 แก้ได้ด้วยสมการ 3 บรรทัด: ขึ้น=ลง, ซ้าย=ขวา, และทวน=ตามรอบจุดที่มีตัวแปรไม่ทราบค่ามากที่สุด',
           },
         ],
-        relatedProblemIds: ['prob-pre-mech-1', 'prob-pre-mech-2'],
+        relatedProblemIds: ['prob-pre-mech-eq-1'],
       },
     ],
   },
@@ -493,7 +493,7 @@ $$L = L_0 \\{1 + \\alpha (T - T_0)\\}$$
             takeawayTh: 'เช่น ถ้า $K_1 = 3K_2$ และยาวเท่ากัน รอยต่อจะอยู่ที่ $\\frac{3T_H + T_C}{4}$ — คิดเหมือนวงจรแบ่งแรงดัน (Voltage Divider) ได้เลย!',
           },
         ],
-        relatedProblemIds: ['prob-pre-thermo-1'],
+        relatedProblemIds: ['prob-pre-thermo-cond-1'],
       },
       {
         id: 'lesson-pre-thermo-1',
@@ -649,7 +649,7 @@ $$u_E = \\frac{1}{2}\\varepsilon_0 E^2 \\quad (\\text{J/m}^3)$$
             takeawayTh: 'ถ้าดึงแผ่นตัวเก็บประจุออกจากกันในขณะที่ "ถอดแบต" (Q คงที่, $E$ คงที่) ปริมาตร $Ad$ เพิ่มขึ้นทำให้ $U$ เพิ่มขึ้น (มาจากงานที่เราออกแรงดึง!) แต่ถ้า "เสียบแบตค้าง" ($V$ คงที่) $E = V/d$ ลดลงและ $U$ ลดลง',
           },
         ],
-        relatedProblemIds: ['prob-pre-em-1'],
+        relatedProblemIds: ['prob-pre-em-cap-1'],
       },
       {
         id: 'lesson-pre-em-2',
@@ -786,7 +786,7 @@ $$B = \\frac{\\mu_0}{4\\pi}\\frac{i\\,(2\\pi r)}{r^2} = \\frac{\\mu_0 i}{2r} \\q
             takeawayTh: 'ข้อสอบลวดดัดโค้งในรอบเข้าค่าย 1 ใช้หลัก 3 บรรทัดนี้ทั้งหมด: (1) เส้นตรงชี้ผ่านศูนย์ $= 0$, (2) ส่วนโค้ง $= \\frac{\\theta}{2\\pi}\\frac{\\mu_0 i}{2r}$, (3) จับบวกลบตามกฎมือขวา!',
           },
         ],
-        relatedProblemIds: ['prob-pre-em-2'],
+        relatedProblemIds: ['prob-pre-em-wire-1'],
       },
       {
         id: 'lesson-pre-em-3',
@@ -941,7 +941,7 @@ $$u_{\\text{EM}} = \\frac{1}{2}\\varepsilon_0 E^2 + \\frac{1}{2}\\frac{B^2}{\\mu
             takeawayTh: 'ใช้ภาพวาด "ทางเดินแสงคร่าวๆ" คู่กับการคำนวณสมการเสมอ: ถ้าคำนวณแล้ว $v$ ติดลบแปลว่าแสงจริงไม่ตัดกันแต่ต้องต่อแนวเสมือนไปตัดหลังกระจก!',
           },
         ],
-        relatedProblemIds: ['prob-pre-opt-2'],
+        relatedProblemIds: ['prob-pre-opt-mirror-1'],
       },
       {
         id: 'lesson-pre-opt-2',

@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import { CURRICULUM_TOPICS } from '@/data/curriculumData';
+import { LESSON_BRIDGES } from '@/data/lessonBridges';
+import { POSN_PROBLEMS } from '@/data/problemsData';
 import { CurriculumTrack, TopicId } from '@/types/curriculum';
 import { Navbar } from '@/components/layout/Navbar';
 import { MobileNav } from '@/components/layout/MobileNav';
@@ -15,22 +17,44 @@ import { FormulaSheetModal } from '@/components/formula/FormulaSheetModal';
 import { RigidBodySimulationView } from '@/components/simulation/RigidBodySimulationView';
 import { QuickReviewDeck } from '@/components/review/QuickReviewDeck';
 import { useStudentStore } from '@/store/useStudentStore';
-import { ArrowRight, Brain, Flame, GraduationCap, PlayCircle } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Brain,
+  CheckCircle2,
+  Clock,
+  FileText,
+  Flame,
+  GraduationCap,
+  PlayCircle,
+  Sparkles,
+} from 'lucide-react';
 
 export default function Home() {
-  const { completedLessonSlugs, themePreference, fontSizeScale } = useStudentStore();
+  const { completedLessonSlugs, problemProgress, themePreference, fontSizeScale } = useStudentStore();
   const [activeTab, setActiveTab] = useState<'roadmap' | 'problems' | 'saved' | 'simulation'>('roadmap');
   const [activeTrack, setActiveTrack] = useState<CurriculumTrack>('pre-camp-1');
-  const [selectedTopicId, setSelectedTopicId] = useState<TopicId>('pre-mechanics');
+  const [selectedTopicId, setSelectedTopicId] = useState<TopicId | null>(null);
   const [selectedLessonSlug, setSelectedLessonSlug] = useState<string | null>(null);
   const [isFormulaSheetOpen, setIsFormulaSheetOpen] = useState<boolean>(false);
   const [showQuickReview, setShowQuickReview] = useState<boolean>(false);
 
   const trackTopics = CURRICULUM_TOPICS.filter((t) => t.track === activeTrack);
-  const activeTopic = trackTopics.find((t) => t.id === selectedTopicId) || trackTopics[0];
-  const activeLesson = selectedLessonSlug
-    ? activeTopic.lessons.find((l) => l.slug === selectedLessonSlug) || activeTopic.lessons[0]
-    : null;
+  const activeTopicIndex = selectedTopicId
+    ? trackTopics.findIndex((t) => t.id === selectedTopicId)
+    : -1;
+  const activeTopic = activeTopicIndex >= 0 ? trackTopics[activeTopicIndex] : null;
+  const prevTopic = activeTopicIndex > 0 ? trackTopics[activeTopicIndex - 1] : null;
+  const nextTopic =
+    activeTopicIndex >= 0 && activeTopicIndex < trackTopics.length - 1
+      ? trackTopics[activeTopicIndex + 1]
+      : null;
+
+  const activeLesson =
+    activeTopic && selectedLessonSlug
+      ? activeTopic.lessons.find((l) => l.slug === selectedLessonSlug) || null
+      : null;
 
   const trackLessonsFlat = trackTopics.flatMap((topic) =>
     topic.lessons.map((lesson) => ({ topic, lesson }))
@@ -42,12 +66,15 @@ export default function Home() {
     trackLessonsFlat.find((entry) => !completedLessonSlugs.includes(entry.lesson.slug)) ||
     trackLessonsFlat[0];
 
+  const scrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const handleSelectTrack = (track: CurriculumTrack) => {
     setActiveTrack(track);
-    const firstTopic = CURRICULUM_TOPICS.find((t) => t.track === track);
-    if (firstTopic) {
-      setSelectedTopicId(firstTopic.id);
-    }
+    setSelectedTopicId(null);
     setSelectedLessonSlug(null);
   };
 
@@ -55,9 +82,24 @@ export default function Home() {
     if (!nextStudyTarget) return;
     setSelectedTopicId(nextStudyTarget.topic.id);
     setSelectedLessonSlug(nextStudyTarget.lesson.slug);
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    scrollToTop();
+  };
+
+  const handleSelectTopic = (topicId: TopicId) => {
+    setSelectedTopicId(topicId);
+    setSelectedLessonSlug(null);
+    scrollToTop();
+  };
+
+  const handleOpenLesson = (slug: string) => {
+    setSelectedLessonSlug(slug);
+    scrollToTop();
+  };
+
+  const handleResetToAllChapters = () => {
+    setSelectedLessonSlug(null);
+    setSelectedTopicId(null);
+    scrollToTop();
   };
 
   return (
@@ -73,17 +115,249 @@ export default function Home() {
         setActiveTab={(tab) => {
           setActiveTab(tab);
           if (tab === 'roadmap') {
-            setSelectedLessonSlug(null);
+            handleResetToAllChapters();
           }
         }}
       />
 
       {/* Main Content Pane */}
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 md:py-8">
-        {/* TAB 1: ROADMAP / ACADEMIC READING VIEW */}
+        {/* TAB 1: ROADMAP / ACADEMIC READING VIEW (3-LEVEL DRILL-DOWN) */}
         {activeTab === 'roadmap' && (
           <div>
-            {!activeLesson ? (
+            {activeTopic && activeLesson ? (
+              /* LEVEL 3: LESSON READER VIEW */
+              <LessonReaderView
+                lesson={activeLesson}
+                topic={activeTopic}
+                onBackToRoadmap={() => {
+                  setSelectedLessonSlug(null);
+                  scrollToTop();
+                }}
+                onSelectLesson={(slug) => handleOpenLesson(slug)}
+                onOpenSimulation={() => setActiveTab('simulation')}
+              />
+            ) : activeTopic ? (
+              /* LEVEL 2: DEDICATED CHAPTER SUBSECTIONS PAGE */
+              (() => {
+                const chapterProblems = POSN_PROBLEMS.filter((p) => p.topicId === activeTopic.id);
+                const masteredInChapter = chapterProblems.filter(
+                  (p) => problemProgress[p.id]?.isMarkedMastered
+                ).length;
+                const completedInChapter = activeTopic.lessons.filter((l) =>
+                  completedLessonSlugs.includes(l.slug)
+                ).length;
+                const totalDerivationsInChapter = activeTopic.lessons.reduce(
+                  (acc, l) => acc + l.derivations.length,
+                  0
+                );
+                const chapterPercent =
+                  activeTopic.lessons.length > 0
+                    ? Math.round((completedInChapter / activeTopic.lessons.length) * 100)
+                    : 0;
+                const nextChapterLesson =
+                  activeTopic.lessons.find((l) => !completedLessonSlugs.includes(l.slug)) ||
+                  activeTopic.lessons[0];
+
+                return (
+                  <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
+                    {/* Top Breadcrumb Navigation */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--hairline-border)]">
+                      <button
+                        type="button"
+                        onClick={handleResetToAllChapters}
+                        className="min-h-[42px] px-3 py-1.5 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-500 inline-flex items-center gap-1.5 text-xs font-serif font-medium text-[var(--ink-primary)] transition-colors"
+                      >
+                        <ArrowLeft className="w-3.5 h-3.5" />
+                        <span>กลับไปหน้าเลือกหมวดวิชาทั้งหมด (All Chapters)</span>
+                      </button>
+
+                      <span className="px-2.5 py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)] font-mono text-[11px] font-semibold text-[var(--ink-secondary)]">
+                        {activeTrack === 'pre-camp-1'
+                          ? 'TRACK 01 • เตรียมสอบเข้าค่าย 1'
+                          : 'TRACK 02 • ค่าย 1 → ค่าย 2 (CALCULUS)'}
+                      </span>
+                    </div>
+
+                    {/* Chapter Hero Banner */}
+                    <header className="rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] p-5 sm:p-7 space-y-5 shadow-2xs">
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                        <div className="space-y-2 max-w-2xl">
+                          <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--ink-tertiary)]">
+                            <span className="font-bold text-[var(--ink-primary)]">
+                              CHAPTER {String(activeTopicIndex + 1).padStart(2, '0')}
+                            </span>
+                            <span>•</span>
+                            <span>{activeTopic.subtitleTh}</span>
+                          </div>
+
+                          <h1 className="text-xl sm:text-3xl font-bold text-[var(--ink-primary)] tracking-tight leading-snug">
+                            <FormattedMathText text={activeTopic.titleTh} />
+                          </h1>
+
+                          <p className="text-sm text-[var(--ink-secondary)] leading-relaxed">
+                            <FormattedMathText text={activeTopic.descriptionTh} />
+                          </p>
+                        </div>
+
+                        {nextChapterLesson && (
+                          <button
+                            type="button"
+                            onClick={() => handleOpenLesson(nextChapterLesson.slug)}
+                            className="min-h-[44px] px-4 py-2.5 rounded bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs sm:text-sm font-serif font-semibold hover:opacity-90 inline-flex items-center justify-center gap-2 shrink-0 shadow-2xs transition-opacity"
+                          >
+                            <PlayCircle className="w-4 h-4" />
+                            <span>
+                              {completedInChapter === 0
+                                ? 'เริ่มเรียนบทแรกของหมวดนี้'
+                                : 'เรียนต่อบทถัดไปในหมวดนี้'}
+                            </span>
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Chapter Stats & Progress */}
+                      <div className="pt-4 border-t border-[var(--hairline-border)] space-y-2.5">
+                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[var(--ink-secondary)]">
+                          <span>
+                            ความคืบหน้าหมวดนี้:{' '}
+                            <strong className="text-[var(--ink-primary)]">
+                              {completedInChapter}/{activeTopic.lessons.length} บทเรียน ({chapterPercent}%)
+                            </strong>
+                          </span>
+                          <div className="flex flex-wrap items-center gap-3">
+                            <span>การพิสูจน์: {totalDerivationsInChapter} ชุด</span>
+                            <span>•</span>
+                            <span>
+                              โจทย์ฝึกหัด: {masteredInChapter}/{chapterProblems.length} ข้อ
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="w-full h-1.5 rounded-full bg-stone-200 dark:bg-stone-800 overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-stone-800 dark:bg-stone-200 transition-all"
+                            style={{ width: `${chapterPercent}%` }}
+                          />
+                        </div>
+                      </div>
+                    </header>
+
+                    {/* Numbered Chapter Subsections List */}
+                    <section className="space-y-3.5">
+                      <div className="flex items-center justify-between pb-2 border-b border-[var(--hairline-border)]">
+                        <div>
+                          <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-[var(--ink-tertiary)] block">
+                            CHAPTER SUBSECTIONS ({activeTopic.lessons.length} บทเรียนย่อย)
+                          </span>
+                          <h2 className="text-base sm:text-lg font-bold text-[var(--ink-primary)]">
+                            เลือกหัวข้อย่อยที่ต้องการศึกษาและทดลองแล็บ
+                          </h2>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-3.5">
+                        {activeTopic.lessons.map((lesson) => {
+                          const isDone = completedLessonSlugs.includes(lesson.slug);
+                          const hasLab = Boolean(LESSON_BRIDGES[lesson.slug]?.interactiveLabId);
+
+                          return (
+                            <button
+                              key={lesson.id}
+                              type="button"
+                              onClick={() => handleOpenLesson(lesson.slug)}
+                              className="group w-full text-left p-4 sm:p-5 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-500 dark:hover:border-stone-400 hover:shadow-xs cursor-pointer transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                            >
+                              <div className="space-y-2 flex-1">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="px-2 py-0.5 rounded bg-[var(--surface-muted)] border border-[var(--hairline-border)] font-mono text-xs font-bold text-[var(--ink-primary)]">
+                                    § {activeTopicIndex + 1}.{lesson.order}
+                                  </span>
+
+                                  {hasLab && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-semibold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800">
+                                      <Sparkles className="w-3 h-3" />
+                                      มีแล็บจำลองโต้ตอบ
+                                    </span>
+                                  )}
+
+                                  {isDone && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800">
+                                      <CheckCircle2 className="w-3 h-3" />
+                                      เรียนจบแล้ว
+                                    </span>
+                                  )}
+                                </div>
+
+                                <h3 className="text-base sm:text-lg font-bold text-[var(--ink-primary)] group-hover:underline underline-offset-2 leading-snug">
+                                  <FormattedMathText text={lesson.titleTh} />
+                                </h3>
+
+                                <p className="text-xs sm:text-sm text-[var(--ink-secondary)] leading-relaxed line-clamp-2">
+                                  <FormattedMathText text={lesson.summaryTh} />
+                                </p>
+
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-[11px] font-mono text-[var(--ink-tertiary)]">
+                                  <span className="inline-flex items-center gap-1">
+                                    <Clock className="w-3 h-3" />
+                                    เวลาอ่าน ~{lesson.readTimeMinutes} นาที
+                                  </span>
+                                  <span className="inline-flex items-center gap-1">
+                                    <BookOpen className="w-3 h-3" />
+                                    {lesson.derivations.length} การพิสูจน์สมการ
+                                  </span>
+                                  <span className="inline-flex items-center gap-1">
+                                    <FileText className="w-3 h-3" />
+                                    {lesson.relatedProblemIds.length} โจทย์แนวข้อสอบ
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center justify-end sm:justify-center shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[var(--hairline-border)]">
+                                <span className="px-3.5 py-2 rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)] group-hover:bg-stone-900 group-hover:text-white dark:group-hover:bg-stone-100 dark:group-hover:text-stone-900 text-xs font-serif font-semibold text-[var(--ink-primary)] transition-colors inline-flex items-center gap-1.5">
+                                  <span>เข้าสู่บทเรียน</span>
+                                  <ArrowRight className="w-3.5 h-3.5" />
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </section>
+
+                    {/* Prev / Next Chapter Pagination Footer */}
+                    <footer className="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-[var(--hairline-border)]">
+                      {prevTopic ? (
+                        <button
+                          type="button"
+                          onClick={() => handleSelectTopic(prevTopic.id)}
+                          className="min-h-[42px] px-3.5 py-2 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-500 text-xs font-serif text-[var(--ink-primary)] inline-flex items-center gap-1.5 transition-colors"
+                        >
+                          <ArrowLeft className="w-3.5 h-3.5" />
+                          <span>หมวดก่อนหน้า: {prevTopic.titleTh.split('(')[0].trim()}</span>
+                        </button>
+                      ) : (
+                        <div />
+                      )}
+
+                      {nextTopic ? (
+                        <button
+                          type="button"
+                          onClick={() => handleSelectTopic(nextTopic.id)}
+                          className="min-h-[42px] px-3.5 py-2 rounded bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 hover:opacity-90 text-xs font-serif font-semibold inline-flex items-center gap-1.5 transition-opacity"
+                        >
+                          <span>หมวดถัดไป: {nextTopic.titleTh.split('(')[0].trim()}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      ) : (
+                        <div />
+                      )}
+                    </footer>
+                  </div>
+                );
+              })()
+            ) : (
+              /* LEVEL 1: ALL CHAPTERS OVERVIEW & TRACK SELECTOR */
               <div className="space-y-8 animate-in fade-in duration-150">
                 {/* Academic Monograph Frontispiece Header */}
                 <header className="border-b border-[var(--hairline-border)] pb-8 pt-2">
@@ -207,79 +481,13 @@ export default function Home() {
                   <QuickReviewDeck onClose={() => setShowQuickReview(false)} />
                 )}
 
-                {/* Table of Contents / Roadmap Tracker */}
+                {/* Table of Contents / Chapter Grid */}
                 <RoadmapTracker
                   topics={trackTopics}
-                  activeTopicId={activeTopic.id}
-                  onSelectTopic={(topicId) => {
-                    setSelectedTopicId(topicId);
-                  }}
+                  activeTopicId={selectedTopicId}
+                  onSelectTopic={handleSelectTopic}
                 />
-
-                {/* Selected Chapter Lessons */}
-                <div className="rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] p-5 md:p-6 space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-[var(--hairline-border)]">
-                    <div>
-                      <span className="text-[11px] font-mono font-bold text-stone-500 uppercase tracking-widest block">
-                        CHAPTER SUBSECTIONS
-                      </span>
-                      <h3 className="text-base font-bold text-[var(--ink-primary)]">
-                        {activeTopic.titleTh}
-                      </h3>
-                    </div>
-                    <span className="text-xs text-[var(--ink-secondary)] font-mono">
-                      {activeTopic.lessons.length} {activeTopic.lessons.length === 1 ? 'Subsection' : 'Subsections'}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-3">
-                    {activeTopic.lessons.map((lesson) => {
-                      const isDone = completedLessonSlugs.includes(lesson.slug);
-                      return (
-                        <div
-                          key={lesson.id}
-                          onClick={() => setSelectedLessonSlug(lesson.slug)}
-                          className="group p-4 rounded border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/40 hover:border-stone-400 dark:hover:border-stone-600 cursor-pointer transition-all flex items-center justify-between gap-4"
-                        >
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono text-xs font-bold text-stone-500">
-                                § {lesson.order}.0
-                              </span>
-                              {isDone && (
-                                <span className="text-[11px] font-mono font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 px-1.5 rounded">
-                                  Studied
-                                </span>
-                              )}
-                            </div>
-                            <h4 className="text-sm md:text-base font-bold text-[var(--ink-primary)] group-hover:underline underline-offset-2">
-                              <FormattedMathText text={lesson.titleTh} />
-                            </h4>
-                            <p className="text-xs text-[var(--ink-secondary)] line-clamp-1 font-serif">
-                              <FormattedMathText text={lesson.summaryTh} />
-                            </p>
-                          </div>
-
-                          <div className="flex items-center gap-2 shrink-0">
-                            <span className="text-xs font-serif text-[var(--ink-secondary)] group-hover:text-[var(--ink-primary)] transition-colors flex items-center gap-1 font-medium">
-                              <span>อ่านบทนี้</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
               </div>
-            ) : (
-              <LessonReaderView
-                lesson={activeLesson}
-                topic={activeTopic}
-                onBackToRoadmap={() => setSelectedLessonSlug(null)}
-                onSelectLesson={(slug) => setSelectedLessonSlug(slug)}
-                onOpenSimulation={() => setActiveTab('simulation')}
-              />
             )}
           </div>
         )}
@@ -295,7 +503,7 @@ export default function Home() {
           <SavedDerivationsView
             onGoToRoadmap={() => {
               setActiveTab('roadmap');
-              setSelectedLessonSlug(null);
+              handleResetToAllChapters();
             }}
           />
         )}
@@ -313,7 +521,7 @@ export default function Home() {
         setActiveTab={(tab) => {
           setActiveTab(tab);
           if (tab === 'roadmap') {
-            setSelectedLessonSlug(null);
+            handleResetToAllChapters();
           }
         }}
         onOpenFormulaSheet={() => setIsFormulaSheetOpen(true)}

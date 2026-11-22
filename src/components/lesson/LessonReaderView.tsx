@@ -73,13 +73,13 @@ export const LessonReaderView: React.FC<LessonReaderViewProps> = ({
       </div>
 
       {/* Top Academic Breadcrumb */}
-      <div className="flex items-center justify-between pb-3 border-b border-[var(--hairline-border)]">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--hairline-border)]">
         <button
           onClick={onBackToRoadmap}
           className="min-h-[42px] inline-flex items-center gap-1.5 text-xs text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>§ ย้อนกลับไปสารบัญ</span>
+          <span>กลับไปหน้าหัวข้อย่อยของหมวดนี้ ({topic.titleTh.split('(')[0].trim()})</span>
         </button>
 
         <button
@@ -98,8 +98,11 @@ export const LessonReaderView: React.FC<LessonReaderViewProps> = ({
       {/* Formal Section Header */}
       <header className="space-y-3 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 text-xs font-mono text-stone-500 uppercase tracking-wider">
-            <span>{topic.titleTh.split('.')[0]}</span>
+          <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-stone-500 uppercase tracking-wider">
+            <span>
+              CHAPTER {topic.titleTh.split('.')[0].trim().padStart(2, '0')} •{' '}
+              {topic.track === 'pre-camp-1' ? 'PRE-CAMP 1 ENTRANCE' : 'CAMP 1–2 CALCULUS'}
+            </span>
             <span>•</span>
             <span>EST. READ {lesson.readTimeMinutes} MIN</span>
           </div>
@@ -240,7 +243,7 @@ export const LessonReaderView: React.FC<LessonReaderViewProps> = ({
             onClick={onBackToRoadmap}
             className="min-h-[42px] px-4 py-2 rounded text-xs font-serif font-medium border border-[var(--hairline-border)] bg-[var(--surface-muted)] text-[var(--ink-primary)] hover:border-stone-400 dark:hover:border-stone-600 transition-all"
           >
-            กลับสู่สารบัญ
+            กลับไปหน้าหัวข้อย่อยของหมวดนี้
           </button>
 
           {nextLesson ? (

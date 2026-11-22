@@ -19,6 +19,13 @@ interface PreCampVisualLabsProps {
   labId: PreCampLabId;
 }
 
+const LabInsightCallout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="p-2.5 rounded border border-amber-300/80 dark:border-amber-800/80 bg-amber-50/70 dark:bg-amber-950/30 text-[11px] sm:text-xs text-amber-950 dark:text-amber-200 leading-relaxed">
+    <span className="font-bold">💡 จุดสังเกตสำคัญ &amp; ทริคทำข้อสอบ สอวน.: </span>
+    {children}
+  </div>
+);
+
 export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) => {
   // 1. Incline / Wedge state
   const [wedgeDeg, setWedgeDeg] = useState<number>(30);
@@ -293,6 +300,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             <span className="font-mono font-bold text-amber-700 dark:text-amber-400">{fActual.toFixed(1)} N</span>
           </div>
         </div>
+
+        <LabInsightCallout>
+          ลองปรับ θ ให้น้อยกว่ามุมวิกฤต จะเห็นว่าแรงเสียดทานจริงมีค่าแค่ mg sin θ (เท่ากับแรงดึงลงพอดี) <strong>ไม่ใช่</strong> μ_s N! และทันทีที่มุมเกิน tan⁻¹(μ_s) แรงเสียดทานจะตกจาก f_s,max ลงมาเป็น f_k ทันที
+        </LabInsightCallout>
       </div>
     );
   }
@@ -398,6 +409,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             <span className="font-mono font-bold text-amber-700 dark:text-amber-400">{range.toFixed(1)} m</span>
           </div>
         </div>
+
+        <LabInsightCallout>
+          ที่จุดสูงสุด v_y = 0 เท่านั้น แต่ความเร็วแนวราบ v_x = u cos θ ยังอยู่ครบ และความเร่งยังคงเป็น g ชี้ลงตลอดทาง! ส่วนระยะตกไกลสุดบนพื้นราบเกิดที่ θ = 45° (ลองเทียบมุม 30° กับ 60° จะเห็น Range เท่ากันเป๊ะ!)
+        </LabInsightCallout>
       </div>
     );
   }
@@ -505,6 +520,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             <span className="font-mono font-bold text-sky-700 dark:text-sky-400">{nw.toFixed(1)} N</span>
           </div>
         </div>
+
+        <LabInsightCallout>
+          ยิ่งวางบันไดเอนราบลง (θ เล็กลง) ทอร์กจาก Mg จะงัดแรงดันกำแพง N_w (= f_s) ให้พุ่งสูงขึ้นจนพื้นรับไม่ไหว! ทริคคือ <strong>เลือกจุดหมุนที่ฐาน O</strong> เสมอ เพื่อตัดทั้ง N_f และ f_s ออกในสมการเดียว
+        </LabInsightCallout>
       </div>
     );
   }
@@ -590,6 +609,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             <span className="font-mono font-bold text-amber-700 dark:text-amber-400">{dropKpa.toFixed(1)} kPa</span>
           </div>
         </div>
+
+        <LabInsightCallout>
+          ตรงคอคอด A₂ แคบกว่าเดิม A₁/A₂ เท่า น้ำจึงวิ่งเร็วขึ้น A₁/A₂ เท่า แต่ในสมการ Bernoulli ความเร็ว <strong>ยกกำลังสอง (½ρv²)</strong> ความดันสถิต P₂ จึงดิ่งฮวบ! (อย่าเผลอคิดว่าบีบท่อแล้วความดันเพิ่มเด็ดขาด)
+        </LabInsightCallout>
       </div>
     );
   }
@@ -728,6 +751,13 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             </div>
           </>
         )}
+
+        <LabInsightCallout>
+          {tempMode === 'conduction'
+            ? 'สมดุลคงตัว (Steady State) ฟลักซ์ความร้อน J₁ = J₂ เท่ากันทั้งสองแท่ง เปรียบเหมือนกระแสไฟฟ้าไหลอนุกรม! ตัวที่มีค่า K มากกว่าจะอุณหภูมิเปลี่ยนน้อยกว่า (เหมือนตัวต้านทานค่าน้อย ΔV น้อย)'
+            : 'เมื่อให้ความร้อนที่ความดันคงที่ (Isobaric): แก๊สอะตอมเดี่ยว (f=3) เอาไปทำงานได้ 2/5 = 40% ส่วนแก๊ส 2 อะตอม (f=5) ต้องแบ่งไปหมุนด้วย จึงทำงานได้แค่ 2/7 ≈ 28.6%!'
+          }
+        </LabInsightCallout>
       </div>
     );
   }
@@ -813,6 +843,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             <span className="font-mono font-bold text-amber-700 dark:text-amber-400">{relU.toFixed(2)}×</span>
           </div>
         </div>
+
+        <LabInsightCallout>
+          คำถามยอดฮิต สอวน.! ถอดแบต (Q คงที่) แล้วดึงแผ่นห่าง: สนามไฟฟ้า E = σ/ε₀ <strong>เท่าเดิม</strong> ไม่ขึ้นกับระยะ d เลย แต่ปริมาตรช่องว่าง (Ad) เพิ่มขึ้น พลังงาน u_E × ปริมาตร จึง<strong>เพิ่มขึ้น</strong> (มาจากแรงมือเราดึงต้านแรงดูด!)
+        </LabInsightCallout>
       </div>
     );
   }
@@ -954,6 +988,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             <span className="font-mono font-bold text-rose-700 dark:text-rose-400">{(current * current * rOhm).toFixed(1)} W</span>
           </div>
         </div>
+
+        <LabInsightCallout>
+          จำคู่ตรงข้ามให้ขึ้นใจ: <strong>t = 0⁺</strong> (สับสวิตช์ปุ๊บ) ตัวเก็บประจุ C ว่าง = <strong>ลวดลัดวงจร</strong> แต่ขดลวด L ต้านกระแสฉับพลัน = <strong>วงจรขาด</strong>! พอทิ้งไว้นาน <strong>t → ∞</strong> ทั้งคู่สลับบทบาทกันทันที!
+        </LabInsightCallout>
       </div>
     );
   }
@@ -1107,6 +1145,12 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
             </div>
           </>
         )}
+
+        <LabInsightCallout>
+          {magMode === 'loop'
+            ? 'ใช้กฎมือขวา: กำนิ้วทั้ง 4 ตามกระแส i → หัวแม่มือชี้ทิศ B! และถ้าเป็นส่วนโค้งมุม θ เรเดียน ใช้สัดส่วน B_arc = (θ / 2π) × μ₀i / (2r) ส่วนเส้นตรงที่ชี้พุ่งหาจุดศูนย์กลางไม่สร้างสนาม B ที่จุดนั้น (r × dℓ = 0)!'
+            : 'กฎของเลนซ์: แรงแม่เหล็ก F = iℓB จะชี้ต้านความเร็ว v เสมอ! เช็กสมดุลพลังงานได้ทันทีว่า กำลังมือดึง (Fv) = กำลังความร้อนบน R (i²R = B²ℓ²v²/R)'}
+        </LabInsightCallout>
       </div>
     );
   }
@@ -1295,6 +1339,10 @@ export const PreCampVisualLabs: React.FC<PreCampVisualLabsProps> = ({ labId }) =
           </span>
         </div>
       </div>
+
+      <LabInsightCallout>
+        ระบบรวมแสง (เลนส์นูน / กระจกเว้า) ใช้ f เป็นบวก (+), ระบบกระจายแสง (เลนส์เว้า / กระจกนูน) ใช้ f เป็นลบ (−)! ทดลองลากวัตถุ u = 20 cm (ที่ 2f) จะเห็นภาพจริงขนาดเท่าวัตถุพอดี (m = −1.00×) และถ้านำวัตถุเข้าใกล้กว่า f ภาพจะพลิกเป็นภาพเสมือนหัวตั้ง!
+      </LabInsightCallout>
     </div>
   );
 };
