@@ -167,8 +167,8 @@ export const HeatFlowLab: React.FC = () => {
               );
             })}
 
-            {/* Dimension L and A labels */}
-            <text x="230" y={91 - rodHalfH - 8} fontSize="9.5" textAnchor="middle" fill="var(--ink-primary)" fontFamily="monospace" fontWeight="bold">
+            {/* Dimension L and A labels cleanly above reservoirs */}
+            <text x="230" y="18" fontSize="9.5" textAnchor="middle" fill="var(--ink-primary)" fontFamily="monospace" fontWeight="bold">
               ยาว L = {lengthCm} cm • หน้าตัด A = {areaCm2} cm²
             </text>
             <text x="230" y="176" fontSize="10" textAnchor="middle" fill="#ea580c" fontFamily="monospace" fontWeight="bold">

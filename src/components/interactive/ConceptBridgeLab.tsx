@@ -11,6 +11,17 @@ import { MomentumCollisionLab } from './MomentumCollisionLab';
 import { CircuitBuilderLab } from './CircuitBuilderLab';
 import { MagnetFieldLab } from './MagnetFieldLab';
 import { HeatFlowLab } from './HeatFlowLab';
+import { NewtonLawsLab } from './NewtonLawsLab';
+import { WorkEnergyLab } from './WorkEnergyLab';
+import { CircularMotionLab } from './CircularMotionLab';
+import { FluidBuoyancyLab } from './FluidBuoyancyLab';
+import { IdealGasLab } from './IdealGasLab';
+import { ElectrostaticsLab } from './ElectrostaticsLab';
+import { FaradayEmWaveLab } from './FaradayEmWaveLab';
+import { LightOpticsBenchLab } from './LightOpticsBenchLab';
+import { CombinedOpticsLab } from './CombinedOpticsLab';
+import { SoundDopplerLab } from './SoundDopplerLab';
+import { Camp2PhysicsLabs, Camp2LabKind } from './Camp2PhysicsLabs';
 import { Track2AdvancedLabs, Track2LabKind } from './Track2AdvancedLabs';
 import { Sliders } from 'lucide-react';
 
@@ -29,8 +40,38 @@ export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => 
   const [gamma, setGamma] = useState<number>(0.36);
   const [freqRatio, setFreqRatio] = useState<number>(0.85);
 
+  if (labId === 'newton-laws-lab') {
+    return <NewtonLawsLab />;
+  }
   if (labId === 'projectile-shooter') {
     return <ProjectileShooterLab />;
+  }
+  if (labId === 'work-energy-coaster') {
+    return <WorkEnergyLab />;
+  }
+  if (labId === 'circular-motion-lab') {
+    return <CircularMotionLab />;
+  }
+  if (labId === 'fluid-buoyancy-lab') {
+    return <FluidBuoyancyLab />;
+  }
+  if (labId === 'ideal-gas-lab') {
+    return <IdealGasLab />;
+  }
+  if (labId === 'electrostatics-field-lab') {
+    return <ElectrostaticsLab />;
+  }
+  if (labId === 'faraday-em-wave-lab') {
+    return <FaradayEmWaveLab />;
+  }
+  if (labId === 'light-optics-bench') {
+    return <LightOpticsBenchLab />;
+  }
+  if (labId === 'combined-optics-lab') {
+    return <CombinedOpticsLab />;
+  }
+  if (labId === 'sound-doppler-lab') {
+    return <SoundDopplerLab />;
   }
   if (labId === 'wave-interference') {
     return <WaveInterferenceLab />;
@@ -49,6 +90,16 @@ export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => 
   }
   if (labId === 'heat-flow') {
     return <HeatFlowLab />;
+  }
+  if (
+    labId === 'vector-calculus-lab' ||
+    labId === 'drag-terminal-lab' ||
+    labId === 'rocket-com-lab' ||
+    labId === 'rolling-race-lab' ||
+    labId === 'kepler-orbit-lab' ||
+    labId === 'shm-phase-lab'
+  ) {
+    return <Camp2PhysicsLabs labId={labId as Camp2LabKind} />;
   }
   if (labId === 'pulley-capstan' || labId === 'coriolis-disk' || labId === 'coupled-oscillators') {
     return <Track2AdvancedLabs labId={labId as Track2LabKind} />;

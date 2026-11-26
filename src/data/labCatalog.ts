@@ -121,8 +121,128 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
   },
 
   // =========================================================================
-  // 2. PRE-CAMP 1 VISUAL LABS
+  // 2. PRE-CAMP 1 INTERACTIVE & VISUAL LABS (18 LABS TOTAL)
   // =========================================================================
+  {
+    id: 'newton-laws-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บกฎนิวตัน F=ma พื้นเอียง & ระบบรอก 2 มวล',
+    subtitleTh: 'ปรับมวล แรงดัน มุมเอียง เสียดทาน f_s/f_k และสลับระบบรอก Table / Atwood',
+    keywords: 'newton force mass acceleration pulley atwood friction FBD นิวตัน แรง กฎของนิวตัน รอก',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-mechanics',
+      slug: 'pre-units-newton-friction',
+    },
+  },
+  {
+    id: 'work-energy-coaster',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บงาน พลังงานกล รางรถไฟเหาะ & สปริงยิงวัตถุ',
+    subtitleTh: 'ดูแท่ง K + U_g + E_ความร้อน สดๆ บนรางตัวยู เนินคู่ รางตีลังกา และเครื่องยิงสปริง',
+    keywords: 'work energy roller coaster spring kinetic potential loop งาน พลังงาน สปริง ตีลังกา',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-mechanics',
+      slug: 'pre-momentum-energy-projectile',
+    },
+  },
+  {
+    id: 'circular-motion-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บวงกลม ตัดเชือกพิสูจน์เส้นสัมผัส & ทางโค้งยกเอียง',
+    subtitleTh: 'กดตัดเชือกดูการพุ่งเส้นตรงตามกฎข้อ 1 พร้อมทางโค้งยกมุม θ และตีลังกาแนวดิ่ง',
+    keywords: 'circular centripetal cut string banked curve vertical loop วงกลม สู่ศูนย์กลาง ตัดเชือก',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-mechanics',
+      slug: 'pre-circular-rotation-equilibrium',
+    },
+  },
+  {
+    id: 'fluid-buoyancy-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บแรงลอยตัวอาร์คิมีดิส ทอร์ริเชลลี & ไฮดรอลิก',
+    subtitleTh: 'เทียบไม้/น้ำแข็ง/โลหะจมในน้ำและปรอท เจาะรูถังน้ำดู R_max และกดไฮดรอลิก',
+    keywords: 'fluid buoyancy archimedes density torricelli hydraulic ของไหล แรงลอยตัว น้ำ ถังรั่ว',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-fluids-thermo',
+      slug: 'pre-fluids-bernoulli',
+    },
+  },
+  {
+    id: 'ideal-gas-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บแก๊สอุดมคติ ลูกสูบโมเลกุล & กราฟ P–V สด',
+    subtitleTh: 'โมเลกุลวิ่งชนตามอุณหภูมิ T กับลูกสูบ 5 โหมด (P/V/T คงที่ และ Adiabatic)',
+    keywords: 'gas ideal piston pressure volume temperature adiabatic pv แก๊ส ลูกสูบ อุณหภูมิ',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-fluids-thermo',
+      slug: 'pre-heat-gas-thermo',
+    },
+  },
+  {
+    id: 'electrostatics-field-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บสนามไฟฟ้า 2 มิติ (เพิ่ม/ลบประจุ & ปล่อย +q₀)',
+    subtitleTh: 'วางขั้วคู่ แผ่นขนาน หรือเพิ่มประจุเอง แล้วแตะหย่อนประจุทดสอบดูเส้นทางวิ่ง',
+    keywords: 'electrostatic electric field charge potential coulomb test charge ไฟฟ้าสถิต ประจุ สนามไฟฟ้า',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-em',
+      slug: 'pre-electrostatics-capacitors',
+    },
+  },
+  {
+    id: 'faraday-em-wave-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บรางฟาราเดย์–เลนซ์ & คลื่นแม่เหล็กไฟฟ้า 3D',
+    subtitleTh: 'ดูหลอดไฟสว่างและแรงเบรกเลนซ์พร้อมคลื่น E ⊥ B ⊥ c ทุกย่านสเปกตรัม',
+    keywords: 'faraday lenz emf electromagnetic wave spectrum maxwell ฟาราเดย์ เลนซ์ คลื่นแม่เหล็กไฟฟ้า',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-em',
+      slug: 'pre-magnetism-induction-maxwell',
+    },
+  },
+  {
+    id: 'light-optics-bench',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บแสง รางกระจก–เลนส์ 4 ชนิด & ปริซึมรุ้ง 6 สี',
+    subtitleTh: 'ทดลองวางวัตถุหน้ากระจก/เลนส์นูนเว้า พร้อมดูการกระจายแสงขาวผ่านปริซึม',
+    keywords: 'light optics mirror lens prism dispersion rainbow แสง กระจก เลนส์ ปริซึม',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-optics',
+      slug: 'pre-mirrors-reflection',
+    },
+  },
+  {
+    id: 'combined-optics-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บระบบผสมเลนส์–กระจก & วัตถุเสมือน u₂ < 0',
+    subtitleTh: 'ฝึกโจทย์ข้อ 28 สอวน. ทั้ง 2 เลนส์และเลนส์+กระจกสะท้อนกลับครบ 3 ขั้น',
+    keywords: 'combined optics lens mirror virtual object two elements ระบบผสม เลนส์ กระจก วัตถุเสมือน',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-optics',
+      slug: 'pre-combined-optical-systems',
+    },
+  },
+  {
+    id: 'sound-doppler-lab',
+    category: 'pre-camp-1',
+    titleTh: 'แล็บเสียง ดอปเพลอร์ โซนิกบูม (Mach) & ท่อเรโซแนนซ์',
+    subtitleTh: 'ดูหน้าคลื่นอัดตัว เกิดกรวย Mach cone (เปิดเสียงไซเรนได้) และคลื่นนิ่งในท่อเสียง',
+    keywords: 'sound doppler sonic boom mach resonance pipe organ เสียง ดอปเพลอร์ ท่อ เรโซแนนซ์',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-waves',
+      slug: 'pre-standing-beats-doppler',
+    },
+  },
   {
     id: 'incline-wedge',
     category: 'pre-camp-1',
@@ -305,6 +425,78 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
       track: 'camp-1-2',
       topicId: 'shm-differential-eq',
       slug: 'damped-driven-resonance',
+    },
+  },
+  {
+    id: 'vector-calculus-lab',
+    category: 'camp-1-2',
+    titleTh: 'แล็บเวกเตอร์ Dot/Cross & พิกัดเชิงขั้ว (r̂, θ̂)',
+    subtitleTh: 'หมุนเวกเตอร์ฐาน r̂(θ) และ θ̂(θ) พร้อมคำนวณ A·B และขนาดพื้นที่ A×B',
+    keywords: 'vector dot cross product polar basis rhat thetahat เวกเตอร์ เชิงขั้ว',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'math-tools',
+      slug: 'vector-algebra-coordinate-systems',
+    },
+  },
+  {
+    id: 'drag-terminal-lab',
+    category: 'camp-1-2',
+    titleTh: 'แล็บแรงต้าน Stokes (F = -bv) & ความเร็วปลาย v_T',
+    subtitleTh: 'ดูลูกบอลตกในของเหลวหนืดพร้อมกราฟ v(t) = v_T(1 - e^{-t/τ}) แบบเรียลไทม์',
+    keywords: 'stokes drag terminal velocity differential equation exponential แรงต้านอากาศ ความเร็วปลาย',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'kinematics-calculus',
+      slug: 'calculus-kinematics-drag-force',
+    },
+  },
+  {
+    id: 'rocket-com-lab',
+    category: 'camp-1-2',
+    titleTh: 'แล็บสมการจรวดมวลแปรผัน (Tsiolkovsky Rocket)',
+    subtitleTh: 'ปรับอัตราเร็วไอพ่น u_ex และสัดส่วนเชื้อเพลิง ดูกราฟ Δv = u_ex ln(m₀/m)',
+    keywords: 'rocket variable mass tsiolkovsky thrust momentum flux จรวด มวลแปรผัน',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'momentum-variable-mass',
+      slug: 'variable-mass-rocket-momentum-flux',
+    },
+  },
+  {
+    id: 'rolling-race-lab',
+    category: 'camp-1-2',
+    titleTh: 'ศึกกลิ้งลงพื้นเอียง (กล่อง vs ทรงกลม vs ทรงกระบอก vs วงแหวน)',
+    subtitleTh: 'พิสูจน์ว่าทำไมทรงกลมตัน (I=2/5 mR²) ชนะวงแหวนเสมอโดยไม่ขึ้นกับมวล',
+    keywords: 'rolling inertia chasles incline race sphere hoop disk กลิ้ง โมเมนต์ความเฉื่อย',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'rotation-dynamics',
+      slug: 'chasles-theorem-rolling-motion',
+    },
+  },
+  {
+    id: 'kepler-orbit-lab',
+    category: 'camp-1-2',
+    titleTh: 'แล็บวงโคจรเคปเลอร์ (วงกลม วงรี & ความเร็วหลุดพ้น)',
+    subtitleTh: 'ปรับอัตราเร็วปล่อย v₀/v_circ ดูความรี e และการกวาดพื้นที่ในกฎข้อ 2 ของเคปเลอร์',
+    keywords: 'kepler orbit ellipse hyperbola escape velocity gravity เคปเลอร์ วงโคจร ดาวเคราะห์',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'non-inertial-central-force',
+      slug: 'central-force-effective-potential-kepler',
+    },
+  },
+  {
+    id: 'shm-phase-lab',
+    category: 'camp-1-2',
+    titleTh: 'แล็บ SHM & วงรีเฟสสเปซ (Phase Space x–v)',
+    subtitleTh: 'ดูมวลติดสปริงสั่นซิงโครไนซ์กับจุดวิ่งวนตามเข็มนาฬิกาบนวงรีพลังงานในระนาบ (x, v)',
+    keywords: 'shm phase space harmonic oscillator spring ellipse เฟสสเปซ การสั่น',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'shm-differential-eq',
+      slug: 'shm-odes-and-energy-method',
     },
   },
 ];

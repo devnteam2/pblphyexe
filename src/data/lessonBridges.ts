@@ -2,16 +2,32 @@
 import { TopicId } from '@/types/curriculum';
 
 export type InteractiveLabId =
+  | 'newton-laws-lab'
   | 'projectile-shooter'
   | 'momentum-collision'
+  | 'work-energy-coaster'
+  | 'circular-motion-lab'
+  | 'fluid-buoyancy-lab'
+  | 'heat-flow'
+  | 'ideal-gas-lab'
+  | 'electrostatics-field-lab'
   | 'circuit-builder'
   | 'magnet-field'
-  | 'heat-flow'
-  | 'wave-interference'
+  | 'faraday-em-wave-lab'
+  | 'light-optics-bench'
   | 'snell-fermat'
+  | 'combined-optics-lab'
+  | 'wave-interference'
+  | 'sound-doppler-lab'
   | 'pulley-capstan'
   | 'coriolis-disk'
   | 'coupled-oscillators'
+  | 'vector-calculus-lab'
+  | 'drag-terminal-lab'
+  | 'rocket-com-lab'
+  | 'rolling-race-lab'
+  | 'kepler-orbit-lab'
+  | 'shm-phase-lab'
   | 'derivative-slope'
   | 'integral-work'
   | 'potential-well'
@@ -36,6 +52,7 @@ export interface ConceptBridge {
   howItEvolvesTh: string;
   everydayAnalogyTh: string;
   interactiveLabId?: InteractiveLabId;
+  extraLabIds?: InteractiveLabId[];
   quickRecall: {
     questionTh: string;
     answerTh: string;
@@ -58,7 +75,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เริ่มจากแปลงหน่วยให้เป็นระบบ SI ให้คล่อง แล้วตั้งแกน $x$-$y$ ตามแนวการเคลื่อนที่ ตรวจว่า $\\Sigma F_y = 0 \\implies N = mg\\cos\\theta$ ก่อนเสมอ จากนั้นค่อยเทียบแรงฉุดกับ $\\mu_s N$',
     everydayAnalogyTh:
       'ลองดันตู้เสื้อผ้าเบาๆ ด้วยแรง $5\\text{ kgf}$ ตู้ยังไม่ขยับ พื้นก็ต้านแค่ $5\\text{ kgf}$ ($f_s$) — มันไม่ได้ออกแรงต้านเต็มแมกซ์ตลอดเวลา!',
-    interactiveLabId: 'incline-wedge',
+    interactiveLabId: 'newton-laws-lab',
+    extraLabIds: ['incline-wedge'],
     quickRecall: {
       questionTh: 'วางกล่องบนพื้นเอียงที่มี $mg\\sin\\theta = 15\\text{ N}$ และ $\\mu_s N = 22\\text{ N}$ แรงเสียดทานสถิตที่เกิดขึ้นจริงมีค่าเท่าใด?',
       answerTh: '$15\\text{ N}$ (กล่องยังไม่ไถล! แรงเสียดทานสถิตจะต้านเท่าที่จำเป็นเพื่อหยุดการเคลื่อนที่ ไม่ใช่ $22\\text{ N}$)',
@@ -95,6 +113,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
     everydayAnalogyTh:
       'เหมือนรถสองคันชนกันเสียงดังสนั่น (พลังงานกลหายเป็นเสียงและความร้อน แต่โมเมนตัมรวมยังอยู่ครบ!) จากนั้นซากรถที่ติดกันค่อยไถลขึ้นเนินไปหยุดนิ่ง',
     interactiveLabId: 'momentum-collision',
+    extraLabIds: ['work-energy-coaster'],
     quickRecall: {
       questionTh: 'เหตุใดการชนแบบติดกันไป (Inelastic) จึงอนุรักษ์โมเมนตัมได้ แต่ไม่อนุรักษ์พลังงานกล?',
       answerTh: 'เพราะระหว่างชนแรงกระแทกระหว่างสองก้อนเป็นแรงภายใน (หักล้างกันด้วยกฎข้อ 3 $\\implies$ โมเมนตัมรวมคงที่) แต่แรงเปลี่ยนรูปพลังงานกลให้เป็นความร้อนและเสียง!',
@@ -112,7 +131,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ในกรอบเฉื่อยไม่มีแรงหนีศูนย์กลาง! มีแค่แรงจริง ($T, N, f_s, mg$) ที่รวมกันชี้เข้าจุดศูนย์กลางเท่ากับ $mv^2/r$ ส่วนสมดุลสถิตให้เลือกจุดหมุน $O$ ตรงจุดที่มีแรงไม่รู้ค่ามากที่สุดเพื่อตัดออกจาก $\\sum \\tau_O = 0$',
     everydayAnalogyTh:
       'ถ้ายืนเปิดประตูใกล้บานพับจะหนักมาก แต่ผลักที่ลูกบิดปลายบานประตูจะเบาหวิว นั่นคือเหตุผลที่แรงผ่านจุดหมุนให้ทอร์กเป็นศูนย์!',
-    interactiveLabId: 'circular-equilibrium',
+    interactiveLabId: 'circular-motion-lab',
+    extraLabIds: ['circular-equilibrium'],
     quickRecall: {
       questionTh: 'เวลาเขียนสมการสมดุลทอร์ก $\\sum \\tau_O = 0$ ของวัตถุที่อยู่นิ่ง เราจำเป็นต้องเลือกจุด $O$ ที่จุดศูนย์กลางมวลเสมอหรือไม่?',
       answerTh: 'ไม่จำเป็น! เมื่อระบบสมดุล ($\\sum F = 0$) ทอร์กรอบ **จุดใดๆ ในอวกาศ** เป็นศูนย์ทั้งหมด จึงเลือกจุดที่มีแรงที่ไม่ต้องการหาพาดผ่านมากที่สุดได้เลย!',
@@ -130,7 +150,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'มองสมการ Bernoulli ให้เหมือน "อนุรักษ์พลังงานต่อ 1 ลูกบาศก์เมตร" ร่วมกับ $A_1 v_1 = A_2 v_2$: ตรงไหนท่อแคบ น้ำต้องไหลเร็วขึ้น ความดันสถิต $P$ จึงลดต่ำลงเพื่อแลกพลังงาน!',
     everydayAnalogyTh:
       'เอานิ้วอุดปลายสายยางฉีดน้ำ น้ำพุ่งแรงขึ้น ($v$ เพิ่ม) หรือเวลาลมพัดแรงเหนือหลังคาสังกะสี อากาศไหลเร็วทำให้ความดันด้านบนลดลงจนยกหลังคาปลิวได้!',
-    interactiveLabId: 'bernoulli-pipe',
+    interactiveLabId: 'fluid-buoyancy-lab',
+    extraLabIds: ['bernoulli-pipe'],
     quickRecall: {
       questionTh: 'เมื่อน้ำในถังสูง $h$ พุ่งออกจากรูเปิดด้านข้างสู่อากาศ ความดันสถิตที่รูเปิดควรแทนด้วย $P_0 + \\rho gh$ หรือ $P_0$?',
       answerTh: 'ต้องแทนด้วย **$P_0$**! เพราะทันทีที่ลำน้ำพุ่งพ้นปากท่อออกมาในอากาศ ผิวลำน้ำสัมผัสความดันบรรยากาศ $P_0$ รอบด้านแล้ว',
@@ -166,7 +187,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เข้าใจว่าทุกโหมดการเคลื่อนที่อิสระ ($f$) เก็บพลังงานเฉลี่ย $\\frac{1}{2}k_B T$ จึงได้ $U = \\frac{f}{2}nRT$ ทันที และใช้ $\\Delta U = \\Delta Q - \\Delta W$ แยกส่วนที่ไปเพิ่มอุณหภูมิออกจากงานดันลูกสูบ $\\Delta W = P\\Delta V$',
     everydayAnalogyTh:
       'ต้มน้ำในหม้อปิดฝาแน่น (ปริมาตรคงที่ $\\Delta W = 0$) น้ำร้อนเร็วกว่าหม้อที่เปิดฝาดันลูกสูบลอยขึ้น ($\\Delta W = P\\Delta V > 0$) เพราะความร้อนทั้งหมดไม่รั่วไหลไปทำงานขยายตัว!',
-    interactiveLabId: 'temperature-box',
+    interactiveLabId: 'ideal-gas-lab',
+    extraLabIds: ['temperature-box'],
     quickRecall: {
       questionTh: 'ตามเอกสาร สอวน. กฎข้อที่ 1 เขียนว่า $\\Delta U = \\Delta Q - \\Delta W$ หากแก๊สถูก **อัด** ปริมาตรลดลง เครื่องหมายของ $\\Delta W$ จะเป็นบวกหรือลบ?',
       answerTh: 'เป็น **ลบ** ($\\Delta W < 0$) เพราะ $\\Delta W$ ในรูปนี้คืองานที่ **แก๊สทำออกไป** เมื่อถูกอัดภายนอกทำงานใส่แก๊ส จึงทำให้ $-\\Delta W$ กลายเป็นบวกและพลังงานภายใน $\\Delta U$ เพิ่มขึ้น!',
@@ -184,7 +206,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้ปริมาณสเกลาร์อย่าง "ศักย์ไฟฟ้า $V$" คำนวณงาน $W = q\\Delta V$ แบบบวกลบตัวเลขธรรมดา และเข้าใจว่าพลังงาน $\\frac{1}{2}CV^2$ แท้จริงกระจายอยู่ในสนามไฟฟ้าด้วยความหนาแน่น $\\frac{1}{2}\\varepsilon_0 E^2\\text{ J/m}^3$',
     everydayAnalogyTh:
       'ศักย์ไฟฟ้าเหมือนความสูงของภูเขา: ไม่ว่าจะเดินอ้อมแค่ไหน งานของแรงโน้มถ่วงหรือแรงไฟฟ้าขึ้นอยู่กับผลต่างความสูง $\\Delta V$ เท่านั้น!',
-    interactiveLabId: 'electric-capacitor',
+    interactiveLabId: 'electrostatics-field-lab',
+    extraLabIds: ['electric-capacitor'],
     quickRecall: {
       questionTh: 'ตัวเก็บประจุที่ชาร์จเต็มแล้ว **ถอดออกจากแบตเตอรี่** หากดึงแผ่นโลหะให้ห่างกันเป็น 2 เท่า สนามไฟฟ้า $E$ ระหว่างแผ่นและพลังงานสะสม $U$ จะเปลี่ยนแปลงอย่างไร?',
       answerTh: 'ประจุ $Q$ คงที่ $\\implies E = \\sigma/\\varepsilon_0$ **คงที่เท่าเดิม** แต่ปริมาตร $Ad$ เพิ่ม 2 เท่า พลังงานรวม $U = (\\frac{1}{2}\\varepsilon_0 E^2)(Ad)$ จึง **เพิ่มขึ้น 2 เท่า!** (มาจากงานที่เราออกแรงดึงแผ่นแยกจากแรงดูด)',
@@ -203,6 +226,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
     everydayAnalogyTh:
       'ตัวเก็บประจุเหมือนถังน้ำเปล่า: วินาทีแรกที่เปิดก๊อก น้ำไหลเทลงถังสะดวกเหมือนท่อโล่ง ($V_C=0$) แต่พอถังเต็มปริ่ม น้ำหยุดไหลเข้าถัง ($i_C=0$) เหมือนกิ่งนั้นถูกปิด!',
     interactiveLabId: 'circuit-builder',
+    extraLabIds: ['rc-circuit-box'],
     quickRecall: {
       questionTh: 'ในวงจร $\\mathcal{E}-R-C$ อนุกรม เมื่อชาร์จประจุจาก $0$ จนเต็ม $Q = C\\mathcal{E}$ พลังงานที่แบตเตอรี่จ่ายทั้งหมดเท่ากับ $C\\mathcal{E}^2$ แต่เก็บใน $C$ ได้ $\\frac{1}{2}C\\mathcal{E}^2$ อีกครึ่งหนึ่งหายไปไหน?',
       answerTh: 'สูญเสียกลายเป็น **ความร้อนจูล ($\\int i^2 R\\,dt = \\frac{1}{2}C\\mathcal{E}^2$)** ในตัวต้านทาน $R$ (และสายไฟ) เสมอ ไม่ว่าค่า $R$ จะมากหรือน้อยก็ตาม!',
@@ -238,7 +262,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เข้าใจว่ากฎของเลนซ์คือ "ธรรมชาติไม่ให้พลังงานฟรี" กระแสเหนี่ยวนำจึงต้านการเปลี่ยนแปลงฟลักซ์เสมอ และจำว่าตัวเหนี่ยวนำ $L$ ทำตัวตรงข้าม $C$ ($t=0^+$ ขวางเป็นวงจรขาด, $t\\to\\infty$ ลัดวงจร)',
     everydayAnalogyTh:
       'ตัวเหนี่ยวนำ $L$ เหมือนกังหันน้ำหนักๆ ในท่อ: ตอนเปิดก๊อกแรกๆ ใบพัดหนักต้านไม่ให้น้ำไหล ($i_L=0$) แต่พอหมุนคล่องคงที่แล้วน้ำไหลผ่านฉลุยไร้แรงต้าน ($V_L=0$)!',
-    interactiveLabId: 'magnetic-wire',
+    interactiveLabId: 'faraday-em-wave-lab',
+    extraLabIds: ['magnetic-wire'],
     quickRecall: {
       questionTh: 'ในวงจรกระแสตรงที่มีทั้ง $R$ และตัวเหนี่ยวนำ $L$ อุดมคติ ทันทีที่สับสวิตช์ ($t=0^+$) กับตอนผ่านไปนาน ($t\\to\\infty$) $L$ ทำตัวเหมือนอะไร?',
       answerTh: 'ที่ $t=0^+$: $L$ ต้านการเปลี่ยนกระแส จึงเหมือน **วงจรขาด** ($i_L=0$) | ที่ $t\\to\\infty$: กระแสคงที่แล้วจึงเหมือน **สายไฟลัดวงจร** ($V_L=0$) — ตรงข้ามกับ $C$!',
@@ -256,7 +281,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้หลักเดียวที่เป็นจริงตามฟิสิกส์ของแสง: ฝั่งที่แสง **วิ่งอยู่จริง** (หน้ากระจก) ให้ระยะเป็น $+$ ส่วนฝั่งที่แสง **ทะลุไม่ได้** (หลังกระจก) ให้เป็น $-$ แล้วเช็กคำตอบซ้ำด้วยรังสี 3 เส้นทันที!',
     everydayAnalogyTh:
       'กระจกมองข้างรถยนต์เป็นกระจกนูน ($f < 0$) จึงเห็นภาพเสมือนหัวตั้งขนาดเล็กอยู่หลังกระจก ($v < 0, 0 < m < 1$) เพื่อให้เก็บมุมมองถนนได้กว้างขึ้น!',
-    interactiveLabId: 'optics-ray-tracer',
+    interactiveLabId: 'light-optics-bench',
     quickRecall: {
       questionTh: 'หากวางวัตถุจริงไว้หน้ากระจกนูน ($f < 0$) ภาพที่ได้จะเป็นภาพชนิดใด หัวตั้งหรือหัวกลับ และขนาดเล็กหรือใหญ่กว่าวัตถุ?',
       answerTh: 'ได้ **ภาพเสมือน ($v < 0$) หัวตั้ง ($m > 0$) ขนาดเล็กกว่าวัตถุ ($|m| < 1$)** เสมอ!',
@@ -292,7 +317,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'สูตรทองคำ $u_{\\text{next}} = d - v_{\\text{prev}}$ ใช้ได้ครอบจักรวาล! ถ้าคำนวณแล้ว $u_2 < 0$ แปลว่าแสงพุ่งลู่เข้าใส่ชิ้นที่ 2 เหมือน **วัตถุเสมือน (Virtual Object)** เพียงแทนค่าลบนั้นลงสูตรตามปกติ และถ้าสะท้อนกระจกย้อนกลับอย่าลืมคิดขากลับผ่านเลนส์อีก 1 รอบ!',
     everydayAnalogyTh:
       'เหมือนกล้องโทรทรรศน์หรือกล้องจุลทรรศน์: เลนส์ตัวที่ 1 ปั้นภาพชั่วคราวกลางอากาศให้เลนส์หรือกระจกตัวถัดไปรับช่วงต่อเป็นวัตถุชิ้นใหม่ไปเรื่อยๆ!',
-    interactiveLabId: 'optics-ray-tracer',
+    interactiveLabId: 'combined-optics-lab',
     quickRecall: {
       questionTh: 'ในระบบเลนส์นูนวางหน้ากระจกเว้าห่างกัน $d$ เมื่อแสงผ่านเลนส์ไปสะท้อนกระจกแล้ว **ย้อนกลับมาผ่านเลนส์อีกที** ต้องใช้สมการ $\\frac{1}{v}+\\frac{1}{u}=\\frac{1}{f}$ ทั้งหมดกี่ครั้ง?',
       answerTh: '**3 ครั้ง** ตามลำดับที่แสงเจออุปกรณ์: (1) เลนส์ขาไป $\\to$ (2) กระจกสะท้อน $\\to$ (3) เลนส์ขากลับ!',
@@ -328,7 +353,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'จำความกว้าง **1 ลูป = $\\lambda/2$** แล้ววาดภาพ Node ที่ปลายปิด / Antinode ที่ปลายเปิด ส่วนดอปเพลอร์ให้เช็กทิศเดียวว่า "วิ่งเข้าหากัน $\\to$ เสียงแหลม ($f\' > f$)" จึงเลือกเครื่องหมายให้เศษโตขึ้นหรือส่วนเล็กลง!',
     everydayAnalogyTh:
       'เสียงไซเรนรถพยาบาลฟังดูแหลมขึ้นตอนพุ่งเข้ามาหาเรา แล้วทุ้มต่ำลงทันควันวินาทีที่รถวิ่งผ่านเลยตัวเราไป!',
-    interactiveLabId: 'wave-interference',
+    interactiveLabId: 'sound-doppler-lab',
     quickRecall: {
       questionTh: 'ระยะห่างระหว่างจุดบัพ (Node) กับจุดปฏิบัพ (Antinode) ที่อยู่ติดกันในคลื่นนิ่งเป็นกี่เท่าของความยาวคลื่น $\\lambda$?',
       answerTh: '**$\\frac{\\lambda}{4}$** (เพราะ 1 ลูปจาก Node ถึง Node ถัดไปยาว $\\frac{\\lambda}{2}$ และ Antinode อยู่ตรงกึ่งกลางพอดี!)',
@@ -385,7 +410,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ให้แกน $\\hat{r}$ ชี้ตามตัววัตถุออกนอกและ $\\hat{\\theta}$ ตั้งฉากในทิศทวนเข็มนาฬิกา แม้ขนาดของ $\\hat{r}$ จะเป็น $1$ เสมอ แต่ **ทิศทาง** ของมันหมุนไปพร้อมมุม $\\theta$ จึงมีอนุพันธ์ตั้งฉากกับตัวเองเท่ากับ $\\dot{\\theta}\\hat{\\theta}$',
     everydayAnalogyTh:
       'เข็มวินาทีนาฬิกายาวเท่าเดิมตลอดเวลา (ขนาดคงที่) แต่ปลายเข็มก็ยังมีความเร็วตั้งฉากกับตัวเข็มเพราะมันกำลังหมุน!',
-    interactiveLabId: 'derivative-slope',
+    interactiveLabId: 'vector-calculus-lab',
     quickRecall: {
       questionTh: 'เหตุใดอนุพันธ์ของเวกเตอร์หนึ่งหน่วย $\\hat{r}$ จึงไม่เป็นศูนย์ แม้ขนาด $|\\hat{r}| = 1$ คงที่?',
       answerTh: 'เพราะเวกเตอร์มีทั้งขนาดและทิศทาง: เมื่อมุม $\\theta$ เปลี่ยน ทิศของ $\\hat{r}$ หมุนตาม ทำให้เกิดการเปลี่ยนแปลงเวกเตอร์ $\\Delta\\hat{r} \\approx \\Delta\\theta\\,\\hat{\\theta}$',
@@ -425,7 +450,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เขียน $a = \\frac{dv}{dt}$ แล้วแยกตัวแปรที่มี $v$ ไว้ฝั่งเดียวกับ $dv$ เพื่ออินทิเกรตหาความชันที่ค่อยๆ ลดลงเป็น $1 - e^{-t/\\tau}$ และหากโจทย์ถามระยะทาง $x$ ให้ใช้กฎลูกโซ่ $a = v\\frac{dv}{dx}$ เพื่อตัดตัวแปรเวลาทิ้ง!',
     everydayAnalogyTh:
       'เม็ดฝนตกจากเมฆสูง 2 กิโลเมตรแต่ไม่ทะลุหัวคนเดินถนน ก็เพราะแรงต้านอากาศทำให้ความเร่งลดลงจนเข้าสู่ความเร็วปลายคงที่ $v_t = mg/b$',
-    interactiveLabId: 'derivative-slope',
+    interactiveLabId: 'drag-terminal-lab',
+    extraLabIds: ['derivative-slope'],
     quickRecall: {
       questionTh: 'เมื่อทราบ $a(x)$ เป็นฟังก์ชันของตำแหน่ง และต้องการหาความเร็ว $v(x)$ ควรใช้สมการแคลคูลัสรูปใด?',
       answerTh: 'ใช้กฎลูกโซ่ $a(x) = v\\frac{dv}{dx}$ แล้วอินทิเกรตทั้งสองข้าง: $\\frac{1}{2}(v^2 - v_0^2) = \\int_{x_0}^x a(x\')\\,dx\'$',
@@ -541,7 +567,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เลือก **ระบบปิด** ที่ติดตามมวลชุดเดียวกันทั้งก่อนและหลัง $\\Delta t$ เสมอ ($P(t+\\Delta t) - P(t) = F_{\\text{ext}}\\Delta t$) เพื่อรวมโมเมนตัมของไอเสีย $\\Delta m(v - u)$ ด้วย ทำให้พจน์ความเร็ว $v$ ของผู้สังเกตตัดหายไปอย่างถูกต้อง',
     everydayAnalogyTh:
       'ถ้าถือกระสอบทรายแล้วโยนถุงทรายตกพื้นตรงๆ ($u=0$) คุณไม่ได้พุ่งไปข้างหน้า! คุณจะพุ่งก็ต่อเมื่อออกแรงถีบถุงทรายให้กระเด็นไปข้างหลัง ($u > 0$) เท่านั้น',
-    interactiveLabId: 'integral-work',
+    interactiveLabId: 'rocket-com-lab',
+    extraLabIds: ['integral-work'],
     quickRecall: {
       questionTh: 'หากรถไฟแล่นบนรางลื่นโดยไร้แรงขับ แล้วเปิดรูให้น้ำรั่วลงพื้นตามแนวดิ่ง ความเร็วรถไฟจะเพิ่มขึ้นหรือไม่?',
       answerTh: 'ไม่เพิ่มและไม่ลด (คงที่เท่าเดิม!) เพราะน้ำที่หยดออกไปยังมีโมเมนตัมต่อหน่วยมวลเท่าเดิมติดตัวไปด้วย จึงไม่มีแรงขับสัมพัทธ์ ($u = 0$)',
@@ -563,7 +590,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'หั่นเส้นทางโค้งออกเป็นช่วงเวกเตอร์สั้นๆ $d\\vec{r}$ ซึ่งแรงแทบคงที่ในแต่ละก้าว แล้วนำผลคูณสเกลาร์ $\\vec{F}\\cdot d\\vec{r}$ มาบวกสะสมกันเป็น $\\int \\vec{F}\\cdot d\\vec{r}$ ซึ่งพิสูจน์ได้จาก $\\vec{F}=m\\frac{d\\vec{v}}{dt}$ ว่าเท่ากับ $\\Delta K$ เสมอ',
     everydayAnalogyTh:
       'เดินขึ้นบันไดวนขึ้นตึก 10 ชั้น แม้ระยะทางเดินเป็นวงกลมยาวมาก แรงโน้มถ่วงก็ทำงานแค่ความสูงดิ่งที่เปลี่ยนไป ($\\Delta h$) เหมือนรวมงานก้าวเล็กๆ ทั้งหมดในแนวดิ่ง',
-    interactiveLabId: 'integral-work',
+    interactiveLabId: 'work-energy-coaster',
+    extraLabIds: ['integral-work'],
     quickRecall: {
       questionTh: 'แรงปฏิกิริยาตั้งฉาก $\\vec{N}$ จากรางโค้งที่ตรึงนิ่งทำงานเท่าใดต่ออนุภาค และถ้ารางกำลังเคลื่อนที่ล่ะ?',
       answerTh: 'ถ้ารางอยู่นิ่ง $W_N = 0$ เสมอเพราะ $\\vec{N}\\perp d\\vec{r}$ แต่ถ้ารางกำลังเคลื่อนที่ (เช่น ลิ่มขยับหนี) $\\vec{N}$ **ทำงานได้** เพราะทิศการกระจัดจริงไม่ได้ตั้งฉากกับ $\\vec{N}$!',
@@ -639,7 +667,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้กฎของ Chasles ที่เป็นจริงเสมอทุกสถานการณ์: เขียน $\\sum F = M a_{\\text{cm}}$ ควบคู่กับ $\\tau_{\\text{cm}} = I_0\\alpha$ รอบ CM แล้วค่อยแทน $a = \\alpha R$ เพื่อหาค่าแรงเสียดทานสถิตจริงก่อนเทียบกับ $\\mu_s N$',
     everydayAnalogyTh:
       'ทรงกลมตัน แหวน และท่อกลวงมวลเท่ากันกลิ้งแข่งกันลงเนิน ทรงกลมตันชนะเสมอเพราะมวลอยู่ใกล้แกนหมุนมากกว่า จึงประหยัดพลังงานหมุนมาแปลงเป็นความเร็วได้มากกว่า!',
-    interactiveLabId: 'incline-wedge',
+    interactiveLabId: 'rolling-race-lab',
+    extraLabIds: ['incline-wedge'],
     quickRecall: {
       questionTh: 'ในโจทย์วัตถุกลิ้งโดยไม่ไถล แรงเสียดทานสถิต $f_s$ มีค่าเท่ากับ $\\mu_s N$ เสมอหรือไม่?',
       answerTh: 'ไม่ใช่! $f_s$ เป็นแรงข้อจำกัดที่ปรับค่าเท่าที่จำเป็น ($f_s \\le \\mu_s N$) ต้องแก้หา $f_s$ จากสมการนิวตันก่อนเสมอ และใช้ $f_s = \\mu_s N$ เฉพาะจุด "จวนจะไถล"',
@@ -697,7 +726,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เนื่องจาก $\\vec{\\tau} = 0$ โมเมนตัมเชิงมุม $L = \\mu r^2 \\dot{\\theta}$ คงที่ จึงกำจัด $\\dot{\\theta}$ ทิ้งจากสมการพลังงาน เหลือแค่ปัญหา 1 มิติของ $r(t)$ ในหลุมศักย์ยังผล $U_{\\text{eff}}(r)$ ที่อ่านจุดใกล้สุด-ไกลสุดและเสถียรภาพได้ทันที',
     everydayAnalogyTh:
       'เทอม $\\frac{L^2}{2\\mu r^2}$ ทำหน้าที่เหมือน "กำแพงพลังงานที่มองไม่เห็น" คอยสะท้อนดาวเคราะห์กลับออกมาเมื่อเข้าใกล้ดวงอาทิตย์มากเกินไป ทำให้ไม่พุ่งชนดวงอาทิตย์!',
-    interactiveLabId: 'potential-well',
+    interactiveLabId: 'kepler-orbit-lab',
+    extraLabIds: ['potential-well'],
     quickRecall: {
       questionTh: 'พลังงานรวม $E = -\\frac{GMm}{2a}$ ของวงโคจรวงรีขึ้นอยู่กับความรี (Eccentricity $\\epsilon$) หรือไม่?',
       answerTh: 'ไม่ขึ้นกับ $\\epsilon$ เลย! วงกลมกับวงรีที่ยืดยาวมากแต่มีความยาวแกนเอก $2a$ เท่ากัน จะมีพลังงานรวม $E$ และคาบโคจร $T$ เท่ากันเป๊ะ!',
@@ -719,7 +749,8 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เขียนพลังงานกลรวม $E = K + U$ (ที่อนุรักษ์และไม่ขึ้นกับแรงภายใน) แล้วดิฟเทียบเวลาให้ $\\frac{dE}{dt} = 0$ และตัด $\\dot{x}$ ทิ้ง จะได้สมการ $\\ddot{x} + \\omega^2 x = 0$ ออกมาทันทีใน 3 บรรทัด!',
     everydayAnalogyTh:
       'เหมือนการส่องดูแค่ "กระเป๋าเงินรวม" ($E = K+U$) แทนที่จะคอยตามดูรายรับ-รายจ่ายของแรงภายในทุกตัว — เงินไหลเข้าจลน์เท่ากับไหลออกจากศักย์เสมอ',
-    interactiveLabId: 'potential-well',
+    interactiveLabId: 'shm-phase-lab',
+    extraLabIds: ['potential-well'],
     quickRecall: {
       questionTh: 'ทำไมวิธี $\\frac{dE}{dt} = 0$ จึงตัดแรงตึงเชือกและแรงเสียดทานสถิตในการกลิ้งไม่ไถลออกไปได้หมด?',
       answerTh: 'เพราะแรงข้อจำกัดอุดมคติเหล่านี้ **ไม่ทำงาน** จึงไม่โผล่ในสมการพลังงาน $E = K + U$ ตั้งแต่แรก!',

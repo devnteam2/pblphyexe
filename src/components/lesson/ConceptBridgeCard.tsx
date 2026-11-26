@@ -2,7 +2,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ConceptBridge } from '@/data/lessonBridges';
+import { ConceptBridge, InteractiveLabId } from '@/data/lessonBridges';
+import { PHYSICS_LAB_CATALOG } from '@/data/labCatalog';
 import { FormattedMathText, LatexRenderer } from '@/components/math/LatexRenderer';
 import { ConceptBridgeLab } from '@/components/interactive/ConceptBridgeLab';
 import { Compass, ArrowRight, Eye, EyeOff, Sparkles } from 'lucide-react';
@@ -17,6 +18,13 @@ export const ConceptBridgeCard: React.FC<ConceptBridgeCardProps> = ({ bridge }) 
   const [activeTab, setActiveTab] = useState<BridgeTab>('why');
   const [showLab, setShowLab] = useState<boolean>(true);
   const [showRecallAnswer, setShowRecallAnswer] = useState<boolean>(false);
+
+  const labIds: InteractiveLabId[] = bridge.interactiveLabId
+    ? Array.from(new Set([bridge.interactiveLabId, ...(bridge.extraLabIds ?? [])]))
+    : [];
+  const [selectedLabId, setSelectedLabId] = useState<InteractiveLabId | undefined>(labIds[0]);
+  const activeLabId =
+    selectedLabId && labIds.includes(selectedLabId) ? selectedLabId : labIds[0];
 
   return (
     <section className="rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] p-4 sm:p-6 shadow-2xs space-y-4 font-serif">
@@ -106,9 +114,37 @@ export const ConceptBridgeCard: React.FC<ConceptBridgeCardProps> = ({ bridge }) 
       </div>
 
       {/* Interactive Touch-Friendly Visual Micro-Lab */}
-      {bridge.interactiveLabId && showLab && (
-        <div className="p-4 rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)]">
-          <ConceptBridgeLab labId={bridge.interactiveLabId} />
+      {activeLabId && showLab && (
+        <div className="p-4 rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)] space-y-3">
+          {labIds.length > 1 && (
+            <div className="flex flex-wrap items-center gap-1.5 pb-2.5 border-b border-[var(--hairline-border)]">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-tertiary)] mr-1">
+                เลือกแล็บในบท ({labIds.length}):
+              </span>
+              {labIds.map((id) => {
+                const catalogEntry = PHYSICS_LAB_CATALOG.find((item) => item.id === id);
+                const shortLabel = catalogEntry
+                  ? catalogEntry.titleTh.replace(/^แล็บ/, '').split('(')[0].trim()
+                  : id;
+                const isSelected = id === activeLabId;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => setSelectedLabId(id)}
+                    className={`min-h-[32px] px-2.5 py-1 rounded text-[11px] font-mono border transition-colors ${
+                      isSelected
+                        ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 border-stone-900 dark:border-stone-100 font-bold'
+                        : 'bg-[var(--surface-card)] text-[var(--ink-secondary)] border-[var(--hairline-border)] hover:text-[var(--ink-primary)]'
+                    }`}
+                  >
+                    {shortLabel}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          <ConceptBridgeLab key={activeLabId} labId={activeLabId} />
         </div>
       )}
 

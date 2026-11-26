@@ -372,7 +372,12 @@ export default function Home() {
                       <div className="grid grid-cols-1 gap-3.5">
                         {activeTopic.lessons.map((lesson) => {
                           const isDone = completedLessonSlugs.includes(lesson.slug);
-                          const hasLab = Boolean(LESSON_BRIDGES[lesson.slug]?.interactiveLabId);
+                          const bridge = LESSON_BRIDGES[lesson.slug];
+                          const primaryLabId = bridge?.interactiveLabId;
+                          const labCount = primaryLabId ? 1 + (bridge?.extraLabIds?.length ?? 0) : 0;
+                          const primaryLabTitle = primaryLabId
+                            ? PHYSICS_LAB_CATALOG.find((item) => item.id === primaryLabId)?.titleTh.split('(')[0].trim()
+                            : undefined;
 
                           return (
                             <button
@@ -387,10 +392,17 @@ export default function Home() {
                                     § {activeTopicIndex + 1}.{lesson.order}
                                   </span>
 
-                                  {hasLab && (
+                                  {labCount > 0 && (
                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-semibold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800">
                                       <Sparkles className="w-3 h-3" />
-                                      มีแล็บจำลองโต้ตอบ
+                                      {labCount > 1
+                                        ? `${labCount} แล็บจำลองโต้ตอบ`
+                                        : 'มีแล็บจำลองโต้ตอบ'}
+                                      {primaryLabTitle && (
+                                        <span className="hidden sm:inline text-amber-700/80 dark:text-amber-300/80">
+                                          • {primaryLabTitle}
+                                        </span>
+                                      )}
                                     </span>
                                   )}
 
