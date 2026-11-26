@@ -4,6 +4,9 @@
 import React, { useState } from 'react';
 import { InteractiveLabId } from '@/data/lessonBridges';
 import { PreCampVisualLabs, PreCampLabId } from './PreCampVisualLabs';
+import { ProjectileShooterLab } from './ProjectileShooterLab';
+import { WaveInterferenceLab } from './WaveInterferenceLab';
+import { SnellFermatLab } from './SnellFermatLab';
 import { Sliders } from 'lucide-react';
 
 interface ConceptBridgeLabProps {
@@ -20,6 +23,16 @@ export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => 
   // Resonance lab state
   const [gamma, setGamma] = useState<number>(0.36);
   const [freqRatio, setFreqRatio] = useState<number>(0.85);
+
+  if (labId === 'projectile-shooter') {
+    return <ProjectileShooterLab />;
+  }
+  if (labId === 'wave-interference') {
+    return <WaveInterferenceLab />;
+  }
+  if (labId === 'snell-fermat') {
+    return <SnellFermatLab />;
+  }
 
   const preCampLabs: PreCampLabId[] = [
     'incline-wedge',

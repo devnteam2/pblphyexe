@@ -1,9 +1,10 @@
 // src/app/page.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CURRICULUM_TOPICS } from '@/data/curriculumData';
 import { LESSON_BRIDGES } from '@/data/lessonBridges';
+import { HubLabId, PHYSICS_LAB_CATALOG } from '@/data/labCatalog';
 import { POSN_PROBLEMS } from '@/data/problemsData';
 import { CurriculumTrack, TopicId } from '@/types/curriculum';
 import { Navbar } from '@/components/layout/Navbar';
@@ -14,7 +15,8 @@ import { LessonReaderView } from '@/components/lesson/LessonReaderView';
 import { ProblemBankView } from '@/components/problems/ProblemBankView';
 import { SavedDerivationsView } from '@/components/saved/SavedDerivationsView';
 import { FormulaSheetModal } from '@/components/formula/FormulaSheetModal';
-import { RigidBodySimulationView } from '@/components/simulation/RigidBodySimulationView';
+import { PhysicsLabHub } from '@/components/simulation/PhysicsLabHub';
+import { GlobalSearchModal } from '@/components/search/GlobalSearchModal';
 import { QuickReviewDeck } from '@/components/review/QuickReviewDeck';
 import { useStudentStore } from '@/store/useStudentStore';
 import {
@@ -26,6 +28,7 @@ import {
   Clock,
   FileText,
   Flame,
+  FlaskConical,
   GraduationCap,
   PlayCircle,
   Sparkles,
@@ -37,7 +40,9 @@ export default function Home() {
   const [activeTrack, setActiveTrack] = useState<CurriculumTrack>('pre-camp-1');
   const [selectedTopicId, setSelectedTopicId] = useState<TopicId | null>(null);
   const [selectedLessonSlug, setSelectedLessonSlug] = useState<string | null>(null);
+  const [selectedLabId, setSelectedLabId] = useState<HubLabId>('projectile-shooter');
   const [isFormulaSheetOpen, setIsFormulaSheetOpen] = useState<boolean>(false);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [showQuickReview, setShowQuickReview] = useState<boolean>(false);
 
   const trackTopics = CURRICULUM_TOPICS.filter((t) => t.track === activeTrack);
@@ -72,34 +77,145 @@ export default function Home() {
     }
   };
 
+  const pushRouteHash = (hash: string) => {
+    if (typeof window !== 'undefined' && window.location.hash !== hash) {
+      window.history.pushState(null, '', hash);
+    }
+  };
+
+  const applyHashState = useCallback((rawHash: string) => {
+    const hash = rawHash.replace(/^#/, '');
+    if (!hash) {
+      setActiveTab('roadmap');
+      setSelectedTopicId(null);
+      setSelectedLessonSlug(null);
+      return;
+    }
+    const parts = hash.split('/').filter(Boolean);
+    const root = parts[0];
+
+    if (root === 'problems' || root === 'saved') {
+      setActiveTab(root);
+      return;
+    }
+    if (root === 'labs') {
+      const candidate = parts[1] as HubLabId | undefined;
+      if (candidate && PHYSICS_LAB_CATALOG.some((l) => l.id === candidate)) {
+        setSelectedLabId(candidate);
+      }
+      setActiveTab('simulation');
+      return;
+    }
+    if (root === 'lesson' && parts[1] && parts[2] && parts[3]) {
+      const track = parts[1] as CurriculumTrack;
+      const topicId = parts[2] as TopicId;
+      const slug = parts[3];
+      if (track === 'pre-camp-1' || track === 'camp-1-2') {
+        setActiveTab('roadmap');
+        setActiveTrack(track);
+        setSelectedTopicId(topicId);
+        setSelectedLessonSlug(slug);
+      }
+      return;
+    }
+    if (root === 'roadmap') {
+      const track = (parts[1] as CurriculumTrack | undefined) || 'pre-camp-1';
+      const topicId = (parts[2] as TopicId | undefined) || null;
+      setActiveTab('roadmap');
+      if (track === 'pre-camp-1' || track === 'camp-1-2') {
+        setActiveTrack(track);
+      }
+      setSelectedTopicId(topicId);
+      setSelectedLessonSlug(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    const onHashOrPop = () => {
+      applyHashState(window.location.hash);
+    };
+    const initRaf = requestAnimationFrame(() => {
+      if (window.location.hash) {
+        applyHashState(window.location.hash);
+      }
+    });
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('hashchange', onHashOrPop);
+    window.addEventListener('popstate', onHashOrPop);
+    return () => {
+      cancelAnimationFrame(initRaf);
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('hashchange', onHashOrPop);
+      window.removeEventListener('popstate', onHashOrPop);
+    };
+  }, [applyHashState]);
+
   const handleSelectTrack = (track: CurriculumTrack) => {
     setActiveTrack(track);
     setSelectedTopicId(null);
     setSelectedLessonSlug(null);
+    pushRouteHash(`#roadmap/${track}`);
   };
 
   const handleContinueLearning = () => {
     if (!nextStudyTarget) return;
     setSelectedTopicId(nextStudyTarget.topic.id);
     setSelectedLessonSlug(nextStudyTarget.lesson.slug);
+    pushRouteHash(`#lesson/${activeTrack}/${nextStudyTarget.topic.id}/${nextStudyTarget.lesson.slug}`);
     scrollToTop();
   };
 
   const handleSelectTopic = (topicId: TopicId) => {
     setSelectedTopicId(topicId);
     setSelectedLessonSlug(null);
+    pushRouteHash(`#roadmap/${activeTrack}/${topicId}`);
     scrollToTop();
   };
 
-  const handleOpenLesson = (slug: string) => {
+  const handleOpenLesson = (slug: string, explicitTrack?: CurriculumTrack, explicitTopicId?: TopicId) => {
+    const track = explicitTrack || activeTrack;
+    const topicId = explicitTopicId || selectedTopicId;
+    setActiveTab('roadmap');
+    if (explicitTrack) setActiveTrack(explicitTrack);
+    if (explicitTopicId) setSelectedTopicId(explicitTopicId);
     setSelectedLessonSlug(slug);
+    if (topicId) {
+      pushRouteHash(`#lesson/${track}/${topicId}/${slug}`);
+    }
     scrollToTop();
   };
 
   const handleResetToAllChapters = () => {
     setSelectedLessonSlug(null);
     setSelectedTopicId(null);
+    pushRouteHash(`#roadmap/${activeTrack}`);
     scrollToTop();
+  };
+
+  const handleOpenLab = (labId: HubLabId) => {
+    setSelectedLabId(labId);
+    setActiveTab('simulation');
+    pushRouteHash(`#labs/${labId}`);
+    scrollToTop();
+  };
+
+  const handleTabSwitch = (tab: 'roadmap' | 'problems' | 'saved' | 'simulation') => {
+    setActiveTab(tab);
+    if (tab === 'roadmap') {
+      handleResetToAllChapters();
+    } else if (tab === 'simulation') {
+      pushRouteHash(`#labs/${selectedLabId}`);
+      scrollToTop();
+    } else {
+      pushRouteHash(`#${tab}`);
+      scrollToTop();
+    }
   };
 
   return (
@@ -111,13 +227,9 @@ export default function Home() {
       {/* Top Academic Header */}
       <Navbar
         onOpenFormulaSheet={() => setIsFormulaSheetOpen(true)}
+        onOpenSearch={() => setIsSearchOpen(true)}
         activeTab={activeTab}
-        setActiveTab={(tab) => {
-          setActiveTab(tab);
-          if (tab === 'roadmap') {
-            handleResetToAllChapters();
-          }
-        }}
+        setActiveTab={handleTabSwitch}
       />
 
       {/* Main Content Pane */}
@@ -132,10 +244,11 @@ export default function Home() {
                 topic={activeTopic}
                 onBackToRoadmap={() => {
                   setSelectedLessonSlug(null);
+                  pushRouteHash(`#roadmap/${activeTrack}/${activeTopic.id}`);
                   scrollToTop();
                 }}
-                onSelectLesson={(slug) => handleOpenLesson(slug)}
-                onOpenSimulation={() => setActiveTab('simulation')}
+                onSelectLesson={(slug) => handleOpenLesson(slug, activeTrack, activeTopic.id)}
+                onOpenSimulation={() => handleOpenLab('rigid-body')}
               />
             ) : activeTopic ? (
               /* LEVEL 2: DEDICATED CHAPTER SUBSECTIONS PAGE */
@@ -471,7 +584,16 @@ export default function Home() {
                         }`}
                       >
                         <Brain className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                        <span>ทบทวน Flashcards</span>
+                        <span>Flashcards</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleOpenLab('projectile-shooter')}
+                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border border-sky-400/70 bg-sky-50/70 dark:bg-sky-950/40 text-xs font-serif font-semibold text-sky-900 dark:text-sky-200 hover:border-sky-600 inline-flex items-center justify-center gap-1.5 transition-colors"
+                      >
+                        <FlaskConical className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                        <span>Physics Lab Hub</span>
                       </button>
                     </div>
                   </div>
@@ -492,8 +614,17 @@ export default function Home() {
           </div>
         )}
 
-        {/* TAB 2: RIGID BODY ROTATION SIMULATION */}
-        {activeTab === 'simulation' && <RigidBodySimulationView />}
+        {/* TAB 2: UNIFIED PHYSICS LAB HUB */}
+        {activeTab === 'simulation' && (
+          <PhysicsLabHub
+            selectedLabId={selectedLabId}
+            onSelectLab={(labId) => {
+              setSelectedLabId(labId);
+              pushRouteHash(`#labs/${labId}`);
+            }}
+            onJumpToLesson={(track, topicId, slug) => handleOpenLesson(slug, track, topicId)}
+          />
+        )}
 
         {/* TAB 3: PROBLEM BANK */}
         {activeTab === 'problems' && <ProblemBankView />}
@@ -502,12 +633,21 @@ export default function Home() {
         {activeTab === 'saved' && (
           <SavedDerivationsView
             onGoToRoadmap={() => {
-              setActiveTab('roadmap');
-              handleResetToAllChapters();
+              handleTabSwitch('roadmap');
             }}
           />
         )}
       </main>
+
+      {/* Global Search Modal (Cmd+K / Ctrl+K) */}
+      {isSearchOpen && (
+        <GlobalSearchModal
+          onClose={() => setIsSearchOpen(false)}
+          onSelectLesson={(track, topicId, slug) => handleOpenLesson(slug, track, topicId)}
+          onSelectLab={(labId) => handleOpenLab(labId)}
+          onSelectProblems={() => handleTabSwitch('problems')}
+        />
+      )}
 
       {/* Formula Sheet Reference Modal */}
       <FormulaSheetModal
@@ -518,12 +658,7 @@ export default function Home() {
       {/* Mobile Bottom Navigation */}
       <MobileNav
         activeTab={activeTab}
-        setActiveTab={(tab) => {
-          setActiveTab(tab);
-          if (tab === 'roadmap') {
-            handleResetToAllChapters();
-          }
-        }}
+        setActiveTab={handleTabSwitch}
         onOpenFormulaSheet={() => setIsFormulaSheetOpen(true)}
       />
     </div>

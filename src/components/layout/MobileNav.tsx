@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { Map, HelpCircle, Bookmark, BookMarked, Disc } from 'lucide-react';
+import { Map, HelpCircle, Bookmark, BookMarked, FlaskConical } from 'lucide-react';
 import { useStudentStore } from '@/store/useStudentStore';
 
 interface MobileNavProps {
@@ -40,10 +40,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           onClick={() => setActiveTab('simulation')}
           className={itemClass(activeTab === 'simulation')}
         >
-          <Disc
+          <FlaskConical
             className={`w-4 h-4 mb-0.5 ${activeTab === 'simulation' ? '' : 'text-sky-700 dark:text-sky-400'}`}
           />
-          <span>จำลองหมุน</span>
+          <span>แล็บจำลอง</span>
         </button>
 
         <button

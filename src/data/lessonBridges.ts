@@ -2,6 +2,9 @@
 import { TopicId } from '@/types/curriculum';
 
 export type InteractiveLabId =
+  | 'projectile-shooter'
+  | 'wave-interference'
+  | 'snell-fermat'
   | 'derivative-slope'
   | 'integral-work'
   | 'potential-well'
@@ -66,7 +69,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'แยกการเคลื่อนที่ตั้งฉากกันเป็น 2 เส้นตรง: แกน $x$ ความเร็วคงที่ ($a_x = 0$) และแกน $y$ ตกอิสระ ($a_y = -g$) โดยมีเพียง **เวลา $t$** ที่ใช้ร่วมกัน แก้หา $t$ จากแกนหนึ่งแล้วโยนเข้าอีกแกนได้ทุกโจทย์!',
     everydayAnalogyTh:
       'เงาของลูกบาสเกตบอลบนพื้นสนาม ($x$) วิ่งด้วยความเร็วสม่ำเสมอเป็นเส้นตรง เหมือนไม่มีแรงโน้มถ่วง ส่วนเงาบนผนังตึก ($y$) เด้งขึ้นลงเหมือนโยนลูกบอลในแนวดิ่งเพียวๆ!',
-    interactiveLabId: 'projectile-collision',
+    interactiveLabId: 'projectile-shooter',
     quickRecall: {
       questionTh: 'ณ จุดสูงสุดของวิถีโพรเจกไทล์ ความเร็วและความเร่งของวัตถุมีค่าเป็นศูนย์หรือไม่?',
       answerTh: 'ไม่เป็นศูนย์ทั้งคู่! ที่จุดสูงสุด $v_y = 0$ เท่านั้น แต่ความเร็วแนวราบ $v_x = u\\cos\\theta$ ยังอยู่ครบ และความเร่งยังคงเป็น $g$ ชี้ลงดิ่งตลอดเวลา!',
@@ -264,7 +267,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'จำหัวใจของกฎบริวสเตอร์เพียงข้อเดียว: **รังสีสะท้อนตั้งฉากกับรังสีหักเห** ($\\theta_B + \\theta_2 = 90^\\circ$) จึงแทนค่าในกฎสเนลล์แล้วได้ $\\tan\\theta_B = n_2/n_1$ โดยอัตโนมัติ!',
     everydayAnalogyTh:
       'แว่นกันแดด Polaroid ตัดแสงสะท้อนจ้าจากผิวน้ำหรือถนนลาดยางได้ ก็เพราะแสงที่สะท้อนใกล้มุมบริวสเตอร์จะกลายเป็นแสงโพลาไรซ์แนวนอนหมดเลย!',
-    interactiveLabId: 'optics-ray-tracer',
+    interactiveLabId: 'snell-fermat',
     quickRecall: {
       questionTh: 'แสงจากตัวกลาง $n_1$ ตกกระทบตัวกลาง $n_2$ ที่มุมบริวสเตอร์ $\\theta_B$ ผลบวกของมุมตกกระทบ $\\theta_B$ กับมุมหักเห $\\theta_2$ มีค่าเท่ากับกี่องศาเสมอ?',
       answerTh: '$90^\\circ$ เสมอ! เพราะที่มุมบริวสเตอร์ รังสีสะท้อนและรังสีหักเหทำมุมตั้งฉากกัน ($\\theta_B + 90^\\circ + \\theta_2 = 180^\\circ$)',

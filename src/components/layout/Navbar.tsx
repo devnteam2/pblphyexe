@@ -9,10 +9,13 @@ import {
   Sun,
   Moon,
   BookMarked,
+  FlaskConical,
+  Search,
 } from 'lucide-react';
 
 interface NavbarProps {
   onOpenFormulaSheet: () => void;
+  onOpenSearch: () => void;
   activeTab: 'roadmap' | 'problems' | 'saved' | 'simulation';
   setActiveTab: (tab: 'roadmap' | 'problems' | 'saved' | 'simulation') => void;
 }
@@ -36,6 +39,7 @@ function getServerOnlineSnapshot() {
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenFormulaSheet,
+  onOpenSearch,
   activeTab,
   setActiveTab,
 }) => {
@@ -88,47 +92,47 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Academic Section Tabs */}
-        <nav className="hidden md:flex items-center gap-1 p-1 rounded-md border border-[var(--hairline-border)] bg-[var(--surface-card)]">
+        <nav className="hidden md:flex items-center gap-1 p-1 rounded-md border border-[var(--hairline-border)] bg-[var(--surface-card)] shrink-0">
           <button
             onClick={() => setActiveTab('roadmap')}
-            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all ${
+            className={`px-2.5 py-1 rounded text-xs font-serif font-medium whitespace-nowrap transition-all ${
               activeTab === 'roadmap'
                 ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
                 : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
             }`}
           >
-            § สารบัญเนื้อหา (Syllabus)
+            § สารบัญ<span className="hidden xl:inline"> (Syllabus)</span>
           </button>
           <button
             onClick={() => setActiveTab('simulation')}
-            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded text-xs font-serif font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
               activeTab === 'simulation'
                 ? 'bg-sky-900 text-white dark:bg-sky-100 dark:text-sky-950 shadow-2xs font-bold'
                 : 'text-sky-700 dark:text-sky-400 hover:text-sky-900 dark:hover:text-sky-200'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-            <span>ห้องทดลองการหมุน (Simulation Lab)</span>
+            <FlaskConical className="w-3.5 h-3.5 shrink-0" />
+            <span>แล็บจำลอง<span className="hidden xl:inline"> (Lab Hub)</span></span>
           </button>
           <button
             onClick={() => setActiveTab('problems')}
-            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all ${
+            className={`px-2.5 py-1 rounded text-xs font-serif font-medium whitespace-nowrap transition-all ${
               activeTab === 'problems'
                 ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
                 : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
             }`}
           >
-            คลังข้อสอบ สอวน. (Exam Bank)
+            คลังโจทย์<span className="hidden xl:inline"> (Exam Bank)</span>
           </button>
           <button
             onClick={() => setActiveTab('saved')}
-            className={`px-3 py-1 rounded text-xs font-serif font-medium transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded text-xs font-serif font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
               activeTab === 'saved'
                 ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-2xs'
                 : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
             }`}
           >
-            <span>บทพิสูจน์ที่บันทึก</span>
+            <span>ที่บันทึก</span>
             {bookmarkedDerivationIds.length > 0 && (
               <span className="w-4 h-4 rounded-full bg-amber-700 text-white text-[9px] flex items-center justify-center font-bold">
                 {bookmarkedDerivationIds.length}
@@ -138,15 +142,29 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 shrink-0">
+          {/* Global Search Modal Trigger */}
+          <button
+            onClick={onOpenSearch}
+            className="p-1.5 sm:px-2.5 sm:py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center gap-1.5 whitespace-nowrap transition-colors"
+            title="ค้นหาบทเรียน บทพิสูจน์ แล็บ และโจทย์ (⌘K)"
+            aria-label="Search curriculum"
+          >
+            <Search className="w-3.5 h-3.5 text-stone-500 shrink-0" />
+            <span className="hidden sm:inline">ค้นหา</span>
+            <kbd className="hidden lg:inline-block px-1 py-0.2 text-[10px] font-mono rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)] text-[var(--ink-tertiary)]">
+              ⌘K
+            </kbd>
+          </button>
+
           {/* Formula Index Modal Trigger */}
           <button
             onClick={onOpenFormulaSheet}
-            className="p-1.5 sm:px-2.5 sm:py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center gap-1.5 transition-colors"
+            className="p-1.5 sm:px-2.5 sm:py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center gap-1.5 whitespace-nowrap transition-colors"
             title="ดัชนีสูตรและทฤษฎีบท"
           >
-            <BookMarked className="w-3.5 h-3.5 text-stone-500" />
-            <span className="hidden sm:inline">ดัชนีสูตร (Formulae)</span>
+            <BookMarked className="w-3.5 h-3.5 text-stone-500 shrink-0" />
+            <span className="hidden lg:inline">ดัชนีสูตร</span>
           </button>
 
           {/* Font Size Comfort Toggle (A / A+) for Phone & Late-night Reading */}
