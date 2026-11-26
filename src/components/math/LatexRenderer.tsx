@@ -41,50 +41,92 @@ export const LatexRenderer: React.FC<LatexRendererProps> = ({
 
   return (
     <span
-      className={`latex-inline-math inline-block select-all px-0.5 ${className}`}
+      className={`latex-inline-math select-all px-0.5 ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 };
 
+const MATH_SENTINEL_RE = /\uE000M(\d+)\uE001/g;
+
+function renderFragmentWithMaths(
+  raw: string,
+  inlineMaths: string[],
+  baseKey: string
+): React.ReactNode {
+  const out: React.ReactNode[] = [];
+  const lines = raw.split('\n');
+  lines.forEach((line, lineIdx) => {
+    if (lineIdx > 0) {
+      out.push(<br key={`${baseKey}-br-${lineIdx}`} />);
+    }
+    let pos = 0;
+    let m: RegExpExecArray | null;
+    const re = new RegExp(MATH_SENTINEL_RE.source, 'g');
+    let chunkIdx = 0;
+    while ((m = re.exec(line)) !== null) {
+      if (m.index > pos) {
+        out.push(
+          <React.Fragment key={`${baseKey}-t-${lineIdx}-${chunkIdx++}`}>
+            {line.slice(pos, m.index)}
+          </React.Fragment>
+        );
+      }
+      const mathIdx = parseInt(m[1], 10);
+      out.push(
+        <LatexRenderer
+          key={`${baseKey}-m-${lineIdx}-${chunkIdx++}`}
+          math={inlineMaths[mathIdx] ?? ''}
+          displayMode={false}
+        />
+      );
+      pos = m.index + m[0].length;
+    }
+    if (pos < line.length) {
+      out.push(
+        <React.Fragment key={`${baseKey}-tail-${lineIdx}`}>
+          {line.slice(pos)}
+        </React.Fragment>
+      );
+    }
+  });
+  return out;
+}
+
 /**
- * Renders inline Markdown emphasis (**bold**, *italic*, `code`) and preserves intentional newlines
- * strictly on plain text segments AFTER math ($...$, $$...$$) has been tokenized.
+ * Renders inline Markdown emphasis (**bold**, *italic*, `code`) including bold spans that wrap
+ * inline LaTeX tokens, while preserving intentional newlines.
  */
-function renderStyledPlainText(text: string, keyPrefix: string): React.ReactNode {
+function renderStyledPlainText(
+  text: string,
+  keyPrefix: string,
+  inlineMaths: string[] = []
+): React.ReactNode {
   const tokenRegex = /(\*\*[^*\n]+?\*\*|\*[^*\n]+?\*|`[^`\n]+?`)/g;
   const nodes: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let partIdx = 0;
 
-  const pushWithLineBreaks = (raw: string, baseKey: string) => {
-    const lines = raw.split('\n');
-    lines.forEach((line, lineIdx) => {
-      if (lineIdx > 0) {
-        nodes.push(<br key={`${baseKey}-br-${lineIdx}`} />);
-      }
-      if (line.length > 0) {
-        nodes.push(<React.Fragment key={`${baseKey}-txt-${lineIdx}`}>{line}</React.Fragment>);
-      }
-    });
-  };
-
   while ((match = tokenRegex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      pushWithLineBreaks(text.slice(lastIndex, match.index), `${keyPrefix}-pre-${partIdx}`);
+      nodes.push(
+        <React.Fragment key={`${keyPrefix}-pre-${partIdx}`}>
+          {renderFragmentWithMaths(text.slice(lastIndex, match.index), inlineMaths, `${keyPrefix}-pre-${partIdx}`)}
+        </React.Fragment>
+      );
     }
     const token = match[0];
     if (token.startsWith('**') && token.endsWith('**')) {
       nodes.push(
         <strong key={`${keyPrefix}-b-${partIdx}`} className="font-bold text-[var(--ink-primary)]">
-          {token.slice(2, -2)}
+          {renderFragmentWithMaths(token.slice(2, -2), inlineMaths, `${keyPrefix}-b-${partIdx}`)}
         </strong>
       );
     } else if (token.startsWith('*') && token.endsWith('*')) {
       nodes.push(
         <em key={`${keyPrefix}-i-${partIdx}`} className="italic">
-          {token.slice(1, -1)}
+          {renderFragmentWithMaths(token.slice(1, -1), inlineMaths, `${keyPrefix}-i-${partIdx}`)}
         </em>
       );
     } else if (token.startsWith('`') && token.endsWith('`')) {
@@ -102,7 +144,11 @@ function renderStyledPlainText(text: string, keyPrefix: string): React.ReactNode
   }
 
   if (lastIndex < text.length) {
-    pushWithLineBreaks(text.slice(lastIndex), `${keyPrefix}-tail`);
+    nodes.push(
+      <React.Fragment key={`${keyPrefix}-tail`}>
+        {renderFragmentWithMaths(text.slice(lastIndex), inlineMaths, `${keyPrefix}-tail`)}
+      </React.Fragment>
+    );
   }
 
   return nodes;
@@ -114,14 +160,15 @@ interface FormattedMathTextProps {
 }
 
 /**
- * Parses mixed text containing inline ($...$), display ($$...$$) math, and basic inline emphasis (**bold**, *italic*).
+ * Parses mixed text containing display ($$...$$) math, inline ($...$) math, and basic inline emphasis (**bold**, *italic*),
+ * supporting inline math nested inside **bold** or *italic* spans cleanly.
  */
 export const FormattedMathText: React.FC<FormattedMathTextProps> = ({ text, className = '' }) => {
-  const segments = useMemo(() => {
+  const parsed = useMemo(() => {
     if (!text) return [];
 
-    // Split display math $$...$$ first, then inline $...$
-    const parts: { type: 'text' | 'display' | 'inline'; content: string }[] = [];
+    // Split display math $$...$$ first
+    const parts: { type: 'text' | 'display'; content: string }[] = [];
     const displayRegex = /\$\$([\s\S]*?)\$\$/g;
     let lastIndex = 0;
     let match: RegExpExecArray | null;
@@ -138,50 +185,32 @@ export const FormattedMathText: React.FC<FormattedMathTextProps> = ({ text, clas
       parts.push({ type: 'text', content: text.substring(lastIndex) });
     }
 
-    // Now process inline math in text segments
-    const finalSegments: { type: 'text' | 'display' | 'inline'; content: string }[] = [];
-    const inlineRegex = /\$([^\$]+?)\$/g;
-
-    for (const part of parts) {
+    // Replace inline $...$ inside text segments with sentinels so **...$math$...** stays atomic
+    return parts.map((part) => {
       if (part.type === 'display') {
-        finalSegments.push(part);
-        continue;
+        return { type: 'display' as const, content: part.content, inlineMaths: [] as string[] };
       }
-
-      let innerLast = 0;
-      let innerMatch: RegExpExecArray | null;
-      while ((innerMatch = inlineRegex.exec(part.content)) !== null) {
-        if (innerMatch.index > innerLast) {
-          finalSegments.push({
-            type: 'text',
-            content: part.content.substring(innerLast, innerMatch.index),
-          });
-        }
-        finalSegments.push({ type: 'inline', content: innerMatch[1] });
-        innerLast = innerMatch.index + innerMatch[0].length;
-      }
-
-      if (innerLast < part.content.length) {
-        finalSegments.push({
-          type: 'text',
-          content: part.content.substring(innerLast),
-        });
-      }
-    }
-
-    return finalSegments;
+      const inlineMaths: string[] = [];
+      const tokenized = part.content.replace(/\$([^\$]+?)\$/g, (_, mathBody: string) => {
+        const idx = inlineMaths.length;
+        inlineMaths.push(mathBody);
+        return `\uE000M${idx}\uE001`;
+      });
+      return { type: 'text' as const, content: tokenized, inlineMaths };
+    });
   }, [text]);
 
   return (
     <span className={`leading-relaxed ${className}`}>
-      {segments.map((seg, idx) => {
+      {parsed.map((seg, idx) => {
         if (seg.type === 'display') {
           return <LatexRenderer key={idx} math={seg.content} displayMode={true} />;
         }
-        if (seg.type === 'inline') {
-          return <LatexRenderer key={idx} math={seg.content} displayMode={false} />;
-        }
-        return <React.Fragment key={idx}>{renderStyledPlainText(seg.content, `seg-${idx}`)}</React.Fragment>;
+        return (
+          <React.Fragment key={idx}>
+            {renderStyledPlainText(seg.content, `seg-${idx}`, seg.inlineMaths)}
+          </React.Fragment>
+        );
       })}
     </span>
   );

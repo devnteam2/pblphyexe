@@ -406,7 +406,7 @@ export default function Home() {
                                   <FormattedMathText text={lesson.titleTh} />
                                 </h3>
 
-                                <p className="text-xs sm:text-sm text-[var(--ink-secondary)] leading-relaxed line-clamp-2">
+                                <p className="text-xs sm:text-sm text-[var(--ink-secondary)] leading-relaxed">
                                   <FormattedMathText text={lesson.summaryTh} />
                                 </p>
 
