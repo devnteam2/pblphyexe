@@ -54,7 +54,7 @@ export const RoadmapTracker: React.FC<RoadmapTrackerProps> = ({
               key={top.id}
               type="button"
               onClick={() => onSelectTopic(top.id)}
-              className={`group p-4 sm:p-5 rounded-lg border text-left cursor-pointer transition-all flex flex-col justify-between ${
+              className={`group p-4 sm:p-5 rounded-xl border text-left cursor-pointer transition-all active:scale-[0.99] flex flex-col justify-between ${
                 isActive
                   ? 'bg-[var(--surface-card)] border-stone-700 dark:border-stone-300 shadow-xs'
                   : 'bg-[var(--surface-card)] border-[var(--hairline-border)] hover:border-stone-500 dark:hover:border-stone-500 hover:shadow-xs'
@@ -96,7 +96,7 @@ export const RoadmapTracker: React.FC<RoadmapTrackerProps> = ({
                     {totalLessons} หัวข้อย่อย
                   </span>
                   <span className="inline-flex items-center gap-1 font-semibold text-[var(--ink-primary)] group-hover:translate-x-0.5 transition-transform">
-                    <span>เปิดดูบทเรียนในหมวดนี้</span>
+                    <span>เปิดดูบทเรียน</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>

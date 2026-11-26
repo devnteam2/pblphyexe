@@ -263,7 +263,8 @@ export const CircularMotionLab: React.FC = () => {
               );
             })()}
 
-            {/* Legend & Cut Status */}
+            {/* Legend & Cut Status with subtle backdrop */}
+            <rect x="8" y="8" width="248" height="35" rx="5" fill="var(--surface-card)" fillOpacity="0.9" />
             <text x="14" y="22" fontSize="9.5" fill="#16a34a" fontFamily="monospace" fontWeight="bold">
               → v ความเร็วตามเส้นสัมผัส
             </text>

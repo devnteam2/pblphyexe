@@ -29,7 +29,7 @@ interface ConceptBridgeLabProps {
   labId: InteractiveLabId;
 }
 
-export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => {
+const ConceptBridgeLabInner: React.FC<ConceptBridgeLabProps> = ({ labId }) => {
   // Derivative lab state
   const [deltaT, setDeltaT] = useState<number>(1.2);
   // Integral lab state
@@ -583,3 +583,9 @@ export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => 
     </div>
   );
 };
+
+export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => (
+  <div className="sim-stage">
+    <ConceptBridgeLabInner labId={labId} />
+  </div>
+);

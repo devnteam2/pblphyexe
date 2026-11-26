@@ -189,13 +189,13 @@ export const IdealGasLab: React.FC = () => {
       </div>
 
       {/* Process Tabs */}
-      <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 text-[10.5px] font-mono">
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 text-[11px] font-mono">
         {[
-          { id: 'free' as const, label: 'ปรับอิสระ' },
+          { id: 'free' as const, label: 'อิสระ' },
           { id: 'isobaric' as const, label: 'P คงที่' },
           { id: 'isochoric' as const, label: 'V คงที่' },
           { id: 'isothermal' as const, label: 'T คงที่' },
-          { id: 'adiabatic' as const, label: 'Adiabatic (ΔQ=0)' },
+          { id: 'adiabatic' as const, label: 'ไม่ถ่ายเท Q=0' },
         ].map((p) => (
           <button
             key={p.id}
@@ -237,9 +237,9 @@ export const IdealGasLab: React.FC = () => {
 
         {/* Right: P-V Diagram */}
         <line x1="238" y1="184" x2="442" y2="184" stroke="var(--ink-tertiary)" strokeWidth="1.2" />
-        <line x1="238" y1="184" x2="238" y2="26" stroke="var(--ink-tertiary)" strokeWidth="1.2" />
+        <line x1="238" y1="184" x2="238" y2="34" stroke="var(--ink-tertiary)" strokeWidth="1.2" />
         <text x="440" y="198" fontSize="9" textAnchor="end" fill="var(--ink-secondary)" fontFamily="monospace">V (L)</text>
-        <text x="234" y="24" fontSize="9" textAnchor="end" fill="var(--ink-secondary)" fontFamily="monospace">P (kPa)</text>
+        <text x="234" y="34" fontSize="9" textAnchor="end" fill="var(--ink-secondary)" fontFamily="monospace">P</text>
 
         {/* Shaded work area under path between V0 and V */}
         {process !== 'free' && process !== 'isochoric' && Math.abs(volL - anchor.V0) > 0.2 && (
@@ -251,7 +251,8 @@ export const IdealGasLab: React.FC = () => {
 
         <path d={pvCurvePath} fill="none" stroke="#d97706" strokeWidth="2.2" />
         <circle cx={mapPvX(volL)} cy={mapPvY(pressKpa)} r="5.5" fill="#0284c7" stroke="white" strokeWidth="1.5" />
-        <text x="340" y="24" fontSize="9.5" textAnchor="middle" fill="var(--ink-primary)" fontFamily="monospace" fontWeight="bold">
+        <rect x="262" y="6" width="166" height="19" rx="4" fill="var(--surface-card)" fillOpacity="0.92" />
+        <text x="345" y="19" fontSize="9.5" textAnchor="middle" fill="var(--ink-primary)" fontFamily="monospace" fontWeight="bold">
           P = {pressKpa.toFixed(0)} kPa • γ = {gamma.toFixed(2)}
         </text>
       </svg>
@@ -343,7 +344,7 @@ export const IdealGasLab: React.FC = () => {
       <div className="p-2.5 rounded border border-amber-300/80 dark:border-amber-800/80 bg-amber-50/70 dark:bg-amber-950/30 text-[11px] sm:text-xs text-amber-950 dark:text-amber-200 leading-relaxed flex items-start gap-2">
         <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
         <FormattedMathText
-          text={'สมการแก๊สอุดมคติ $PV = nRT$ กับกฎข้อที่ 1 ($\\Delta Q = \\Delta U + \\Delta W$): ลองเลือกโหมด **Adiabatic** แล้วบีบอัดลูกสูบให้ปริมาตร $V$ ลดลง แม้ไม่ใส่ความร้อน ($\\Delta Q = 0$) แต่อุณหภูมิและโมเลกุลจะพุ่งแรงขึ้นทันที!'}
+          text={'สมการแก๊สอุดมคติ $PV = nRT$ กับกฎข้อที่ 1 ($\\Delta Q = \\Delta U + \\Delta W$): ลองเลือกโหมด **ไม่ถ่ายเท Q=0 (Adiabatic)** แล้วบีบอัดลูกสูบให้ปริมาตร $V$ ลดลง แม้ไม่ใส่ความร้อน แต่อุณหภูมิและโมเลกุลจะพุ่งแรงขึ้นทันที!'}
         />
       </div>
     </div>

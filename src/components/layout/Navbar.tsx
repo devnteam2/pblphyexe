@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-serif font-bold text-base md:text-lg text-[var(--ink-primary)] tracking-tight">
                 OpenPOSN
               </span>
-              <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded border border-stone-300 dark:border-stone-700 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400">
+              <span className="hidden sm:inline-block text-[10px] font-mono uppercase px-1.5 py-0.5 rounded border border-stone-300 dark:border-stone-700 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400">
                 Monograph
               </span>
             </div>
@@ -146,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Global Search Modal Trigger */}
           <button
             onClick={onOpenSearch}
-            className="p-1.5 sm:px-2.5 sm:py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center gap-1.5 whitespace-nowrap transition-colors"
+            className="min-h-[38px] min-w-[38px] p-1.5 sm:px-2.5 sm:py-1 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors"
             title="ค้นหาบทเรียน บทพิสูจน์ แล็บ และโจทย์ (⌘K)"
             aria-label="Search curriculum"
           >
@@ -157,10 +157,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </kbd>
           </button>
 
-          {/* Formula Index Modal Trigger */}
+          {/* Formula Index Modal Trigger (already in MobileNav on phones) */}
           <button
             onClick={onOpenFormulaSheet}
-            className="p-1.5 sm:px-2.5 sm:py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center gap-1.5 whitespace-nowrap transition-colors"
+            className="hidden md:flex min-h-[38px] px-2.5 py-1 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] text-xs font-serif text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] items-center gap-1.5 whitespace-nowrap transition-colors"
             title="ดัชนีสูตรและทฤษฎีบท"
           >
             <BookMarked className="w-3.5 h-3.5 text-stone-500 shrink-0" />
@@ -170,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Font Size Comfort Toggle (A / A+) for Phone & Late-night Reading */}
           <button
             onClick={toggleFontSize}
-            className={`px-2 py-1 rounded border text-xs font-serif font-bold transition-colors ${
+            className={`min-h-[38px] min-w-[38px] px-2 py-1 rounded-lg border text-xs font-serif font-bold transition-colors flex items-center justify-center ${
               fontSizeScale === 'large'
                 ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 border-stone-900 dark:border-stone-100'
                 : 'border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
@@ -184,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Theme Switcher: Archival Paper vs Slate Blackboard */}
           <button
             onClick={toggleTheme}
-            className="p-1.5 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] transition-colors"
+            className="min-h-[38px] min-w-[38px] p-1.5 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] flex items-center justify-center transition-colors"
             title={themePreference === 'archival_paper' ? 'เปลี่ยนเป็น Slate Blackboard Mode' : 'เปลี่ยนเป็น Archival Paper Mode'}
             aria-label="Toggle Theme"
           >
@@ -195,9 +195,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
-          {/* Offline Indicator */}
+          {/* Offline Indicator (hidden on mobile unless offline) */}
           <div
-            className={`px-2 py-0.5 rounded text-[11px] font-mono border flex items-center gap-1 ${
+            className={`${isOnline ? 'hidden md:flex' : 'flex'} min-h-[38px] px-2 py-0.5 rounded-lg text-[11px] font-mono border items-center gap-1 ${
               isOnline
                 ? 'border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400'
                 : 'border-amber-500 text-amber-700 dark:text-amber-400'

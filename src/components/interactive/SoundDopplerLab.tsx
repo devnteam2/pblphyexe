@@ -257,18 +257,22 @@ export const SoundDopplerLab: React.FC = () => {
               />
             ))}
 
-            {/* Supersonic Mach Cone */}
+            {/* Supersonic Mach Cone cleanly bounded inside canvas */}
             {machSrc > 1.02 && (() => {
               const sinTheta = 1 / machSrc;
               const tanTheta = sinTheta / Math.sqrt(Math.max(0.01, 1 - sinTheta * sinTheta));
-              const backX = Math.max(0, dopplerSnap.srcX - 180);
+              const maxDyTop = 110 - 48; // keep clear of top HUD
+              const maxDyBot = 186 - 110; // keep clear of bottom label
+              const maxDxFromCone = Math.min(maxDyTop, maxDyBot) / Math.max(0.1, tanTheta);
+              const backX = Math.max(12, dopplerSnap.srcX - Math.min(180, maxDxFromCone));
               const spreadY = (dopplerSnap.srcX - backX) * tanTheta;
               const machAngleDeg = (Math.asin(sinTheta) * 180) / Math.PI;
               return (
                 <>
                   <line x1={dopplerSnap.srcX} y1="110" x2={backX} y2={110 - spreadY} stroke="#d97706" strokeWidth="2.4" strokeDasharray="5 3" />
                   <line x1={dopplerSnap.srcX} y1="110" x2={backX} y2={110 + spreadY} stroke="#d97706" strokeWidth="2.4" strokeDasharray="5 3" />
-                  <text x="14" y="204" fontSize="9.5" fill="#d97706" fontFamily="monospace" fontWeight="bold">
+                  <rect x="8" y="191" width="320" height="20" rx="4" fill="var(--surface-card)" fillOpacity="0.9" />
+                  <text x="14" y="205" fontSize="9.5" fill="#d97706" fontFamily="monospace" fontWeight="bold">
                     กรวยโซนิกบูม! มุมกรวย θ = arcsin(1/M) = {machAngleDeg.toFixed(1)}°
                   </text>
                 </>
@@ -287,7 +291,8 @@ export const SoundDopplerLab: React.FC = () => {
               S ({machSrc.toFixed(2)}M)
             </text>
 
-            {/* HUD Top */}
+            {/* HUD Top with subtle card backdrop */}
+            <rect x="8" y="8" width="265" height="36" rx="5" fill="var(--surface-card)" fillOpacity="0.9" />
             <text x="14" y="22" fontSize="9.5" fill="var(--ink-primary)" fontFamily="monospace" fontWeight="bold">
               ด้านหน้าคลื่นบีบอัด (f&apos; สูง): {machSrc >= 0.99 ? '∞ โซนิกบูม!' : `${fApproach.toFixed(0)} Hz`}
             </text>

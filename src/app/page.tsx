@@ -40,7 +40,7 @@ export default function Home() {
   const [activeTrack, setActiveTrack] = useState<CurriculumTrack>('pre-camp-1');
   const [selectedTopicId, setSelectedTopicId] = useState<TopicId | null>(null);
   const [selectedLessonSlug, setSelectedLessonSlug] = useState<string | null>(null);
-  const [selectedLabId, setSelectedLabId] = useState<HubLabId>('projectile-shooter');
+  const [selectedLabId, setSelectedLabId] = useState<HubLabId | null>(null);
   const [isFormulaSheetOpen, setIsFormulaSheetOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [showQuickReview, setShowQuickReview] = useState<boolean>(false);
@@ -102,6 +102,8 @@ export default function Home() {
       const candidate = parts[1] as HubLabId | undefined;
       if (candidate && PHYSICS_LAB_CATALOG.some((l) => l.id === candidate)) {
         setSelectedLabId(candidate);
+      } else {
+        setSelectedLabId(null);
       }
       setActiveTab('simulation');
       return;
@@ -210,7 +212,8 @@ export default function Home() {
     if (tab === 'roadmap') {
       handleResetToAllChapters();
     } else if (tab === 'simulation') {
-      pushRouteHash(`#labs/${selectedLabId}`);
+      setSelectedLabId(null);
+      pushRouteHash('#labs');
       scrollToTop();
     } else {
       pushRouteHash(`#${tab}`);
@@ -282,7 +285,7 @@ export default function Home() {
                         className="min-h-[42px] px-3 py-1.5 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-500 inline-flex items-center gap-1.5 text-xs font-serif font-medium text-[var(--ink-primary)] transition-colors"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
-                        <span>กลับไปหน้าเลือกหมวดวิชาทั้งหมด (All Chapters)</span>
+                        <span>กลับหน้ารวมทุกบท</span>
                       </button>
 
                       <span className="px-2.5 py-1 rounded border border-[var(--hairline-border)] bg-[var(--surface-muted)] font-mono text-[11px] font-semibold text-[var(--ink-secondary)]">
@@ -293,7 +296,7 @@ export default function Home() {
                     </div>
 
                     {/* Chapter Hero Banner */}
-                    <header className="rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] p-5 sm:p-7 space-y-5 shadow-2xs">
+                    <header className="rounded-xl border border-[var(--hairline-border)] bg-[var(--surface-card)] p-5 sm:p-7 space-y-5 shadow-2xs">
                       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                         <div className="space-y-2 max-w-2xl">
                           <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--ink-tertiary)]">
@@ -384,7 +387,7 @@ export default function Home() {
                               key={lesson.id}
                               type="button"
                               onClick={() => handleOpenLesson(lesson.slug)}
-                              className="group w-full text-left p-4 sm:p-5 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-500 dark:hover:border-stone-400 hover:shadow-xs cursor-pointer transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                              className="group w-full text-left p-4 sm:p-5 rounded-xl border border-[var(--hairline-border)] bg-[var(--surface-card)] hover:border-stone-500 dark:hover:border-stone-400 hover:shadow-xs active:scale-[0.99] cursor-pointer transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                             >
                               <div className="space-y-2 flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
@@ -482,94 +485,84 @@ export default function Home() {
                 );
               })()
             ) : (
-              /* LEVEL 1: ALL CHAPTERS OVERVIEW & TRACK SELECTOR */
-              <div className="space-y-8 animate-in fade-in duration-150">
-                {/* Academic Monograph Frontispiece Header */}
-                <header className="border-b border-[var(--hairline-border)] pb-8 pt-2">
-                  <div className="max-w-3xl space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[var(--ink-tertiary)] uppercase">
-                      <span>OPENPOSN PHYSICS MONOGRAPH SERIES</span>
+              /* LEVEL 1: ALL CHAPTERS OVERVIEW & COMPACT TRACK SELECTOR */
+              <div className="space-y-6 animate-in fade-in duration-150">
+                {/* Clean Mobile-First Header */}
+                <header className="border-b border-[var(--hairline-border)] pb-5 pt-1 space-y-4">
+                  <div className="max-w-3xl space-y-1.5">
+                    <div className="flex items-center gap-2 text-[11px] font-mono tracking-widest text-[var(--ink-tertiary)] uppercase">
+                      <span>OPENPOSN PHYSICS</span>
                       <span>•</span>
-                      <span>100% OPEN-ACCESS</span>
+                      <span>100% FREE &amp; OFFLINE</span>
                     </div>
 
-                    <h1 className="text-2xl sm:text-4xl font-bold font-serif text-[var(--ink-primary)] tracking-tight leading-snug">
-                      สอวน. ฟิสิกส์ เพื่อทุกคน: บทเรียนและการพิสูจน์จาก First Principles
+                    <h1 className="text-2xl sm:text-3xl font-bold font-serif text-[var(--ink-primary)] tracking-tight leading-snug">
+                      สอวน. ฟิสิกส์ เพื่อทุกคน
                     </h1>
 
-                    <p className="text-sm md:text-base text-[var(--ink-secondary)] font-serif leading-relaxed">
-                      เลือกเส้นทางตามเป้าหมายของคุณ: เริ่มปูพื้นฐานเตรียม{' '}
-                      <strong className="text-[var(--ink-primary)]">สอบเข้าค่าย 1 (28 หัวข้อทางการ สอวน.)</strong>{' '}
-                      แบบเข้าใจง่ายไม่ต้องพึ่งแคลคูลัสหนัก หรือก้าวต่อสู่ระดับ{' '}
-                      <strong className="text-[var(--ink-primary)]">ค่าย 1 → ค่าย 2</strong>{' '}
-                      ด้วยกลศาสตร์แคลคูลัสเต็มรูปแบบ
+                    <p className="text-xs sm:text-sm text-[var(--ink-secondary)] font-serif leading-relaxed">
+                      เรียนฟิสิกส์จากหลักการจริง พร้อม{' '}
+                      <strong className="text-[var(--ink-primary)]">39 แล็บจำลองโต้ตอบ</strong>{' '}
+                      ให้กดทดลองเล่นเข้าใจทันทีทุกบท
                     </p>
                   </div>
 
-                  {/* Dual-Track Selector Cards */}
-                  <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => handleSelectTrack('pre-camp-1')}
-                      className={`p-4 rounded-lg border text-left transition-all ${
-                        activeTrack === 'pre-camp-1'
-                          ? 'bg-[var(--surface-card)] border-stone-800 dark:border-stone-200 ring-1 ring-stone-800 dark:ring-stone-200 shadow-xs'
-                          : 'bg-[var(--surface-muted)] border-[var(--hairline-border)] opacity-80 hover:opacity-100'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-2 mb-1.5">
-                        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                          <Flame className="w-3.5 h-3.5" />
-                          TRACK 01 • RECOMMENDED FOR BEGINNERS
-                        </span>
-                        {activeTrack === 'pre-camp-1' && (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900">
-                            ACTIVE
+                  {/* Clean Segmented 2-Track Switcher */}
+                  <div className="space-y-2">
+                    <div className="p-1 rounded-xl border border-[var(--hairline-border)] bg-[var(--surface-muted)] grid grid-cols-2 gap-1">
+                      <button
+                        type="button"
+                        onClick={() => handleSelectTrack('pre-camp-1')}
+                        className={`min-h-[44px] px-3 py-2 rounded-lg text-left transition-all flex items-center gap-2 ${
+                          activeTrack === 'pre-camp-1'
+                            ? 'bg-[var(--surface-card)] text-[var(--ink-primary)] shadow-xs border border-[var(--hairline-border)] font-bold'
+                            : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
+                        }`}
+                      >
+                        <Flame className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <div className="min-w-0">
+                          <span className="text-xs sm:text-sm block truncate">
+                            สอบเข้าค่าย 1 • 5 บท
                           </span>
-                        )}
-                      </div>
-                      <h2 className="text-sm md:text-base font-bold text-[var(--ink-primary)]">
-                        เตรียมสอบเข้าค่าย 1 (Pre-Camp 1 Entrance)
-                      </h2>
-                      <p className="text-xs text-[var(--ink-secondary)] mt-1 leading-relaxed">
-                        เนื้อหา 28 หัวข้อตามประกาศ สอวน. (กลศาสตร์ ของไหล ความร้อน ไฟฟ้า แม่เหล็ก แสง) เน้นภาพจริงและพีชคณิต ไม่ต้องใช้แคลคูลัสหนัก!
-                      </p>
-                    </button>
+                          <span className="text-[10px] font-mono text-[var(--ink-tertiary)] block truncate">
+                            28 หัวข้อ ไม่ต้องใช้แคลฯ
+                          </span>
+                        </div>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => handleSelectTrack('camp-1-2')}
-                      className={`p-4 rounded-lg border text-left transition-all ${
-                        activeTrack === 'camp-1-2'
-                          ? 'bg-[var(--surface-card)] border-stone-800 dark:border-stone-200 ring-1 ring-stone-800 dark:ring-stone-200 shadow-xs'
-                          : 'bg-[var(--surface-muted)] border-[var(--hairline-border)] opacity-80 hover:opacity-100'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-2 mb-1.5">
-                        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                          <GraduationCap className="w-3.5 h-3.5" />
-                          TRACK 02 • ADVANCED CALCULUS MECHANICS
-                        </span>
-                        {activeTrack === 'camp-1-2' && (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900">
-                            ACTIVE
+                      <button
+                        type="button"
+                        onClick={() => handleSelectTrack('camp-1-2')}
+                        className={`min-h-[44px] px-3 py-2 rounded-lg text-left transition-all flex items-center gap-2 ${
+                          activeTrack === 'camp-1-2'
+                            ? 'bg-[var(--surface-card)] text-[var(--ink-primary)] shadow-xs border border-[var(--hairline-border)] font-bold'
+                            : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
+                        }`}
+                      >
+                        <GraduationCap className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                        <div className="min-w-0">
+                          <span className="text-xs sm:text-sm block truncate">
+                            ค่าย 1 → ค่าย 2 • 8 บท
                           </span>
-                        )}
-                      </div>
-                      <h2 className="text-sm md:text-base font-bold text-[var(--ink-primary)]">
-                        เตรียมค่าย 1 → ค่าย 2 (Camp 1 &amp; 2 Intensive)
-                      </h2>
-                      <p className="text-xs text-[var(--ink-secondary)] mt-1 leading-relaxed">
-                        คณิตศาสตร์โอลิมปิกและกลศาสตร์แคลคูลัสเชิงลึก 8 บท ตามตำรา สอวน. &amp; Kleppner–Kolenkow (พิกัดเชิงขั้ว จรวด ไจโรสโคป วงโคจร เรโซแนนซ์)
-                      </p>
-                    </button>
+                          <span className="text-[10px] font-mono text-[var(--ink-tertiary)] block truncate">
+                            กลศาสตร์แคลคูลัส K&amp;K
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+
+                    <p className="text-[11px] sm:text-xs text-[var(--ink-secondary)] px-1">
+                      {activeTrack === 'pre-camp-1'
+                        ? 'เส้นทางแนะนำสำหรับผู้เริ่มต้น: กลศาสตร์ ของไหล ความร้อน แก๊ส ไฟฟ้า แม่เหล็ก แสง และคลื่น'
+                        : 'เส้นทางเข้มข้นระดับค่าย 1→2: เวกเตอร์เชิงขั้ว รอกแคปสแตน จรวด จานหมุน เคปเลอร์ และเรโซแนนซ์'}
+                    </p>
                   </div>
 
-                  {/* Study Companion Quick Actions (Mobile-first Resume + Flashcard Review + Lab Hub) */}
-                  <div className="mt-4 p-3.5 sm:p-4 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] flex flex-col lg:flex-row lg:items-center justify-between gap-3 shadow-2xs">
+                  {/* Compact 3-Button Action Bar */}
+                  <div className="p-3 sm:p-4 rounded-xl border border-[var(--hairline-border)] bg-[var(--surface-card)] flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 shadow-2xs">
                     <div className="space-y-0.5 min-w-0">
                       <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[var(--ink-tertiary)] block">
-                        STUDY COMPANION ({activeTrack === 'pre-camp-1' ? 'สอบเข้าค่าย 1' : 'ค่าย 1 → 2'}) • {completedInTrackCount}/{trackLessonsFlat.length} บทเรียน
+                        STUDY ({activeTrack === 'pre-camp-1' ? 'สอบเข้าค่าย 1' : 'ค่าย 1 → 2'}) • {completedInTrackCount}/{trackLessonsFlat.length} บท
                       </span>
                       <p className="text-xs sm:text-sm font-semibold text-[var(--ink-primary)] line-clamp-1">
                         ถัดไป: <FormattedMathText text={nextStudyTarget?.lesson.titleTh || ''} />
@@ -580,16 +573,25 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={handleContinueLearning}
-                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-serif font-semibold hover:opacity-90 inline-flex items-center justify-center gap-1.5 whitespace-nowrap shadow-2xs"
+                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded-xl bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-serif font-semibold hover:opacity-90 active:scale-95 inline-flex items-center justify-center gap-1.5 whitespace-nowrap shadow-2xs transition-all"
                       >
                         <PlayCircle className="w-3.5 h-3.5 shrink-0" />
-                        <span>{completedInTrackCount === 0 ? 'เริ่มปูพื้นฐานบทแรก' : 'เรียนต่อทันที'}</span>
+                        <span>{completedInTrackCount === 0 ? 'เริ่มเรียนทันที' : 'เรียนต่อทันที'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleTabSwitch('simulation')}
+                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded-xl border border-sky-400/70 bg-sky-50/75 dark:bg-sky-950/40 text-xs font-serif font-semibold text-sky-900 dark:text-sky-200 hover:border-sky-600 active:scale-95 inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-all"
+                      >
+                        <FlaskConical className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+                        <span>ห้องแล็บ (39)</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setShowQuickReview((prev) => !prev)}
-                        className={`flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border text-xs font-serif font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors ${
+                        className={`min-h-[42px] px-3 py-2 rounded-xl border text-xs font-serif font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap active:scale-95 transition-all ${
                           showQuickReview
                             ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-500 text-amber-950 dark:text-amber-200 font-semibold'
                             : 'bg-[var(--surface-muted)] border-[var(--hairline-border)] text-[var(--ink-primary)] hover:border-stone-400'
@@ -597,15 +599,6 @@ export default function Home() {
                       >
                         <Brain className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                         <span>Flashcards</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => handleOpenLab('projectile-shooter')}
-                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border border-sky-400/70 bg-sky-50/70 dark:bg-sky-950/40 text-xs font-serif font-semibold text-sky-900 dark:text-sky-200 hover:border-sky-600 inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors"
-                      >
-                        <FlaskConical className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
-                        <span>Physics Lab Hub</span>
                       </button>
                     </div>
                   </div>
@@ -626,13 +619,19 @@ export default function Home() {
           </div>
         )}
 
-        {/* TAB 2: UNIFIED PHYSICS LAB HUB */}
+        {/* TAB 2: SUBJECT-SEPARATED LAB DIRECTORY & DEDICATED LAB PAGES */}
         {activeTab === 'simulation' && (
           <PhysicsLabHub
             selectedLabId={selectedLabId}
             onSelectLab={(labId) => {
               setSelectedLabId(labId);
               pushRouteHash(`#labs/${labId}`);
+              scrollToTop();
+            }}
+            onBackToDirectory={() => {
+              setSelectedLabId(null);
+              pushRouteHash('#labs');
+              scrollToTop();
             }}
             onJumpToLesson={(track, topicId, slug) => handleOpenLesson(slug, track, topicId)}
           />
