@@ -336,7 +336,7 @@ export const SnellFermatLab: React.FC = () => {
       )}
 
       <div className="p-3 rounded border border-amber-300/80 dark:border-amber-800/80 bg-amber-50/70 dark:bg-amber-950/30 text-xs text-amber-950 dark:text-amber-200 leading-relaxed">
-        <FormattedMathText text="💡 **การพิสูจน์ของแฟร์มาต์:** แสงเดินทางตามเส้นทางที่ใช้เวลาน้อยที่สุด $T(x) = \\frac{n_1\\sqrt{x^2+a^2} + n_2\\sqrt{(d-x)^2+b^2}}{c}$ เมื่อหาอนุพันธ์ $\\frac{dT}{dx} = 0$ จะได้ $\\frac{n_1 x}{\\sqrt{x^2+a^2}} = \\frac{n_2 (d-x)}{\\sqrt{(d-x)^2+b^2}} \\implies n_1\\sin\\theta_1 = n_2\\sin\\theta_2$ ทันที!" />
+        <FormattedMathText text={'💡 **การพิสูจน์ของแฟร์มาต์:** แสงเดินทางตามเส้นทางที่ใช้เวลาน้อยที่สุด $T(x) = \\frac{n_1\\sqrt{x^2+a^2} + n_2\\sqrt{(d-x)^2+b^2}}{c}$ เมื่อหาอนุพันธ์ $\\frac{dT}{dx} = 0$ จะได้ $\\frac{n_1 x}{\\sqrt{x^2+a^2}} = \\frac{n_2 (d-x)}{\\sqrt{(d-x)^2+b^2}} \\implies n_1\\sin\\theta_1 = n_2\\sin\\theta_2$ ทันที!'} />
       </div>
     </div>
   );

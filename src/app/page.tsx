@@ -553,9 +553,9 @@ export default function Home() {
                     </button>
                   </div>
 
-                  {/* Study Companion Quick Actions (Mobile-first Resume + Flashcard Review) */}
-                  <div className="mt-4 p-3.5 sm:p-4 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-                    <div className="space-y-0.5">
+                  {/* Study Companion Quick Actions (Mobile-first Resume + Flashcard Review + Lab Hub) */}
+                  <div className="mt-4 p-3.5 sm:p-4 rounded-lg border border-[var(--hairline-border)] bg-[var(--surface-card)] flex flex-col lg:flex-row lg:items-center justify-between gap-3 shadow-2xs">
+                    <div className="space-y-0.5 min-w-0">
                       <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[var(--ink-tertiary)] block">
                         STUDY COMPANION ({activeTrack === 'pre-camp-1' ? 'สอบเข้าค่าย 1' : 'ค่าย 1 → 2'}) • {completedInTrackCount}/{trackLessonsFlat.length} บทเรียน
                       </span>
@@ -564,35 +564,35 @@ export default function Home() {
                       </p>
                     </div>
 
-                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2 shrink-0">
                       <button
                         type="button"
                         onClick={handleContinueLearning}
-                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-serif font-semibold hover:opacity-90 inline-flex items-center justify-center gap-1.5 shadow-2xs"
+                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-xs font-serif font-semibold hover:opacity-90 inline-flex items-center justify-center gap-1.5 whitespace-nowrap shadow-2xs"
                       >
-                        <PlayCircle className="w-3.5 h-3.5" />
+                        <PlayCircle className="w-3.5 h-3.5 shrink-0" />
                         <span>{completedInTrackCount === 0 ? 'เริ่มปูพื้นฐานบทแรก' : 'เรียนต่อทันที'}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setShowQuickReview((prev) => !prev)}
-                        className={`flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border text-xs font-serif font-medium inline-flex items-center justify-center gap-1.5 transition-colors ${
+                        className={`flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border text-xs font-serif font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors ${
                           showQuickReview
                             ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-500 text-amber-950 dark:text-amber-200 font-semibold'
                             : 'bg-[var(--surface-muted)] border-[var(--hairline-border)] text-[var(--ink-primary)] hover:border-stone-400'
                         }`}
                       >
-                        <Brain className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                        <Brain className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                         <span>Flashcards</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => handleOpenLab('projectile-shooter')}
-                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border border-sky-400/70 bg-sky-50/70 dark:bg-sky-950/40 text-xs font-serif font-semibold text-sky-900 dark:text-sky-200 hover:border-sky-600 inline-flex items-center justify-center gap-1.5 transition-colors"
+                        className="flex-1 sm:flex-none min-h-[42px] px-3.5 py-2 rounded border border-sky-400/70 bg-sky-50/70 dark:bg-sky-950/40 text-xs font-serif font-semibold text-sky-900 dark:text-sky-200 hover:border-sky-600 inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors"
                       >
-                        <FlaskConical className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                        <FlaskConical className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
                         <span>Physics Lab Hub</span>
                       </button>
                     </div>

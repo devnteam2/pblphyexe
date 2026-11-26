@@ -426,7 +426,7 @@ export const WaveInterferenceLab: React.FC = () => {
         <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
         <div>
           <FormattedMathText
-            text="หัวใจสมการแทรกสอด Buff/Debuff: $y_1 + y_2 = \\left[2A\\cos\\left(\\frac{\\Delta\\phi}{2}\\right)\\right]\\sin\\left(kx - \\omega t + \\frac{\\Delta\\phi}{2}\\right)$ — เมื่อ $\\Delta\\phi = 0, 2\\pi$ (Buff) แอมพลิจูดเพิ่มเป็น $2A$ และความเข้มพุ่ง $4$ เท่า ($I = 4I_0$)! ส่วน $\\Delta\\phi = \\pi$ (Debuff) คลื่นหักล้างหายเกลี้ยงเป็นศูนย์!"
+            text={'หัวใจสมการแทรกสอด Buff/Debuff: $y_1 + y_2 = \\left[2A\\cos\\left(\\frac{\\Delta\\phi}{2}\\right)\\right]\\sin\\left(kx - \\omega t + \\frac{\\Delta\\phi}{2}\\right)$ — เมื่อ $\\Delta\\phi = 0, 2\\pi$ (Buff) แอมพลิจูดเพิ่มเป็น $2A$ และความเข้มพุ่ง $4$ เท่า ($I = 4I_0$)! ส่วน $\\Delta\\phi = \\pi$ (Debuff) คลื่นหักล้างหายเกลี้ยงเป็นศูนย์!'}
           />
         </div>
       </div>

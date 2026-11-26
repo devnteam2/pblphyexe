@@ -1,7 +1,7 @@
 // src/components/interactive/ProjectileShooterLab.tsx
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMathText } from '@/components/math/LatexRenderer';
 import { Target, RotateCcw, Eye, EyeOff, Calculator, Shuffle, CheckCircle2, XCircle, Play } from 'lucide-react';
 
@@ -220,7 +220,10 @@ export const ProjectileShooterLab: React.FC = () => {
   const uy = launchU * Math.sin(rad);
   const startY = level === 'cliff' ? CLIFF_H : 0;
 
-  const { maxT, outcome: predictedOutcome } = evaluateTrajectory(level, targetParam, launchU, launchDeg);
+  const { maxT, outcome: predictedOutcome } = useMemo(
+    () => evaluateTrajectory(level, targetParam, launchU, launchDeg),
+    [level, targetParam, launchU, launchDeg]
+  );
   const ideal = computeIdealParams(level, targetParam);
 
   // World -> SVG projection
