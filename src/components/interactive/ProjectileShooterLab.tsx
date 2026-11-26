@@ -203,7 +203,7 @@ export const ProjectileShooterLab: React.FC = () => {
   const [targetParam, setTargetParam] = useState<number>(LEVEL_META.flat.defaultParam);
   const [launchU, setLaunchU] = useState<number>(20);
   const [launchDeg, setLaunchDeg] = useState<number>(45);
-  const [showAimGuide, setShowAimGuide] = useState<boolean>(true);
+  const [showAimGuide, setShowAimGuide] = useState<boolean>(false);
   const [showVectors, setShowVectors] = useState<boolean>(true);
   const [showSolution, setShowSolution] = useState<boolean>(false);
 
@@ -347,10 +347,14 @@ export const ProjectileShooterLab: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowAimGuide((prev) => !prev)}
-            className="px-2 py-0.5 rounded border border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] inline-flex items-center gap-1"
+            className={`px-2.5 py-1 rounded border inline-flex items-center gap-1 transition-colors ${
+              showAimGuide
+                ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold'
+                : 'border-[var(--hairline-border)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]'
+            }`}
           >
-            {showAimGuide ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-            <span>{showAimGuide ? 'โหมดฝึก: เปิดเส้นเล็ง' : 'โหมดสอบ: ปิดเส้นเล็ง'}</span>
+            {showAimGuide ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+            <span>{showAimGuide ? 'ซ่อนวิถีพาราโบลา (เลิกโกง)' : 'แสดงวิถีพาราโบลา (โกง)'}</span>
           </button>
         </div>
       </div>

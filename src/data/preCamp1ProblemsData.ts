@@ -1070,4 +1070,148 @@ export const PRE_CAMP1_PROBLEMS: POSNProblem[] = [
         'ถูกต้อง! จาก $\\frac{1}{v} = \\frac{1}{-|f|} - \\frac{1}{u}$ จะได้ $|v| = \\frac{u|f|}{u + |f|} < u$ เสมอสำหรับวัตถุจริง ($u > 0$) ดังนั้น $|M| = |v|/u < 1$ เสมอ — นั่นคือเหตุผลที่กระจกมองข้างรถยนต์ (กระจกนูน) เห็นภาพมุมกว้างและมีคำเตือนว่า "Objects in mirror are closer than they appear"!',
     },
   },
+  {
+    id: 'prob-pre-wave-1',
+    code: 'PRE-C1-W01',
+    sourceExam: 'แนวข้อสอบคัดเลือก สอวน. ค่าย 1 (คลื่น การแทรกสอด Buff/Debuff & เส้นเชือก)',
+    topicId: 'pre-waves',
+    difficulty: 'PreCamp1_Entrance',
+    titleTh: 'การแทรกสอดจากลำโพงอาพันธ์ 2 ตัว: หาจุด Buff (เสียงดัง) vs Debuff (เงียบสนิท) และความเข้มคลื่น',
+    statementTh:
+      'ลำโพงอาพันธ์ 2 ตัว $S_1$ และ $S_2$ ส่งเสียงเฟสตรงกันความถี่ $f = 680\\text{ Hz}$ ในอากาศที่อัตราเร็วเสียง $v = 340\\text{ m/s}$ โดยผู้ฟังยืนอยู่ห่างจาก $S_1$ เป็นระยะ $r_1 = 4.00\\text{ m}$ และห่างจาก $S_2$ เป็นระยะ $r_2 = 5.25\\text{ m}$ (ก) จงหาความต่างเฟส $\\Delta\\phi$ และตรวจสอบว่าจุดนี้เป็นเสริม (Buff) หรือหักล้าง (Debuff) (ข) หากลำโพงแต่ละตัวให้แอมพลิจูด $A_0$ และความเข้ม $I_0$ เท่ากัน ณ จุดที่เลื่อนไปจนผลต่างระยะทาง $\\Delta r = 0.625\\text{ m}$ ความเข้มเสียงรวมจะกี่เท่าของ $I_0$?',
+    statementLatex: 'f = 680\\text{ Hz}, \\; v = 340\\text{ m/s}, \\; \\Delta r_A = 1.25\\text{ m}, \\; \\Delta r_B = 0.625\\text{ m}',
+    hints: [
+      {
+        tier: 1,
+        type: 'physical_model',
+        titleTh: 'Hint 1: หาความยาวคลื่น λ = v/f ก่อน แล้วเทียบผลต่างระยะทาง Δr = |r₂ - r₁| กับ λ',
+        contentTh:
+          'คำนวณ $\\lambda = \\frac{340}{680} = 0.50\\text{ m}$ จากนั้นนับจำนวนคลื่นที่ต่างกัน $\\frac{\\Delta r}{\\lambda}$!',
+        latexSnippets: ['\\lambda = \\frac{v}{f} = 0.50\\text{ m}'],
+      },
+      {
+        tier: 2,
+        type: 'governing_equations',
+        titleTh: 'Hint 2: แปลง Δr เป็นความต่างเฟส Δφ = 2π (Δr / λ)',
+        contentTh:
+          'ทุกๆ $1\\lambda$ เฟสต่างไป $2\\pi$ เรเดียน: $\\Delta r_A = 1.25\\text{ m} = 2.5\\lambda \\implies \\Delta\\phi = 5\\pi$ (ตรงข้ามเฟสพอดี = หักล้างหมด!)',
+        latexSnippets: ['\\Delta\\phi = \\frac{2\\pi\\,\\Delta r}{\\lambda}'],
+      },
+      {
+        tier: 3,
+        type: 'mathematical_trick',
+        titleTh: 'Hint 3: ใช้สูตรความเข้ม I = 4 I₀ cos²(Δφ / 2) สำหรับจุดที่เฟสต่างครึ่งๆ กลางๆ',
+        contentTh:
+          'ที่จุด $\\Delta r_B = 0.625\\text{ m} = 1.25\\lambda$ จะได้ $\\Delta\\phi = 2.5\\pi$ ($\\cos(\\Delta\\phi/2) = \\cos(1.25\\pi) = -\\frac{1}{\\sqrt{2}}$) ยกกำลังสองได้ $1/2$!',
+        latexSnippets: ['I = 4I_0\\cos^2\\left(\\frac{\\Delta\\phi}{2}\\right)'],
+      },
+    ],
+    fullSolution: {
+      approachOverviewTh:
+        'เปลี่ยนผลต่างระยะทาง Δr ให้เป็นจำนวนความยาวคลื่น λ แล้วแปลงเป็นความต่างเฟส Δφ เพื่อเข้าสูตร A_res = 2A₀|cos(Δφ/2)| และ I = 4I₀ cos²(Δφ/2)',
+      coordinateSystemSetupTh: 'แหล่งกำเนิดคลื่นอาพันธ์เฟสตรงกันในระนาบ 2 มิติ',
+      steps: [
+        {
+          stepNumber: 1,
+          stepTitleTh: 'หาความยาวคลื่นและความต่างเฟส ณ จุดแรก ($\\Delta r_A = 1.25\\text{ m}$)',
+          latexMath: '\\lambda = \\frac{340}{680} = 0.50\\text{ m}, \\qquad \\Delta\\phi_A = 2\\pi\\left(\\frac{1.25}{0.50}\\right) = 5\\pi\\text{ rad} \\; (\\equiv 180^\\circ)',
+          explanationTh: 'เพราะ $\\Delta r_A = (2 + \\frac{1}{2})\\lambda$ และ $\\Delta\\phi = 5\\pi$ คลื่นจึง **หักล้างกันหมด (Destructive / Debuff)** เสียงเงียบสนิท ($I = 0$)!',
+        },
+        {
+          stepNumber: 2,
+          stepTitleTh: 'คำนวณความเข้มเสียงรวม ณ จุดที่สอง ($\\Delta r_B = 0.625\\text{ m}$)',
+          latexMath: '\\Delta\\phi_B = 2\\pi\\left(\\frac{0.625}{0.50}\\right) = 2.5\\pi \\implies I = 4I_0\\cos^2\\left(\\frac{2.5\\pi}{2}\\right) = 4I_0\\left(\\frac{1}{2}\\right) = 2I_0',
+          explanationTh: 'จุดนี้ไม่ได้เสริมสุดขีด ($4I_0$) และไม่ได้ดับหมด ($0$) แต่ได้ความเข้มเท่ากับ $2I_0$ พอดี (ลองปรับ $\\Delta\\phi = 90^\\circ$ ในแล็บคลื่นได้เลย!)',
+        },
+      ],
+      finalAnswerLatex: '\\text{(ก) } \\Delta\\phi_A = 5\\pi\\text{ rad (Debuff เสียงดับ)}, \\qquad \\text{(ข) } I = 2I_0',
+      examTrapWarningTh:
+        'ระวัง! **จุดเสริมกัน (Buff) ความเข้มเป็น $4I_0$** ไม่ใช่ $2I_0$ เพราะแอมพลิจูดรวม $2A_0$ และความเข้ม $I \\propto A^2$ ($2^2 = 4$ เท่า!)',
+    },
+    selfCheck: {
+      id: 'check-pre-wave-1',
+      promptTh: 'หากกลับขั้วสายไฟของลำโพง $S_2$ 1 ข้าง ทำให้แหล่งกำเนิดทั้งสอง **ส่งเสียงเฟสตรงข้ามกันตั้งแต่ต้น** ($180^\\circ$) จุดกึ่งกลางพอดี ($r_1 = r_2$) จะเกิดอะไรขึ้น?',
+      optionsTh: [
+        'เกิดหักล้างกันหมด (Debuff / Node เสียงดับ) ที่แนวกลางพอดี และเงื่อนไข Buff/Debuff จะสลับกันทั้งสนาม!',
+        'ยังเสริมกันเสียงดัง $4I_0$ ที่แนวกลางเหมือนเดิม',
+        'ความเร็วเสียงจะลดลงครึ่งหนึ่ง',
+        'เกิดคลื่นกระแทก (Sonic Boom)',
+      ],
+      correctOptionIndex: 0,
+      explanationTh:
+        'ถูกต้อง! เมื่อแหล่งกำเนิดเริ่มเฟสตรงข้าม ($\\pi$) อยู่แล้ว ระยะทางเท่ากัน ($\\Delta r = 0$) ยังคงเหลือความต่างเฟส $\\pi$ จึงกลายเป็นแนวบัพ (Debuff) ทันที!',
+    },
+  },
+  {
+    id: 'prob-pre-wave-2',
+    code: 'PRE-C1-W02',
+    sourceExam: 'แนวข้อสอบคัดเลือก สอวน. ค่าย 1 (คลื่นนิ่งในเส้นเชือก บีตส์ และดอปเพลอร์)',
+    topicId: 'pre-waves',
+    difficulty: 'PreCamp1_Entrance',
+    titleTh: 'คลื่นนิ่งบนสายกีตาร์ + ความถี่บีตส์เมื่อปรับความตึงเชือก',
+    statementTh:
+      'ลวดโลหะยาว $L = 0.80\\text{ m}$ มวลรวม $m = 4.0\\text{ g}$ ถูกขึงตึงระหว่างจุดตรึง 2 ฝั่ง เมื่อดีดให้สั่นใน **ฮาร์มอนิกที่ 2** ($n = 2$) พบว่าเกิดเสียงสั่นพ้องที่ความถี่ $f_2 = 250\\text{ Hz}$ และเมื่อนำมาเทียบกับส้อมเสียงมาตรฐานจะได้ยิน **บีตส์ $4\\text{ Hz}$** พอเร่งความตึงเชือกเพิ่มขึ้นอีกเล็กน้อยพบว่าเสียงบีตส์ช้าลงเหลือ $1\\text{ Hz}$ จงหา (ก) แรงตึงเชือก $T$ เริ่มต้น และ (ข) ความถี่ของส้อมเสียงมาตรฐาน',
+    statementLatex: 'L = 0.80\\text{ m}, \\; m = 4.0\\times 10^{-3}\\text{ kg}, \\; f_2 = 250\\text{ Hz}, \\; f_{\\text{beat}}: 4\\text{ Hz} \\to 1\\text{ Hz}',
+    hints: [
+      {
+        tier: 1,
+        type: 'physical_model',
+        titleTh: 'Hint 1: ฮาร์มอนิกที่ 2 (n = 2) ปลายตรึง 2 ด้านมี 2 ลูปพอดี -> λ = L!',
+        contentTh:
+          'ใช้ $\\lambda_n = \\frac{2L}{n} = \\frac{2(0.80)}{2} = 0.80\\text{ m}$ แล้วหาความเร็วคลื่นบนเชือก $v = f_2\\lambda_2$',
+        latexSnippets: ['v = f_2 \\lambda_2 = 250(0.80) = 200\\text{ m/s}'],
+      },
+      {
+        tier: 2,
+        type: 'governing_equations',
+        titleTh: 'Hint 2: หาความหนาแน่นเชิงเส้น μ = m/L แล้วแทนใน v = √(T/μ)',
+        contentTh:
+          '$\\mu = \\frac{4.0\\times 10^{-3}}{0.80} = 5.0\\times 10^{-3}\\text{ kg/m}$ จาก $T = \\mu v^2$ จะได้แรงตึงเชือก $T$ ทันที',
+        latexSnippets: ['T = \\mu v^2'],
+      },
+      {
+        tier: 3,
+        type: 'mathematical_trick',
+        titleTh: 'Hint 3: ตีความบีตส์เมื่อ "เร่งความตึงเชือกเพิ่ม -> f_wire เพิ่มขึ้น -> บีตส์ลดลง"',
+        contentTh:
+          'ส้อมเสียงอาจเป็น $250 \\pm 4 = 254$ หรือ $246\\text{ Hz}$ แต่เมื่อเพิ่ม $T$ ความถี่ลวดพุ่งสูงขึ้น (>250) แล้วเข้าใกล้ส้อมเสียงมากขึ้น (บีตส์ลดจาก 4 เหลือ 1) ดังนั้นส้อมเสียงต้อง **สูงกว่า 250**!',
+        latexSnippets: ['f_{\\text{fork}} > 250\\text{ Hz}'],
+      },
+    ],
+    fullSolution: {
+      approachOverviewTh:
+        'คำนวณความเร็วคลื่นบนเชือกจากฮาร์มอนิกที่ 2 (v = fλ) เชื่อมกับสูตร v = √(T/μ) แล้ววิเคราะห์ทิศทางการเปลี่ยนความถี่บีตส์เพื่อเลือกคำตอบส้อมเสียง',
+      coordinateSystemSetupTh: 'คลื่นนิ่งบนเส้นเชือกปลายตรึงสองด้าน (Node ที่ x=0 และ x=L)',
+      steps: [
+        {
+          stepNumber: 1,
+          stepTitleTh: 'คำนวณความเร็วคลื่นและแรงตึงเชือกเริ่มต้น $T$',
+          latexMath: '\\lambda_2 = \\frac{2L}{2} = 0.80\\text{ m} \\implies v = (250)(0.80) = 200\\text{ m/s}, \\quad \\mu = \\frac{0.004}{0.80} = 0.005\\text{ kg/m}',
+          explanationTh: 'แทนใน $T = \\mu v^2 = (0.005)(200)^2 = 200\\text{ N}$',
+        },
+        {
+          stepNumber: 2,
+          stepTitleTh: 'ระบุความถี่ส้อมเสียงจากการลดลงของบีตส์เมื่อขึงเชือกตึงขึ้น',
+          latexMath: 'f_{\\text{fork}} = 250 + 4 = 254\\text{ Hz} \\; (\\text{เพราะเมื่อ } T \\uparrow \\implies v \\uparrow \\implies f_{\\text{wire}} \\uparrow \\text{ เข้าใกล้ } 254\\text{ Hz})',
+          explanationTh: 'หากส้อมเสียงเป็น $246\\text{ Hz}$ การเพิ่ม $T$ จะยิ่งทำใหเชือกถ่างห่างจาก $246\\text{ Hz}$ จนบีตส์ถี่ขึ้น (>4 Hz) ซึ่งขัดแย้งกับโจทย์!',
+        },
+      ],
+      finalAnswerLatex: 'T = 200\\text{ N}, \\qquad f_{\\text{fork}} = 254\\text{ Hz}',
+      examTrapWarningTh:
+        'จำไว้ว่า $\\mu = m/L$ ต้องแปลงมวลเป็น **กิโลกรัม (kg)** เสมอ! ถ้าลืมแปลง 4 g เป็น $4 \\times 10^{-3}\\text{ kg}$ คำตอบแรงตึงเชือก $T$ จะผิดไป $1000$ เท่า!',
+    },
+    selfCheck: {
+      id: 'check-pre-wave-2',
+      promptTh: 'หากไม่เปลี่ยนแรงตึงเชือก ($v = 200\\text{ m/s}$) แต่ดีดสายลวดเดิมให้สั่นใน **ฮาร์มอนิกที่ 3** ($n = 3$) บนลวดเดียวกัน จะมีจุดปฏิบัพ (Antinode) กี่จุด และมีความถี่กี่ Hz?',
+      optionsTh: [
+        '$3$ จุดปฏิบัพ และความถี่ $375\\text{ Hz}$ (คือ $3 \\times f_1$ โดย $f_1 = 125\\text{ Hz}$)',
+        '$2$ จุดปฏิบัพ และความถี่ $300\\text{ Hz}$',
+        '$4$ จุดปฏิบัพ และความถี่ $500\\text{ Hz}$',
+        '$3$ จุดปฏิบัพ และความถี่ $750\\text{ Hz}$',
+      ],
+      correctOptionIndex: 0,
+      explanationTh:
+        'ถูกต้อง! ฮาร์มอนิกที่ 2 = $2f_1 = 250\\text{ Hz} \\implies$ ความถี่มูลฐาน $f_1 = 125\\text{ Hz}$ ดังนั้นฮาร์มอนิกที่ 3 มี 3 ลูป (3 Antinodes, 4 Nodes) และความถี่ $f_3 = 3(125) = 375\\text{ Hz}$!',
+    },
+  },
 ];

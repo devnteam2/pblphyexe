@@ -3,8 +3,15 @@ import { TopicId } from '@/types/curriculum';
 
 export type InteractiveLabId =
   | 'projectile-shooter'
+  | 'momentum-collision'
+  | 'circuit-builder'
+  | 'magnet-field'
+  | 'heat-flow'
   | 'wave-interference'
   | 'snell-fermat'
+  | 'pulley-capstan'
+  | 'coriolis-disk'
+  | 'coupled-oscillators'
   | 'derivative-slope'
   | 'integral-work'
   | 'potential-well'
@@ -87,7 +94,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'แบ่งโจทย์เป็นตอนสั้นๆ: ตอนที่ "ชน/ระเบิด" ใช้ **อนุรักษ์โมเมนตัม** หาความเร็วหลังชน จากนั้นตอนที่ "ไถลลื่น/แกว่งขึ้น/อัดสปริง" ค่อยใช้ **อนุรักษ์พลังงานกล**',
     everydayAnalogyTh:
       'เหมือนรถสองคันชนกันเสียงดังสนั่น (พลังงานกลหายเป็นเสียงและความร้อน แต่โมเมนตัมรวมยังอยู่ครบ!) จากนั้นซากรถที่ติดกันค่อยไถลขึ้นเนินไปหยุดนิ่ง',
-    interactiveLabId: 'projectile-collision',
+    interactiveLabId: 'momentum-collision',
     quickRecall: {
       questionTh: 'เหตุใดการชนแบบติดกันไป (Inelastic) จึงอนุรักษ์โมเมนตัมได้ แต่ไม่อนุรักษ์พลังงานกล?',
       answerTh: 'เพราะระหว่างชนแรงกระแทกระหว่างสองก้อนเป็นแรงภายใน (หักล้างกันด้วยกฎข้อ 3 $\\implies$ โมเมนตัมรวมคงที่) แต่แรงเปลี่ยนรูปพลังงานกลให้เป็นความร้อนและเสียง!',
@@ -141,7 +148,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เปรียบเทียบการนำความร้อนเหมือน **วงจรความต้านทานไฟฟ้า!** อัตราการไหลความร้อน $H = J A$ เหมือนกระแสไฟฟ้า, $\\Delta T$ เหมือนความต่างศักย์, และ $\\frac{\\Delta x}{KA}$ คือ "ความต้านทานความร้อน" ต่ออนุกรมกระแสเท่ากัน!',
     everydayAnalogyTh:
       'จับช้อนโลหะกับทัพพีไม้จุ่มหม้อซุปร้อนพร้อมกัน: ทั้งคู่สัมผัสซุปร้อนเท่ากัน แต่มือลวกที่ช้อนโลหะก่อนเพราะค่าการนำความร้อน $K_{\\text{metal}}$ สูงกว่าไม้เป็นร้อยเท่า!',
-    interactiveLabId: 'temperature-box',
+    interactiveLabId: 'heat-flow',
     quickRecall: {
       questionTh: 'นำแท่งโลหะ $K_1$ และ $K_2$ ยาวเท่ากัน พื้นที่หน้าตัดเท่ากัน มาต่อ **อนุกรม** ระหว่างอุณหภูมิ $100^\\circ\\text{C}$ และ $0^\\circ\\text{C}$ ถ้า $K_1 = 3K_2$ อุณหภูมิรอยต่อในสมดุลจะเป็นเท่าใด?',
       answerTh: '$75^\\circ\\text{C}$! เพราะ $K_1(100 - T) = K_2(T - 0) \\implies 3(100 - T) = T \\implies T = 75^\\circ\\text{C}$ (ตัวที่นำความร้อนดีกว่ายอมให้ $\\Delta T$ ตกคร่อมน้อยกว่า!)',
@@ -195,7 +202,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้กฎ 2 จังหวะโดยไม่ต้องใช้แคลคูลัสเลย: จังหวะสับสวิตช์ ($t=0^+$, ประจุว่าง) ให้มอง $C$ เป็น **สายไฟเชื่อมตรง**; จังหวะคงตัว ($t\\to\\infty$, เต็มแล้ว) ให้มอง $C$ เป็น **สวิตช์ขาด** แล้วคิดวงจร $R$ ปกติ!',
     everydayAnalogyTh:
       'ตัวเก็บประจุเหมือนถังน้ำเปล่า: วินาทีแรกที่เปิดก๊อก น้ำไหลเทลงถังสะดวกเหมือนท่อโล่ง ($V_C=0$) แต่พอถังเต็มปริ่ม น้ำหยุดไหลเข้าถัง ($i_C=0$) เหมือนกิ่งนั้นถูกปิด!',
-    interactiveLabId: 'rc-circuit-box',
+    interactiveLabId: 'circuit-builder',
     quickRecall: {
       questionTh: 'ในวงจร $\\mathcal{E}-R-C$ อนุกรม เมื่อชาร์จประจุจาก $0$ จนเต็ม $Q = C\\mathcal{E}$ พลังงานที่แบตเตอรี่จ่ายทั้งหมดเท่ากับ $C\\mathcal{E}^2$ แต่เก็บใน $C$ ได้ $\\frac{1}{2}C\\mathcal{E}^2$ อีกครึ่งหนึ่งหายไปไหน?',
       answerTh: 'สูญเสียกลายเป็น **ความร้อนจูล ($\\int i^2 R\\,dt = \\frac{1}{2}C\\mathcal{E}^2$)** ในตัวต้านทาน $R$ (และสายไฟ) เสมอ ไม่ว่าค่า $R$ จะมากหรือน้อยก็ตาม!',
@@ -213,7 +220,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'แยกเส้นลวดออกเป็นส่วนตรงกับส่วนโค้ง! ส่วนเส้นตรงที่แนวเล็ง **พุ่งผ่านจุดสังเกตพอดี** ให้สนามแม่เหล็กเป็น **ศูนย์** ($\\vec{dl} \\times \\hat{r} = 0$) ส่วนโค้งมุม $\\theta$ ก็คิดสัดส่วน $\\frac{\\theta}{2\\pi}$ ของเต็มวงได้ทันที!',
     everydayAnalogyTh:
       'กระแสที่วิ่งพุ่งตรงเข้าหาหรือพุ่งตรงหนีจุดศูนย์กลางเหมือนคนที่เดินตรงเข้าหาเสา ไม่ได้เดินวนรอบเสา จึงไม่สร้างสนามแม่เหล็กหมุนที่เสาเลย ($B = 0$)!',
-    interactiveLabId: 'magnetic-wire',
+    interactiveLabId: 'magnet-field',
     quickRecall: {
       questionTh: 'ขดลวดรูป **ครึ่งวงกลม** รัศมี $R$ ต่อกับสายไฟตรงยาว 2 เส้นที่แนวชี้ตรงผ่านจุดศูนย์กลางวงกลม สนามแม่เหล็กที่จุดศูนย์กลางมีค่าเท่าใด?',
       answerTh: '$B = \\frac{1}{2}\\left(\\frac{\\mu_0 i}{2R}\\right) = \\frac{\\mu_0 i}{4R}$! เพราะสายตรง 2 เส้นที่เล็งผ่านจุดศูนย์กลางไม่สร้างสนามที่จุดนั้นเลย ($B_{\\text{straight}} = 0$)!',
@@ -291,6 +298,42 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       answerTh: '**3 ครั้ง** ตามลำดับที่แสงเจออุปกรณ์: (1) เลนส์ขาไป $\\to$ (2) กระจกสะท้อน $\\to$ (3) เลนส์ขากลับ!',
     },
   },
+  'pre-waves-interference': {
+    levelTag: 'เตรียมสอบเข้าค่าย 1 • บทคลื่น 5.1 (การแทรกสอด Buff/Debuff & เส้นเชือก)',
+    basicLabelTh: 'จำสูตร v = fλ กับ Δr = mλ แบบไม่เข้าใจที่มาของคลื่นซ้อนทับ',
+    basicFormulaLatex: 'v = f\\lambda, \\quad \\Delta r = m\\lambda',
+    advancedLabelTh: 'ซ้อนทับ $y_1 + y_2$ เฟสต่าง $\\Delta\\phi$ & อัตราเร็วในเชือก $\\sqrt{T/\\mu}$',
+    advancedFormulaLatex: 'A_{\\text{res}} = 2A\\left|\\cos\\frac{\\Delta\\phi}{2}\\right|, \\qquad I = 4I_0\\cos^2\\left(\\frac{\\Delta\\phi}{2}\\right)',
+    whyItBreaksTh:
+      'นักเรียนมักคิดว่าคลื่น 2 ตัวชนกันแล้วได้ความเข้ม $2I_0$ และมักสับสนทันทีเมื่อโจทย์ถามจุดที่เฟสต่างกัน $\\frac{\\pi}{2}$ หรือให้แหล่งกำเนิดเฟสตรงข้ามกันตั้งแต่แรก',
+    howItEvolvesTh:
+      'รวมฟังก์ชันคลื่น $y_1 + y_2$ ด้วยตรีโกณมิติจะได้ตัวคูณแอมพลิจูด $2A\\cos(\\Delta\\phi/2)$ ออกมาตรงๆ: พลังงานรวมไม่หายแต่ถูกกวาดไปกองที่จุด Buff ($4I_0$) และปล่อยจุด Debuff ($0$) ว่างไว้!',
+    everydayAnalogyTh:
+      'หูฟังตัดเสียงรบกวน (ANC) ใช้ไมโครโฟนฟังเสียงเครื่องบินแล้วปล่อยคลื่นกลับเฟส $180^\\circ$ สวนไปหักล้าง (Debuff) จนเงียบสนิท!',
+    interactiveLabId: 'wave-interference',
+    quickRecall: {
+      questionTh: 'ลำโพงเฟสตรงกัน 2 ตัวแต่ละตัวให้ความเข้มเสียง $I_0$ ณ จุดที่ได้ยินเสียงเสริมสุดขีด (Buff) ความเข้มเสียงรวมจะเป็นกี่เท่าของ $I_0$?',
+      answerTh: '**$4I_0$** (ไม่ใช่ $2I_0$)! เพราะแอมพลิจูดเพิ่ม $2$ เท่า ($2A_0$) และความเข้ม $I \\propto A^2 \\implies 2^2 = 4$ เท่า!',
+    },
+  },
+  'pre-standing-beats-doppler': {
+    levelTag: 'เตรียมสอบเข้าค่าย 1 • บทคลื่น 5.2 (คลื่นนิ่ง บีตส์ & ดอปเพลอร์)',
+    basicLabelTh: 'ท่องสัดส่วนท่อปลายเปิด vs ท่อปลายปิด แล้วลืมสูตรบ่อย',
+    basicFormulaLatex: 'f_n = \\frac{nv}{2L}, \\quad f_{\\text{beat}} = |f_1 - f_2|',
+    advancedLabelTh: 'คลื่นนิ่ง $2A\\sin(kx)\\cos(\\omega t)$ & ทริคเครื่องหมายดอปเพลอร์',
+    advancedFormulaLatex: '\\lambda_{\\text{node-to-node}} = \\frac{\\lambda}{2}, \\qquad f\' = f\\left(\\frac{v \\pm v_O}{v \\mp v_S}\\right)',
+    whyItBreaksTh:
+      'เมื่อต้องเช็กว่าเครื่องหมายในสูตรดอปเพลอร์เป็น $+$ หรือ $-$ หรือต้องตีความบีตส์เวลาปรับสายกีตาร์ให้ตึงขึ้น การจำสูตรแบบไร้ภาพมักสลับซ้าย-ขวาผิดหมด',
+    howItEvolvesTh:
+      'จำความกว้าง **1 ลูป = $\\lambda/2$** แล้ววาดภาพ Node ที่ปลายปิด / Antinode ที่ปลายเปิด ส่วนดอปเพลอร์ให้เช็กทิศเดียวว่า "วิ่งเข้าหากัน $\\to$ เสียงแหลม ($f\' > f$)" จึงเลือกเครื่องหมายให้เศษโตขึ้นหรือส่วนเล็กลง!',
+    everydayAnalogyTh:
+      'เสียงไซเรนรถพยาบาลฟังดูแหลมขึ้นตอนพุ่งเข้ามาหาเรา แล้วทุ้มต่ำลงทันควันวินาทีที่รถวิ่งผ่านเลยตัวเราไป!',
+    interactiveLabId: 'wave-interference',
+    quickRecall: {
+      questionTh: 'ระยะห่างระหว่างจุดบัพ (Node) กับจุดปฏิบัพ (Antinode) ที่อยู่ติดกันในคลื่นนิ่งเป็นกี่เท่าของความยาวคลื่น $\\lambda$?',
+      answerTh: '**$\\frac{\\lambda}{4}$** (เพราะ 1 ลูปจาก Node ถึง Node ถัดไปยาว $\\frac{\\lambda}{2}$ และ Antinode อยู่ตรงกึ่งกลางพอดี!)',
+    },
+  },
   // =========================================================================
   // Chapter 1 (Camp 1 -> 2): Math Tools
   // =========================================================================
@@ -324,6 +367,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ตรึงแกน $y, z$ ให้อยู่นิ่งก่อนแล้วดูความชันตามแกน $x$ ($\\partial f / \\partial x$) จากนั้นทำซ้ำกับแกน $y$ และ $z$ แล้วนำมาประกอบเป็นเวกเตอร์ $\\vec{\\nabla} f$ ซึ่งจะชี้ไปในทิศที่ชันขึ้นเร็วที่สุดเสมอ',
     everydayAnalogyTh:
       'เหมือนยืนอยู่บนไหล่เขา: ก้าวไปทางทิศเหนือชันนิดเดียว ($\\partial h/\\partial y$) แต่ก้าวไปทางทิศตะวันออกชันมาก ($\\partial h/\\partial x$) เวกเตอร์ $\\vec{\\nabla} h$ คือลูกศรชี้ตรงขึ้นยอดเขาที่ชันที่สุด!',
+    interactiveLabId: 'derivative-slope',
     quickRecall: {
       questionTh: 'เวกเตอร์แรง $\\vec{F} = -\\vec{\\nabla} U$ ชี้ไปทางไหนเทียบกับพื้นผิวระดับพลังงานศักย์เท่ากัน?',
       answerTh: 'ตั้งฉากกับเส้นระดับพลังงานเท่า และชี้ลงไปในทิศที่พลังงานศักย์ $U$ ลดลงเร็วที่สุดเสมอ (เหมือนลูกบอลกลิ้งลงเนิน)',
@@ -359,6 +403,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้ Total Differential $dA = \\frac{\\partial A}{\\partial x}dx + \\frac{\\partial A}{\\partial y}dy$ ร่วมกับความไม่สัมพันธ์ของความแปรปรวน ($\\overline{dx\\,dy}=0$) จึงได้ผลรวมแบบพีทาโกรัส (Quadrature)',
     everydayAnalogyTh:
       'ถ้าสุ่มทอยลูกเต๋า 2 ลูก โอกาสที่ทั้งคู่จะออกแต้มสูงสุดพร้อมกันมีน้อยกว่ามาก เช่นเดียวกับการวัด 2 แกนที่คลาดเคลื่อนคนละทิศทางจึงหักล้างกันบางส่วน',
+    interactiveLabId: 'integral-work',
     quickRecall: {
       questionTh: 'ถ้า $y = a x^n$ ความคลาดเคลื่อนสัมพัทธ์ $\\sigma_y/y$ สัมพันธ์กับ $\\sigma_x/x$ อย่างไร?',
       answerTh: '$\\frac{\\sigma_y}{y} = |n|\\frac{\\sigma_x}{x}$ (เลขชี้กำลัง $n$ กลายเป็นตัวคูณความคลาดเคลื่อนสัมพัทธ์!)',
@@ -398,6 +443,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ดิฟเวกเตอร์ $\\vec{r} = r(t)\\hat{r}(t)$ ทีละขั้นด้วย Product Rule: ครั้งแรกได้ $\\vec{v} = \\dot{r}\\hat{r} + r\\dot{\\theta}\\hat{\\theta}$ ครั้งที่สองได้ความเร่ง 4 เทอม สังเกตว่า $a_r$ มี $-r\\dot{\\theta}^2$ แฝงอยู่ ดังนั้น $v_r \\neq \\int a_r\\,dt$',
     everydayAnalogyTh:
       'นักสเก็ตน้ำแข็งหุบแขนเข้าหาตัว ($\\dot{r} < 0$) เพื่อหมุนเร็วขึ้น เช่นเดียวกับเด็กที่เดินออกจากจุดศูนย์กลางม้าหมุนแล้วรู้สึกเหมือนมีแรงผลักเอียงไปด้านข้าง ($2\\dot{r}\\dot{\\theta}$)',
+    interactiveLabId: 'coriolis-disk',
     quickRecall: {
       questionTh: 'ในพิกัดเชิงขั้ว เหตุใดความเร่งตามแนวรัศมี $a_r = \\ddot{r} - r\\dot{\\theta}^2$ ถึงมีค่าไม่เท่ากับ $\\frac{dv_r}{dt}$?',
       answerTh: 'เพราะ $\\vec{v} = v_r\\hat{r} + v_\\theta\\hat{\\theta}$: เมื่อ $\\hat{\\theta}$ หมุนไป มันเบนความเร็วตามแนวสัมผัส $r\\dot{\\theta}\\hat{\\theta}$ เข้าสู่แนวรัศมี จึงเกิดเทอม $-r\\dot{\\theta}^2$!',
@@ -419,6 +465,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ตั้งพิกัดจากจุดตรึงใน **กรอบเฉื่อยเท่านั้น** (เช่น เพดานหรือพื้นโลก) เขียนสมการความยาวเชือก $L$ หรือความชันลิ่ม $\\tan\\theta$ แล้วดิฟเทียบเวลา 2 ครั้ง หรือใช้หลักงานเสมือน $\\sum \\vec{T}_i\\cdot\\vec{a}_i = 0$ เช็กคำตอบภายใน 5 วินาที',
     everydayAnalogyTh:
       'ถ้าดึงเชือกผ่านรอกทดแรงลง 2 เมตร ตัวรอกจะขยับขึ้นเพียง 1 เมตร — ความสัมพันธ์ระยะทางนี้บังคับให้ความเร็วและความเร่งต้องมีอัตราส่วน $2:1$ เสมอ',
+    interactiveLabId: 'pulley-capstan',
     quickRecall: {
       questionTh: 'เวลาตั้งพิกัดของรอกและมวลเพื่อดิฟหาสมการข้อจำกัด (Constraint) ควรวัดพิกัดจากจุดไหน?',
       answerTh: 'วัดจากจุดอ้างอิงที่อยู่นิ่งในกรอบเฉื่อยเสมอ (เช่น เพดานหรือพื้นโต๊ะ) ห้ามวัดจากรอกที่กำลังมีความเร่ง',
@@ -436,6 +483,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ย้ายข้างแล้วแยกตัวประกอบ $\\sin\\alpha\\,(T - m\\omega^2 l) = 0$ เพื่อเก็บคำตอบ $\\alpha = 0$ ไว้ จากนั้นตรวจเงื่อนไข $\\cos\\alpha = \\frac{g}{l\\omega^2} \\le 1$ จึงค้นพบจุดเปลี่ยนผ่าน $\\omega_c = \\sqrt{g/l}$',
     everydayAnalogyTh:
       'หมุนเชือกผูกยางลบช้าๆ ยางลบก็ยังห้อยอยู่ข้างล่าง ต้องหมุนเร็วเกินขีดจำกัดวิกฤตเมื่อไรจึงจะเหวี่ยงกางออกไปด้านข้างได้!',
+    interactiveLabId: 'pulley-capstan',
     quickRecall: {
       questionTh: 'ถ้าหมุนเพนดูลัมกรวยความยาว $l$ ด้วย $\\omega < \\sqrt{g/l}$ เชือกจะทำมุมเท่าใดกับแนวดิ่ง?',
       answerTh: '$\\alpha = 0^\\circ$ (ห้อยดิ่งตรงลงมา) เพราะเงื่อนไขกางออก $\\cos\\alpha = g/(l\\omega^2)$ มีค่ามากกว่า $1$ ซึ่งไม่มีคำตอบจริง',
@@ -453,6 +501,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ตัดชิ้นส่วนเล็กๆ กว้าง $dr$ หรือมุม $d\\theta$ ออกมาวาด FBD ใช้ $\\sin(d\\theta/2) \\approx d\\theta/2$ ตัดเทอมเล็กอันดับสองทิ้ง จะได้สมการเชิงอนุพันธ์อันดับหนึ่งที่อินทิเกรตได้ตรงไปตรงมา',
     everydayAnalogyTh:
       'ลูกเรือแค่คนเดียวสามารถพันเชือกรอบเสาท่าเรือแค่ 2–3 รอบ ($e^{\\mu\\theta}$) เพื่อหยุดเรือบรรทุกขนาดใหญ่ได้โดยไม่หลุดมือ',
+    interactiveLabId: 'pulley-capstan',
     quickRecall: {
       questionTh: 'ในเชือกมวลสม่ำเสมอหมุนควงในระนาบระดับ จุดใดมีแรงตึงเชือกสูงสุดและต่ำสุด?',
       answerTh: 'สูงสุดที่จุดยึดหมุน ($r=0$, เท่ากับ $\\frac{1}{2}M\\omega^2 L$) และลดลงแบบพาราโบลาจนเป็นศูนย์ที่ปลายอิสระ ($r=L$)',
@@ -550,6 +599,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'กระโดดขึ้นไปนั่งบนจุดศูนย์กลางมวล (C-Frame): ในกรอบนี้โมเมนตัมรวมเป็น $0$ ดังนั้นก่อนชนและหลังชนทั้งคู่แค่วิ่งสวนทางกัน $180^\\circ$ ด้วยอัตราเร็วเดิม! หลังชนจึงแค่หมุนทิศมุม $\\Theta$ แล้วบวก $\\vec{V}_{\\text{cm}}$ กลับคืน',
     everydayAnalogyTh:
       'มองลูกบิลเลียดชนกันจากกล้องโดรนที่บินตามจุดกึ่งกลางมวล จะเห็นลูกบิลเลียดแค่วิ่งเข้าหากันแล้วกระดอนออกตรงข้ามกันง่ายนิดเดียว',
+    interactiveLabId: 'momentum-collision',
     quickRecall: {
       questionTh: 'เมื่อลูกมวลหนักมาก $m_1$ ชนเป้าหมายมวลเบา $m_2$ ที่หยุดนิ่ง ($m_1 > m_2$) เหตุใดลูกหนัก $m_1$ จึงไม่มีทางกระดอนถอยหลัง ($>90^\\circ$)?',
       answerTh: 'เพราะความเร็ว CM ($V$) มากกว่าความเร็วกระดอนกลับในกรอบ CM ($v\'_1$) เสมอ ดังนั้น $\\sin\\theta_{1,\\max} = v\'_1/V = m_2/m_1 < 1$',
@@ -589,6 +639,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้กฎของ Chasles ที่เป็นจริงเสมอทุกสถานการณ์: เขียน $\\sum F = M a_{\\text{cm}}$ ควบคู่กับ $\\tau_{\\text{cm}} = I_0\\alpha$ รอบ CM แล้วค่อยแทน $a = \\alpha R$ เพื่อหาค่าแรงเสียดทานสถิตจริงก่อนเทียบกับ $\\mu_s N$',
     everydayAnalogyTh:
       'ทรงกลมตัน แหวน และท่อกลวงมวลเท่ากันกลิ้งแข่งกันลงเนิน ทรงกลมตันชนะเสมอเพราะมวลอยู่ใกล้แกนหมุนมากกว่า จึงประหยัดพลังงานหมุนมาแปลงเป็นความเร็วได้มากกว่า!',
+    interactiveLabId: 'incline-wedge',
     quickRecall: {
       questionTh: 'ในโจทย์วัตถุกลิ้งโดยไม่ไถล แรงเสียดทานสถิต $f_s$ มีค่าเท่ากับ $\\mu_s N$ เสมอหรือไม่?',
       answerTh: 'ไม่ใช่! $f_s$ เป็นแรงข้อจำกัดที่ปรับค่าเท่าที่จำเป็น ($f_s \\le \\mu_s N$) ต้องแก้หา $f_s$ จากสมการนิวตันก่อนเสมอ และใช้ $f_s = \\mu_s N$ เฉพาะจุด "จวนจะไถล"',
@@ -606,6 +657,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'กฎที่แท้จริงคือสมการเวกเตอร์ $d\\vec{L} = \\vec{\\tau}\\,dt$: เมื่อทอร์ก $\\vec{\\tau}$ จากน้ำหนักตั้งฉากกับโมเมนตัมเชิงมุม $\\vec{L}_s$ เสมอ ขนาดของ $\\vec{L}_s$ จึงไม่เพิ่มหรือลด แต่ปลายเวกเตอร์ $\\vec{L}_s$ ถูกดึงให้เลี้ยวขวางไปเรื่อยๆ ด้วยอัตราเร็ว $\\Omega$',
     everydayAnalogyTh:
       'เหมือนรถที่วิ่งตรงด้วยความเร็วสูงแล้วมีแรงสู่ศูนย์กลางดึง **ตั้งฉาก** กับความเร็ว — รถไม่ได้วิ่งเร็วขึ้น แต่จะ **เลี้ยวโค้ง** แทน!',
+    interactiveLabId: 'coriolis-disk',
     quickRecall: {
       questionTh: 'ถ้าปั่นมู่เล่ของไจโรสโคปให้เร็วขึ้น 2 เท่า ($\\omega_s \\to 2\\omega_s$) อัตราเร็วในการหมุนควง $\\Omega$ จะเป็นอย่างไร?',
       answerTh: 'ลดลงครึ่งหนึ่ง ($\\Omega = \\frac{Mgl}{I_0\\omega_s} \\propto \\frac{1}{\\omega_s}$): ยิ่งปั่นไจโรเร็ว มันยิ่งหมุนควงช้าและนิ่งมั่นคงขึ้น!',
@@ -627,6 +679,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'ใช้กฎการแปลงอนุพันธ์ในกรอบหมุน $\\left(\\frac{d}{dt}\\right)_{\\text{in}} = \\left(\\frac{d}{dt}\\right)_{\\text{rot}} + \\vec{\\Omega}\\times$ ซ้ำ 2 ครั้ง จะเกิดทั้งแรงหนีศูนย์กลาง (ผลักออกนอกแกน) และแรงคอริโอลิส (เบี่ยงทิศวัตถุที่กำลังวิ่ง)',
     everydayAnalogyTh:
       'เวลานั่งรถเมล์แล้วคนขับเหยียบเบรกกระทันหัน คุณรู้สึกเหมือนมีใครผลักไปข้างหน้า แรงนั้นคือ "แรงเฉื่อยเทียม" $-m\\vec{A}$ ที่มีขนาดและธรรมชาติเหมือนสนามโน้มถ่วงเอียง!',
+    interactiveLabId: 'coriolis-disk',
     quickRecall: {
       questionTh: 'เหตุใดแรงคอริโอลิส $-2m(\\vec{\\Omega}\\times\\vec{v}_{\\text{rot}})$ จึง **ไม่ทำงาน** ในกรอบหมุนเลยแม้แต่นิดเดียว?',
       answerTh: 'เพราะทิศของ $\\vec{\\Omega}\\times\\vec{v}_{\\text{rot}}$ ตั้งฉากกับความเร็ว $\\vec{v}_{\\text{rot}}$ ตลอดเวลา ผลคูณสเกลาร์ $\\vec{F}_{\\text{cor}} \\cdot \\vec{v}_{\\text{rot}} = 0$!',
@@ -684,6 +737,7 @@ export const LESSON_BRIDGES: Record<string, ConceptBridge> = {
       'เปลี่ยนตัวแปรไปสู่ **โหมดสมมาตร** ($q_1 = x_a + x_b$ ที่แกว่งไปทางเดียวกันจนสปริงไม่ยืด) และ **โหมดต้านสมมาตร** ($q_2 = x_a - x_b$ ที่แกว่งสวนทางกัน) สมการทั้งสองจะขาดออกจากกันอย่างสิ้นเชิงและแก้เป็น SHM ธรรมดาได้ทันที',
     everydayAnalogyTh:
       'แขวนลูกตุ้ม 2 อันบนเชือกขึงราวตากผ้าเดียวกัน: ถ้าผลักแค่อันซ้าย ไม่นานอันซ้ายจะหยุดนิ่งแล้วส่งพลังงานทั้งหมดไปให้อันขวาแกว่งแทน สลับกันไปมาเป็นจังหวะบีตส์!',
+    interactiveLabId: 'coupled-oscillators',
     quickRecall: {
       questionTh: 'ถ้าลูกตุ้มคู่ควบด้วยสปริงอ่อน 2 อันถูกดึงออก **ไปทางเดียวกันเท่ากัน** ($x_a(0)=x_b(0)$) แล้วปล่อย จะเกิดการถ่ายเทพลังงานไปมาหรือไม่?',
       answerTh: 'ไม่เกิด! เพราะเราปลุกเฉพาะโหมดสมมาตร $q_1$ เพียงโหมดเดียว สปริงไม่เคยถูกยืดหด ทั้งคู่จึงแกว่งพร้อมกันด้วยความถี่ $\\sqrt{g/l}$ ตลอดไป',
@@ -718,6 +772,7 @@ export function getBridgeForLesson(slug: string, topicId: TopicId): ConceptBridg
     'pre-fluids-thermo': 'pre-fluids-bernoulli',
     'pre-em': 'pre-electrostatics-capacitors',
     'pre-optics': 'pre-mirrors-reflection',
+    'pre-waves': 'pre-waves-interference',
     'math-tools': 'single-variable-calculus-physics',
     'kinematics-calculus': 'calculus-kinematics-drag-force',
     'newton-constraints': 'pulley-wedge-kinematic-constraints',

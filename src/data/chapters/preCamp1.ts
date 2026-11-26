@@ -174,6 +174,45 @@ $$y = x\\tan\\theta - \\frac{g x^2}{2u^2\\cos^2\\theta}$$
             finalResultLatex: 't_f = \\frac{2u\\sin(\\alpha - \\beta)}{g\\cos\\beta}, \\qquad R_{\\text{incline}} = \\frac{2u^2\\cos\\alpha\\sin(\\alpha - \\beta)}{g\\cos^2\\beta}',
             takeawayTh: 'ใช้เอกลักษณ์ $2\\cos\\alpha\\sin(\\alpha - \\beta) = \\sin(2\\alpha - \\beta) - \\sin\\beta$ จะเห็นทันทีว่ายิงได้ไกลสุดบนพื้นเอียงเมื่อ $2\\alpha - \\beta = 90^\\circ$ (แบ่งครึ่งมุมระหว่างพื้นเอียงกับแนวดิ่ง)!',
           },
+          {
+            id: 'deriv-pre-suvat-graphs',
+            topicId: 'pre-mechanics',
+            titleTh: 'ที่มาของสูตร SUVAT 4 สูตรจากพื้นที่ใต้กราฟ v-t (ไม่ง้อแคลคูลัส)',
+            objectiveTh: 'พิสูจน์ $v = u + at$, $s = ut + \\frac{1}{2}at^2$ และ $v^2 = u^2 + 2as$ จากรูปคางหมูในกราฟความเร็ว-เวลา',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-suvat-1',
+                descriptionTh: 'ความเร่งคงที่ $a$ หมายถึงความชันของกราฟ $v(t)$ เป็นเส้นตรงคงตัวจาก $u$ ไปยัง $v$ ในเวลา $t$',
+                significanceTh: 'การกระจัด $s$ คือพื้นที่ใต้กราฟ $v(t)$ ระหว่างเวลา $0$ ถึง $t$',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'สูตรที่ 1–2: ความชันกราฟและพื้นที่สี่เหลี่ยมคางหมู',
+                latexMath: 'a = \\frac{v - u}{t} \\implies v = u + at, \\qquad s = \\text{พื้นที่คางหมู} = \\left(\\frac{u + v}{2}\\right)t',
+                physicalIntuitionTh: 'เมื่อความเร่งคงที่ ความเร็วเฉลี่ยตลอดช่วงเวลา $t$ ก็คือค่ากลางระหว่างต้นกับปลาย $\\frac{u+v}{2}$ พอดี!',
+                mathOperationTh: 'นิยามความชัน $a = \\Delta v / \\Delta t$ และพื้นที่คางหมู',
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'สูตรที่ 3: แทน $v = u + at$ ลงในพื้นที่คางหมูเพื่อตัดตัวแปร $v$',
+                latexMath: 's = \\left(\\frac{u + (u + at)}{2}\\right)t = ut + \\frac{1}{2}at^2',
+                physicalIntuitionTh: 'มองเป็น 2 ชิ้นชัดๆ: สี่เหลี่ยมผืนผ้าฐาน ($ut$) บวกกับสามเหลี่ยมส่วนที่เร่งเพิ่ม ($\\frac{1}{2} \\cdot t \\cdot at$)!',
+                mathOperationTh: 'กระจายพจน์ $v$ เข้าในสมการพื้นที่',
+              },
+              {
+                stepNumber: 3,
+                titleTh: 'สูตรที่ 4: กำจัดเวลา $t$ ด้วยการแทน $t = \\frac{v - u}{a}$',
+                latexMath: 's = \\left(\\frac{u + v}{2}\\right)\\left(\\frac{v - u}{a}\\right) = \\frac{v^2 - u^2}{2a} \\implies v^2 = u^2 + 2as',
+                physicalIntuitionTh: 'นี่คือต้นตอของทฤษฎีบทงาน–พลังงาน! ลองคูณ $\\frac{1}{2}m$ ทั้งสองข้างจะได้ $\\frac{1}{2}mv^2 - \\frac{1}{2}mu^2 = (ma)s = Fs$ เป๊ะ!',
+                mathOperationTh: 'ใช้ผลต่างกำลังสอง $(v+u)(v-u) = v^2 - u^2$',
+                isCrucialLeap: true,
+              },
+            ],
+            finalResultLatex: 'v = u + at, \\quad s = ut + \\frac{1}{2}at^2, \\quad v^2 = u^2 + 2as',
+            takeawayTh: 'ทุกสูตร SUVAT มาจากรูปสี่เหลี่ยมคางหมูเพียงรูปเดียว และจำไว้เสมอว่าสูตรเหล่านี้ใช้ได้เฉพาะเมื่อความเร่ง $a$ คงตัวเท่านั้น!',
+          },
         ],
         relatedProblemIds: ['prob-pre-mech-proj-1'],
       },
@@ -260,6 +299,45 @@ $$u_1 - u_2 = v_2 - v_1$$
             finalResultLatex: 'v_0 = \\left(1 + \\frac{M}{m}\\right)\\sqrt{2gh}',
             takeawayTh: 'สูตรแยก 2 ช่วง ("ชนใช้โมเมนตัม → เหวี่ยง/ไถลใช้พลังงาน") คือหัวใจของโจทย์กลศาสตร์สอบเข้า สอวน. เกือบทุกปี!',
           },
+          {
+            id: 'deriv-pre-elastic-rel-vel',
+            topicId: 'pre-mechanics',
+            titleTh: 'พิสูจน์กฎความเร็วสัมพัทธ์ชนยืดหยุ่น 1 มิติ: u₁ - u₂ = -(v₁ - v₂) ทีละบรรทัด',
+            objectiveTh: 'แสดงวิธีจัดรูปผลต่างกำลังสองเพื่อลดสมการพลังงานกำลังสองให้เหลือสมการเชิงเส้นแก้ไวใน 10 วินาที',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-el-1',
+                descriptionTh: 'มวล $m_1, m_2$ เคลื่อนที่ 1 มิติด้วยความเร็วต้น $u_1, u_2$ และชนแบบยืดหยุ่นสมบูรณ์เป็น $v_1, v_2$',
+                significanceTh: 'ระบบอนุรักษ์ทั้งโมเมนตัมเชิงเส้นและพลังงานจลน์รวม',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'ตั้งสมการอนุรักษ์โมเมนตัมและจับกลุ่มมวลชนิดเดียวกันไว้คนละฝั่ง',
+                latexMath: 'm_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2 \\implies m_1(u_1 - v_1) = m_2(v_2 - u_2) \\quad \\cdots (1)',
+                physicalIntuitionTh: 'การจัดกลุ่ม $m_1$ ไว้ซ้ายและ $m_2$ ไว้ขวาคือการเขียน $\\Delta p_1 = -\\Delta p_2$ นั่นเอง',
+                mathOperationTh: 'ย้ายข้างสมการโมเมนตัม',
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'ตั้งสมการอนุรักษ์พลังงานจลน์และแยกผลต่างกำลังสอง',
+                latexMath: '\\frac{1}{2}m_1 u_1^2 + \\frac{1}{2}m_2 u_2^2 = \\frac{1}{2}m_1 v_1^2 + \\frac{1}{2}m_2 v_2^2 \\implies m_1(u_1 - v_1)(u_1 + v_1) = m_2(v_2 - u_2)(v_2 + u_2) \\quad \\cdots (2)',
+                physicalIntuitionTh: 'จัดฝั่งเดียวกันกับสมการ (1) เตรียมพร้อมสำหรับการหารตัดตัวแปรในขั้นถัดไป',
+                mathOperationTh: 'คูณ 2 ตลอดแล้วย้ายข้างใช้ $a^2 - b^2 = (a-b)(a+b)$',
+                isCrucialLeap: true,
+              },
+              {
+                stepNumber: 3,
+                titleTh: 'นำสมการ (2) หารด้วยสมการ (1) (เมื่อชนกันจริง $u_1 \\ne v_1$)',
+                latexMath: 'u_1 + v_1 = v_2 + u_2 \\implies u_1 - u_2 = v_2 - v_1 = -(v_1 - v_2)',
+                physicalIntuitionTh: 'ความหมายเชิงฟิสิกส์งดงามมาก: **อัตราเร็วที่พุ่งเข้าหากันก่อนชน = อัตราเร็วที่เด้งแยกจากกันหลังชน**! (และสำหรับชนไม่ยืดหยุ่น นิยามสัมประสิทธิ์คืนตัว $e = \\frac{v_2 - v_1}{u_1 - u_2}$)',
+                mathOperationTh: 'หารสมการ (2) ด้วย (1) ทีละฝั่ง',
+              },
+            ],
+            finalResultLatex: 'u_1 - u_2 = v_2 - v_1, \\qquad e = \\frac{v_2 - v_1}{u_1 - u_2}',
+            takeawayTh: 'จำสมการเชิงเส้น $u_1 - u_2 = v_2 - v_1$ ไปใช้คู่กับ $m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2$ จะประหยัดเวลาแก้โจทย์ชนยืดหยุ่นในห้องสอบไปมหาศาล!',
+          },
         ],
         relatedProblemIds: ['prob-pre-mech-2'],
       },
@@ -334,6 +412,38 @@ $$I_{\\text{cm}} \\Omega = \\text{ทอร์กรอบแกนหมุน}
             ],
             finalResultLatex: 'N_w = f_s = \\frac{Mg}{2\\tan\\theta}, \\qquad \\mu_{s,\\min} = \\frac{1}{2\\tan\\theta}',
             takeawayTh: 'โจทย์สมดุลสถิตทุกข้อในรอบเข้าค่าย 1 แก้ได้ด้วยสมการ 3 บรรทัด: ขึ้น=ลง, ซ้าย=ขวา, และทวน=ตามรอบจุดที่มีตัวแปรไม่ทราบค่ามากที่สุด',
+          },
+          {
+            id: 'deriv-pre-centripetal-triangles',
+            topicId: 'pre-mechanics',
+            titleTh: 'พิสูจน์ความเร่งสู่ศูนย์กลาง a_c = v²/r ด้วยสามเหลี่ยมคล้ายเวกเตอร์',
+            objectiveTh: 'เห็นที่มาชัดเจนว่าเหตุใดวงกลมอัตราเร็วคงตัวจึงมีความเร่งขนาด $v^2/r$ พุ่งเข้าจุดศูนย์กลาง',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-cent-1',
+                descriptionTh: 'วัตถุเคลื่อนที่บนวงกลมรัศมี $r$ ด้วยอัตราเร็วคงตัว $v$ ในช่วงเวลาสั้นๆ $\\Delta t$ กวาดมุมเล็ก $\\Delta\\theta$',
+                significanceTh: 'เวกเตอร์ความเร็ว $\\vec{v}_1$ และ $\\vec{v}_2$ มีขนาด $v$ เท่ากันแต่หมุนทิศไปมุม $\\Delta\\theta$',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'เทียบสามเหลี่ยมหน้าจั่วของตำแหน่ง $(r, r, \\Delta s)$ กับสามเหลี่ยมความเร็ว $(v, v, \\Delta v)$',
+                latexMath: '\\frac{|\\Delta \\vec{v}|}{v} \\approx \\frac{\\Delta s}{r} = \\frac{v\\,\\Delta t}{r}',
+                physicalIntuitionTh: 'เพราะ $\\vec{v} \\perp \\vec{r}$ เสมอ เมื่อ $\\vec{r}$ หมุนไปมุม $\\Delta\\theta$ เวกเตอร์ $\\vec{v}$ ก็หมุนตามไปมุม $\\Delta\\theta$ เท่ากันเป๊ะ จึงเกิดสามเหลี่ยมคล้ายสองรูป!',
+                mathOperationTh: 'เทียบสัดส่วนฐานต่อด้านประกอบของสามเหลี่ยมคล้ายเมื่อ $\\Delta\\theta \\to 0$',
+                isCrucialLeap: true,
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'หารตลอดด้วยช่วงเวลา $\\Delta t$ และตรวจทิศทางของ $\\Delta\\vec{v}$',
+                latexMath: 'a_c = \\lim_{\\Delta t \\to 0}\\frac{|\\Delta \\vec{v}|}{\\Delta t} = \\frac{v}{r}\\cdot v = \\frac{v^2}{r} = \\omega^2 r',
+                physicalIntuitionTh: 'เมื่อ $\\Delta\\theta \\to 0$ เวกเตอร์ผลต่าง $\\Delta\\vec{v} = \\vec{v}_2 - \\vec{v}_1$ จะตั้งฉากกับ $\\vec{v}$ และชี้พุ่งเข้าหาจุดศูนย์กลางวงกลมตลอดเวลา!',
+                mathOperationTh: 'แทน $v = \\omega r$ เพื่อแปลงรูปเป็น $\\omega^2 r$',
+              },
+            ],
+            finalResultLatex: 'a_c = \\frac{v^2}{r} = \\omega^2 r \\quad (\\text{ทิศชี้เข้าศูนย์กลางวงกลม})',
+            takeawayTh: 'ในกรอบเฉื่อย $mv^2/r$ คือผลลัพธ์ด้านขวาของ $F = ma$ **ไม่ใช่แรงลึกลับที่เพิ่มลงบน FBD** ต้องหาแรงจริง (เช่น $T, N, f_s, mg$) มาบวกกันให้เท่ากับ $mv^2/r$!',
           },
         ],
         relatedProblemIds: ['prob-pre-mech-eq-1'],
@@ -424,6 +534,45 @@ $$\\frac{1}{2}\\rho v^2 + \\rho g h + P = \\text{คงที่}$$
             ],
             finalResultLatex: 'v_{\\text{exit}} = \\sqrt{2gh} \\quad (\\text{ถังแคบไม่ตัด } v_1: \\; v_2 = \\sqrt{\\frac{2gh}{1 - (A_2/A_1)^2}})',
             takeawayTh: 'จุดพลาดอันดับ 1 ในข้อสอบ Bernoulli: ต้องใช้ความดันอากาศ $P_0$ ที่ **รูเปิด** ไม่ใช่ความดันใต้ถัง $P_0 + \\rho gh$ เพราะเมื่อน้ำพุ่งพ้นปากท่อแล้ว ความดันรอบลำน้ำคือความดันบรรยากาศ $P_0$!',
+          },
+          {
+            id: 'deriv-pre-bernoulli-work-energy',
+            topicId: 'pre-fluids-thermo',
+            titleTh: 'พิสูจน์สมการ Bernoulli ½ρv² + ρgh + P = const จากทฤษฎีบทงาน–พลังงาน',
+            objectiveTh: 'เข้าใจที่มาจากกฎข้อที่ 1 ของการอนุรักษ์พลังงานว่าสมการ Bernoulli ก็คือ $W_{\\text{pressure}} = \\Delta K + \\Delta U$ ของน้ำมวล $\\Delta m$',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-bern-1',
+                descriptionTh: 'ของไหลอุดมคติไหลคงตัว (Steady, Incompressible, Non-viscous) ผ่านท่อที่ไม่สม่ำเสมอจากปลาย 1 ($P_1, A_1, v_1, h_1$) ไปปลาย 2 ($P_2, A_2, v_2, h_2$)',
+                significanceTh: 'ในช่วงเวลาสั้นๆ $\\Delta t$ ปริมาตรน้ำ $\\Delta V = A_1\\Delta x_1 = A_2\\Delta x_2$ เท่ากันทั้งสองปลาย มวลจึงเป็น $\\Delta m = \\rho\\Delta V$',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'คำนวณงานสุทธิจากแรงดันน้ำ $W_{\\text{pressure}}$ ที่ผลักก้อนน้ำทั้งลำ',
+                latexMath: 'W_{\\text{net}} = F_1\\Delta x_1 - F_2\\Delta x_2 = P_1(A_1\\Delta x_1) - P_2(A_2\\Delta x_2) = (P_1 - P_2)\\Delta V',
+                physicalIntuitionTh: 'น้ำด้านหลังออกแรงดันไปข้างหน้า (งาน $+$) ส่วนน้ำด้านหน้าต้านไว้ (งาน $-$) งานสุทธิจึงเท่ากับผลต่างความดันคูณปริมาตร $\\Delta V$!',
+                mathOperationTh: 'แทนแรง $F = PA$ และปริมาตรเท่ากัน $\\Delta V = A_1\\Delta x_1 = A_2\\Delta x_2$',
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'คำนวณการเปลี่ยนพลังงานจลน์ $\\Delta K$ และพลังงานศักย์โน้มถ่วง $\\Delta U$',
+                latexMath: '\\Delta K = \\frac{1}{2}(\\rho\\Delta V)(v_2^2 - v_1^2), \\qquad \\Delta U = (\\rho\\Delta V)g(h_2 - h_1)',
+                physicalIntuitionTh: 'ส่วนกลางของลำน้ำเคลื่อนที่เหมือนเดิม หักล้างกันหมด เหลือเสมือนย้ายก้อนมวล $\\Delta m = \\rho\\Delta V$ จากปลาย 1 ไปโผล่ที่ปลาย 2!',
+                mathOperationTh: 'แทนมวล $\\Delta m = \\rho\\Delta V$',
+              },
+              {
+                stepNumber: 3,
+                titleTh: 'ตั้งทฤษฎีบทงาน–พลังงาน $W_{\\text{net}} = \\Delta K + \\Delta U$ แล้วหารตลอดด้วย $\\Delta V$',
+                latexMath: '(P_1 - P_2)\\Delta V = \\frac{1}{2}\\rho\\Delta V(v_2^2 - v_1^2) + \\rho\\Delta V g(h_2 - h_1) \\implies P_1 + \\frac{1}{2}\\rho v_1^2 + \\rho gh_1 = P_2 + \\frac{1}{2}\\rho v_2^2 + \\rho gh_2',
+                physicalIntuitionTh: 'หารด้วยปริมาตร $\\Delta V$ ปุ๊บทุกพจน์กลายเป็น **พลังงานต่อ 1 ลูกบาศก์เมตร** (หน่วย $\\text{J/m}^3 = \\text{Pa}$)! จึงเห็นชัดเจนว่าเมื่อ $v$ พุ่งสูง ความดัน $P$ ต้องลดต่ำเพื่อรักษาผลรวมคงที่!',
+                mathOperationTh: 'หารตลอดด้วย $\\Delta V$ และจัดกลุ่มดัชนี 1 กับ 2 ไว้คนละข้าง',
+                isCrucialLeap: true,
+              },
+            ],
+            finalResultLatex: 'P + \\frac{1}{2}\\rho v^2 + \\rho gh = \\text{constant}',
+            takeawayTh: 'Bernoulli ไม่มีเวทมนตร์ลึกลับ — มันคือ "อนุรักษ์พลังงานต่อหน่วยปริมาตร" ที่ใช้ได้ทันทีทุกครั้งที่ของไหลไม่อัดตัวและไม่มีความหนืด!',
           },
         ],
         relatedProblemIds: ['prob-pre-fluid-1'],
@@ -1004,6 +1153,45 @@ $$\\tan\\theta_B = \\frac{n_2}{n_1}$$
             finalResultLatex: '\\tan\\theta_B = \\frac{n_2}{n_1}, \\qquad \\sin\\theta_c = \\frac{n_2}{n_1} \\; (n_1 > n_2)',
             takeawayTh: 'มุมบริวสเตอร์ ($\\tan\\theta_B = n_2/n_1$) เกิดได้ทั้งตอนเข้า ($>45^\\circ$) และตอนออก ($<45^\\circ$) ไม่เหมือนมุมวิกฤตที่เกิดได้เฉพาะจาก $n$ มากไป $n$ น้อย!',
           },
+          {
+            id: 'deriv-pre-snell-huygens-fermat',
+            topicId: 'pre-optics',
+            titleTh: 'พิสูจน์กฎของสเนลล์ n₁sinθ₁ = n₂sinθ₂ ครบทั้ง 2 วิธี (หน้าคลื่นฮอยเกนส์ & เวลาสั้นสุดของแฟร์มาต์)',
+            objectiveTh: 'เข้าใจทั้งภาพเรขาคณิตแบบไม่ใช้แคลคูลัส (ฮอยเกนส์) และวิธีหาค่าต่ำสุดแบบ First Principles (แฟร์มาต์)',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-snell-1',
+                descriptionTh: 'แสงวิ่งจากตัวกลางที่ 1 (ดัชนี $n_1 = c/v_1$) เข้าตัวกลางที่ 2 ($n_2 = c/v_2$) โดยความถี่ $f$ คงที่เสมอ',
+                significanceTh: 'เมื่อ $v$ ช้าลง ความยาวคลื่น $\\lambda = v/f$ หดลง ทำให้หน้าคลื่นเอียงเลี้ยวเข้าหาเส้นปกติ!',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'วิธีที่ 1 (หน้าคลื่นฮอยเกนส์ — ไม่ต้องใช้แคลคูลัส): สามเหลี่ยมมุมฉากบนแนวรอยต่อยาว $AB$',
+                latexMath: 'AB\\sin\\theta_1 = v_1\\,\\Delta t, \\qquad AB\\sin\\theta_2 = v_2\\,\\Delta t \\implies \\frac{\\sin\\theta_1}{\\sin\\theta_2} = \\frac{v_1}{v_2} = \\frac{c/n_1}{c/n_2} = \\frac{n_2}{n_1}',
+                physicalIntuitionTh: 'นึกภาพรถล้อซ้ายวิ่งบนถนนยาง (เร็ว $v_1$) แต่ล้อขวาตกลงโคลน (ช้า $v_2$) พอเวลาผ่านไป $\\Delta t$ ข้างที่ช้าไปได้ระยะน้อยกว่า ตัวรถจึงหักเลี้ยวเข้าหาเส้นปกติ!',
+                mathOperationTh: 'หารสมการระยะทางหน้าคลื่นทั้งสองแล้วแทน $v = c/n$',
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'วิธีที่ 2 (เวลาสั้นสุดของแฟร์มาต์): เขียนเวลาเดินจาก $A(0,a)$ ถึง $B(d,-b)$ ผ่าน $(x, 0)$',
+                latexMath: 'T(x) = \\frac{\\sqrt{x^2 + a^2}}{v_1} + \\frac{\\sqrt{(d - x)^2 + b^2}}{v_2} = \\frac{n_1\\sqrt{x^2+a^2} + n_2\\sqrt{(d-x)^2+b^2}}{c}',
+                physicalIntuitionTh: 'เหมือนไลฟ์การ์ดวิ่งบนหาดทราย ($v_1$ เร็ว) แล้วว่ายน้ำ ($v_2$ ช้า) ต้องวิ่งอ้อมไปลงน้ำให้ช่วงว่ายน้ำสั้นลงจนได้เวลารวมต่ำสุด!',
+                mathOperationTh: 'ใช้พีทาโกรัสหาความยาวแต่ละช่วงหารด้วย $v_1, v_2$',
+              },
+              {
+                stepNumber: 3,
+                titleTh: 'หาอนุพันธ์ $\\frac{dT}{dx} = 0$ เพื่อหาจุดที่เวลาเดินสั้นที่สุด',
+                latexMath: '\\frac{dT}{dx} = \\frac{n_1 x}{c\\sqrt{x^2+a^2}} - \\frac{n_2(d-x)}{c\\sqrt{(d-x)^2+b^2}} = 0 \\implies n_1\\sin\\theta_1 = n_2\\sin\\theta_2',
+                physicalIntuitionTh: 'สัดส่วน $\\frac{x}{\\sqrt{x^2+a^2}}$ ก็คือ $\\sin\\theta_1$ และ $\\frac{d-x}{\\sqrt{(d-x)^2+b^2}}$ ก็คือ $\\sin\\theta_2$ นั่นเอง — พิสูจน์กฎสเนลล์จบในบรรทัดเดียว!',
+                mathOperationTh: 'ดิฟ $\\frac{d}{dx}\\sqrt{u} = \\frac{u\'}{2\\sqrt{u}}$ แล้วเทียบค่า $\\sin\\theta$',
+                isCrucialLeap: true,
+              },
+            ],
+            finalResultLatex: 'n_1\\sin\\theta_1 = n_2\\sin\\theta_2, \\qquad n_1 v_1 \\text{ ไม่เท่ากับ } n_2 v_2 \\; (\\text{แต่ } n\\sin\\theta = \\text{invariant!})',
+            takeawayTh: 'ใช้แล็บ Fermat Least Time ทดลองเลื่อนจุด $x$ แล้วกดล็อก $dT/dx = 0$ จะเห็นสองวิธีนี้เชื่อมกันเป๊ะทันที!',
+          },
         ],
         relatedProblemIds: ['prob-pre-opt-1'],
       },
@@ -1076,6 +1264,176 @@ $$\\tan\\theta_B = \\frac{n_2}{n_1}$$
           },
         ],
         relatedProblemIds: ['prob-pre-opt-2'],
+      },
+    ],
+  },
+
+  // =========================================================================
+  // PRE-CAMP 1 — CHAPTER 5: WAVES, INTERFERENCE (BUFF/DEBUFF) & SOUND — 2 LESSONS
+  // =========================================================================
+  {
+    id: 'pre-waves',
+    track: 'pre-camp-1',
+    titleTh: '5. คลื่น เสียง และการแทรกสอด Buff/Debuff (Waves & Sound)',
+    subtitleTh: 'Wave Superposition, Constructive Buff / Destructive Debuff, Standing Waves, Beats & Doppler',
+    iconName: 'Activity',
+    colorAccent: '#0EA5E9',
+    descriptionTh:
+      'ปูพื้นฐานฟิสิกส์คลื่นกลและคลื่นเสียงตั้งแต่สมการคลื่น พิสูจน์การแทรกสอดเสริม/หักล้าง (Buff/Debuff) อัตราเร็วคลื่นในเส้นเชือก คลื่นนิ่ง ฮาร์มอนิก บีตส์ และปรากฏการณ์ดอปเพลอร์',
+    lessons: [
+      {
+        id: 'lesson-pre-wave-1',
+        slug: 'pre-waves-interference',
+        topicId: 'pre-waves',
+        order: 1,
+        titleTh: '5.1 สมการคลื่น การแทรกสอด Buff/Debuff และคลื่นในเส้นเชือก',
+        summaryTh:
+          'พิสูจน์การซ้อนทับของคลื่น $y_1 + y_2$ เงื่อนไขเสริมกัน (Buff) vs หักล้าง (Debuff) ความเข้มคลื่น $4I_0$ และอัตราเร็ว $v = \\sqrt{T/\\mu}$',
+        readTimeMinutes: 16,
+        theoryMarkdownTh: `
+เวลาคลื่น 2 ขบวนวิ่งมาเจอกันที่จุดเดียวกัน มันไม่ชนกันกระเด็นแบบลูกบิลเลียด แต่ **บวกการกระจัดทับกันตรงๆ ($y_{\\text{net}} = y_1 + y_2$)** แล้ววิ่งผ่านกันไปเหมือนไม่มีอะไรเกิดขึ้น!
+
+### 1. Buff vs Debuff ในคลื่นคืออะไร?
+- **คลื่นขาเข้า 2 ขบวน:** $y_1 = A\\sin(kx - \\omega t)$ และ $y_2 = A\\sin(kx - \\omega t + \\Delta\\phi)$
+- **Constructive Interference ("Buff" / เสริมกันสุดขีด):** เฟสตรงกัน ($\\Delta\\phi = 0, 2\\pi, 4\\pi, \\dots$) $\\iff$ ผลต่างระยะทาง $\\Delta r = m\\lambda$ ($m = 0, 1, 2, \\dots$)
+  - แอมพลิจูดรวม: $A_{\\text{max}} = 2A$
+  - ความเข้มรวม: $I_{\\text{max}} = 4I_0$ (**เพิ่ม 4 เท่า** ไม่ใช่ 2 เท่า!)
+- **Destructive Interference ("Debuff" / หักล้างกันสนิท):** เฟสตรงข้าม ($\\Delta\\phi = \\pi, 3\\pi, 5\\pi, \\dots$) $\\iff$ $\\Delta r = (m + \\frac{1}{2})\\lambda$
+  - แอมพลิจูดรวม: $A_{\\text{min}} = 0$ (หูฟังตัดเสียงรบกวน ANC ใช้หลักนี้ปล่อยคลื่นกลับเฟส $180^\\circ$ มาหักล้างเสียงเครื่องยนต์!)
+
+---
+
+### 2. พจนานุกรมคีย์เวิร์ด & กับดักข้อสอบ
+1. **เช็กเฟสตั้งต้นของแหล่งกำเนิดก่อนเสมอ!** ถ้าแหล่งกำเนิด **เฟสตรงข้ามกันตั้งแต่แรก** ($\\pi$) เงื่อนไข Buff กับ Debuff จะ **สลับกันหมด** (แนวกลาง $r_1 = r_2$ จะกลายเป็นจุดดับ Debuff ทันที!)
+2. **แปลงระยะทางเป็นมุมเฟสได้เสมอ:** $\\Delta\\phi = 2\\pi\\left(\\frac{\\Delta r}{\\lambda}\\right)$
+3. **อัตราเร็วคลื่นในเส้นเชือก $v = \\sqrt{\\frac{T}{\\mu}}$:** ขึ้นอยู่กับตัวกลาง (แรงตึง $T$ และมวลต่อหน่วยความยาว $\\mu = m/L$ ในหน่วย kg/m!) เท่านั้น — สะบัดแรงขึ้นหรือถี่ขึ้น **ไม่ได้เปลี่ยน $v$!**
+        `,
+        derivations: [
+          {
+            id: 'deriv-pre-wave-interference-proof',
+            topicId: 'pre-waves',
+            titleTh: 'พิสูจน์สมการแทรกสอด Buff/Debuff และสูตรความเข้ม I = 4I₀ cos²(Δφ/2)',
+            objectiveTh: 'ใช้เอกลักษณ์ตรีโกณมิติรวมคลื่น 2 ขบวนที่ต่างเฟสกัน $\\Delta\\phi$ เพื่อเห็นพจน์ Buff/Debuff ออกมาชัดเจน',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-w1-1',
+                descriptionTh: 'คลื่นอาพันธ์ 2 ขบวนมีแอมพลิจูด $A$ ความถี่ $\\omega$ และเลขคลื่น $k$ เท่ากัน ต่างกันเฉพาะเฟส $\\Delta\\phi$',
+                significanceTh: 'หลักการซ้อนทับเชิงเส้น (Linear Superposition) ให้ $y_{\\text{net}} = y_1 + y_2$',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'บวกคลื่นทั้งสองขบวนและใช้สูตรผลบวกไซน์ $\\sin\\alpha + \\sin\\beta$',
+                latexMath: 'y = A\\sin(kx - \\omega t) + A\\sin(kx - \\omega t + \\Delta\\phi) = 2A\\cos\\left(\\frac{\\Delta\\phi}{2}\\right)\\sin\\left(kx - \\omega t + \\frac{\\Delta\\phi}{2}\\right)',
+                physicalIntuitionTh: 'คลื่นลัพธ์ยังคงแกว่งด้วยความถี่เดิม แต่แอมพลิจูดใหม่ถูกควบคุมโดยตัวคูณ $2A\\cos(\\Delta\\phi/2)$ ทั้งก้อน!',
+                mathOperationTh: 'ประยุกต์ $\\sin\\alpha + \\sin\\beta = 2\\sin\\left(\\frac{\\alpha+\\beta}{2}\\right)\\cos\\left(\\frac{\\alpha-\\beta}{2}\\right)$',
+                isCrucialLeap: true,
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'วิเคราะห์ค่า Buff สูงสุด ($\\cos = \\pm 1$) และ Debuff สูญหาย ($\\cos = 0$)',
+                latexMath: 'A_{\\text{res}} = 2A\\left|\\cos\\frac{\\Delta\\phi}{2}\\right|, \\qquad I = I_0\\left(\\frac{A_{\\text{res}}}{A}\\right)^2 = 4I_0\\cos^2\\left(\\frac{\\Delta\\phi}{2}\\right)',
+                physicalIntuitionTh: 'เมื่อ $\\Delta\\phi = 0, 2\\pi \\implies I = 4I_0$ (Buff สุดขีด!) และเมื่อ $\\Delta\\phi = \\pi, 3\\pi \\implies I = 0$ (Debuff เงียบกริบ!)',
+                mathOperationTh: 'ความเข้มคลื่นแปรผันตรงกับกำลังสองของแอมพลิจูด $I \\propto A^2$',
+              },
+            ],
+            finalResultLatex: 'A_{\\text{res}} = 2A\\left|\\cos\\frac{\\Delta\\phi}{2}\\right|, \\qquad I = 4I_0\\cos^2\\left(\\frac{\\Delta\\phi}{2}\\right)',
+            takeawayTh: 'เปลี่ยนจากข้อสงสัยเป็นสูตรตายตัว: ไม่ว่าจะถามแอมพลิจูดหรือความเข้ม ณ จุดที่คลื่นต่างเฟสเท่าใด สมการ $I = 4I_0\\cos^2(\\Delta\\phi/2)$ ตอบได้ทุกจุด!',
+          },
+          {
+            id: 'deriv-pre-string-wave-speed',
+            topicId: 'pre-waves',
+            titleTh: 'พิสูจน์อัตราเร็วคลื่นในเส้นเชือก v = √(T/μ) ด้วยกฎนิวตันข้อที่ 2 ในกรอบตามคลื่น',
+            objectiveTh: 'แสดงเหตุผลทางกลศาสตร์ว่าเหตุใดคลื่นจึงวิ่งเร็วขึ้นเมื่อเชือกตึงและเบาลง โดยใช้เพียง $F_c = mv^2/R$',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-str-1',
+                descriptionTh: 'พิจารณาโค้งยอดคลื่นเล็กๆ ที่ประมาณได้ด้วยส่วนโค้งวงกลมรัศมี $R$ ยาว $\\Delta s = R(2\\theta)$ เคลื่อนที่ด้วยอัตราเร็ว $v$',
+                significanceTh: 'หากย้ายไปนั่งบนกรอบที่วิ่งตามยอดคลื่น เชือกทั้งเส้นจะดูเหมือนไหลผ่านโค้งคงที่ด้วยอัตราเร็ว $v$!',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'แตกแรงตึงเชือก $T$ ที่ปลายทั้งสองของส่วนโค้ง $\\Delta s$ เข้าสู่จุดศูนย์กลางความโค้ง',
+                latexMath: 'F_{\\text{center}} = 2T\\sin\\theta \\approx 2T\\theta = T\\left(\\frac{\\Delta s}{R}\\right)',
+                physicalIntuitionTh: 'แรงตึงซ้าย–ขวาหักล้างกันในแนวราบ เหลือองค์ประกอบดึงลงสู่ศูนย์กลางวงกลมช่วยโค้งสายเชือก',
+                mathOperationTh: 'ประมาณมุมเล็ก $\\sin\\theta \\approx \\theta$ และใช้ $2\\theta = \\Delta s / R$',
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'จับแรงสู่ศูนย์กลางเท่ากับ $\\frac{\\Delta m \\cdot v^2}{R}$ แล้วตัด $\\Delta s$ กับ $R$ ทิ้ง',
+                latexMath: 'T\\frac{\\Delta s}{R} = \\frac{(\\mu\\Delta s)v^2}{R} \\implies T = \\mu v^2 \\implies v = \\sqrt{\\frac{T}{\\mu}}',
+                physicalIntuitionTh: 'รัศมี $R$ และความยาวชิ้นส่วน $\\Delta s$ ตัดหายหมด! แปลว่าคลื่นรูปร่างไหนก็เดินทางบนเชือกด้วยอัตราเร็วเดียวกัน $v = \\sqrt{T/\\mu}$!',
+                mathOperationTh: 'แทนมวลชิ้นส่วน $\\Delta m = \\mu\\Delta s$',
+                isCrucialLeap: true,
+              },
+            ],
+            finalResultLatex: 'v = \\sqrt{\\frac{T}{\\mu}}',
+            takeawayTh: 'ข้อสอบชอบหลอกเปลี่ยนความยาวคลื่นหรือความถี่บนเชือกเส้นเดิม ถ้าแรงตึง $T$ กับ $\\mu$ เท่าเดิม อัตราเร็ว $v$ ไม่มีวันเปลี่ยน!',
+          },
+        ],
+        relatedProblemIds: ['prob-pre-wave-1'],
+      },
+      {
+        id: 'lesson-pre-wave-2',
+        slug: 'pre-standing-beats-doppler',
+        topicId: 'pre-waves',
+        order: 2,
+        titleTh: '5.2 คลื่นนิ่ง (Standing Waves) บีตส์ (Beats) และปรากฏการณ์ดอปเพลอร์',
+        summaryTh:
+          'พิสูจน์คลื่นนิ่ง y = 2A sin(kx)cos(ωt) แยกจุด Node/Antinode ฮาร์มอนิกเชือก-ท่อเสียง ความถี่บีตส์ และสูตรดอปเพลอร์แบบไม่สับสนเครื่องหมาย',
+        readTimeMinutes: 15,
+        theoryMarkdownTh: `
+เมื่อคลื่น 2 ขบวนที่ **เหมือนกันเป๊ะ** วิ่ง **สวนทางกัน** (เช่น คลื่นตกกระทบชนผนังสะท้อนกลับ) มันจะขังตัวเองเกิดเป็น **คลื่นนิ่ง** ที่มีจุดนิ่งสนิท (**Node**) และจุดสั่นแรงสุด (**Antinode**) อยู่กับที่!
+
+### 1. สรุปสูตรคลื่นนิ่ง บีตส์ และดอปเพลอร์
+- **ฮาร์มอนิกคลื่นนิ่ง (เชือกตรึง 2 ด้าน หรือ ท่อปลายเปิดทั้ง 2 ด้าน):**
+  $$\\lambda_n = \\frac{2L}{n}, \\qquad f_n = n\\left(\\frac{v}{2L}\\right), \\quad n = 1, 2, 3, \\dots$$
+- **ท่อปลายปิด 1 ด้าน เปิด 1 ด้าน:** เกิดได้เฉพาะฮาร์มอนิกเลขคี่ ($n = 1, 3, 5, \\dots$) โดย $f_n = n\\left(\\frac{v}{4L}\\right)$
+- **บีตส์ (Beats):** คลื่น 2 ความถี่ใกล้เคียงกัน $f_1, f_2$ ซ้อนกันได้เสียงดัง–ค่อยสลับจังหวะถี่ $f_{\\text{beat}} = |f_1 - f_2|$ และความถี่ที่ได้ยินจริงคือค่าเฉลี่ย $\\frac{f_1 + f_2}{2}$
+- **ปรากฏการณ์ดอปเพลอร์ (Doppler):**
+  $$f\' = f\\left(\\frac{v \\pm v_O}{v \\mp v_S}\\right)$$
+  **วิธีกันจำเครื่องหมายสลับ:** ถามตัวเองคำเดียวว่า *"ผู้ฟังกับแหล่งกำเนิดวิ่ง **เข้าหากัน** หรือ **หนีจากกัน**?"*
+  - เข้าหากัน $\\implies$ เสียงต้องแหลมขึ้น ($f\' > f$) $\\implies$ ตัวเศษ **$+$**, ตัวส่วน **$-$**!
+  - หนีจากกัน $\\implies$ เสียงต้องทุ้มลง ($f\' < f$) $\\implies$ ตัวเศษ **$-$**, ตัวส่วน **$+$**!
+        `,
+        derivations: [
+          {
+            id: 'deriv-pre-standing-beats',
+            topicId: 'pre-waves',
+            titleTh: 'พิสูจน์สมการคลื่นนิ่ง y = 2A sin(kx)cos(ωt) และเงื่อนไข Node / Antinode',
+            objectiveTh: 'รวมคลื่น 2 ขบวนที่วิ่งสวนทางกันด้วยอัตราเร็วเดียวกัน เพื่อแยกพจน์ตำแหน่ง $x$ ออกจากพจน์เวลา $t$',
+            startingAssumptions: [
+              {
+                id: 'asm-pre-std-1',
+                descriptionTh: 'คลื่นขบวนหนึ่งวิ่งไปทาง $+x$: $y_+ = A\\sin(kx - \\omega t)$ และคลื่นสะท้อนวิ่งสวนกลับทาง $-x$: $y_- = A\\sin(kx + \\omega t)$',
+                significanceTh: 'ทิศทางตรงข้ามแสดงด้วยเครื่องหมายหน้า $\\omega t$ ที่ต่างกัน ($-$ vs $+$)',
+              },
+            ],
+            steps: [
+              {
+                stepNumber: 1,
+                titleTh: 'ใช้เอกลักษณ์ $\\sin(A - B) + \\sin(A + B) = 2\\sin A\\cos B$',
+                latexMath: 'y(x,t) = A\\sin(kx - \\omega t) + A\\sin(kx + \\omega t) = \\left[2A\\sin(kx)\\right]\\cos(\\omega t)',
+                physicalIntuitionTh: 'ความมหัศจรรย์ของสมการนี้คือ $x$ กับ $t$ **แยกตัวขาดจากกัน!** รูปทรง $\\sin(kx)$ ไม่ได้ไหลไปซ้ายหรือขวาแล้ว แต่แค่กระเพื่อมขึ้น–ลงอยู่กับที่!',
+                mathOperationTh: 'กระจาย $\\sin(kx \\mp \\omega t)$ แล้วรวมพจน์ที่หักล้างกันทิ้ง',
+                isCrucialLeap: true,
+              },
+              {
+                stepNumber: 2,
+                titleTh: 'หาตำแหน่ง Node (นิ่งตลอดกาล) และความยาวคลื่นฮาร์มอนิกเมื่อปลายตรึง $y(L,t) = 0$',
+                latexMath: '\\sin(kL) = 0 \\implies \\frac{2\\pi}{\\lambda}L = n\\pi \\implies \\lambda_n = \\frac{2L}{n} \\implies f_n = \\frac{v}{\\lambda_n} = \\frac{nv}{2L}',
+                physicalIntuitionTh: '1 ลูปคลื่นนิ่งยาวเท่ากับ $\\frac{\\lambda}{2}$ เสมอ! ระยะห่างระหว่าง Node ถึง Node (หรือ Antinode ถึง Antinode) ที่ติดกันจึงเป็น $\\frac{\\lambda}{2}$ ส่วน Node ถึง Antinode เป็น $\\frac{\\lambda}{4}$',
+                mathOperationTh: 'จับ $\\sin(kL) = 0 \\implies kL = n\\pi$ แล้วแทน $k = 2\\pi/\\lambda$',
+              },
+            ],
+            finalResultLatex: 'y(x,t) = 2A\\sin(kx)\\cos(\\omega t), \\qquad f_n = \\frac{nv}{2L}',
+            takeawayTh: 'จำให้แม่นว่าความกว้าง **1 ลูปคลื่นนิ่ง = λ/2** (ไม่ใช่ 1λ!) ใช้ตรวจจำนวนโหนดและหา $\\lambda$ ได้ใน 2 วินาที!',
+          },
+        ],
+        relatedProblemIds: ['prob-pre-wave-2'],
       },
     ],
   },

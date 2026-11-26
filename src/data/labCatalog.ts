@@ -36,11 +36,64 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
     },
   },
   {
+    id: 'momentum-collision',
+    category: 'flagship',
+    titleTh: 'แล็บการชนและโมเมนตัม (เพิ่ม/ลบมวล 2–4 ก้อน)',
+    subtitleTh: 'ตั้งมวล ความเร็ว และค่าคืนตัว e ปล่อยชนสดเทียบโมเมนตัม vs พลังงานจลน์',
+    keywords: 'momentum collision mass elastic inelastic restitution โมเมนตัม ชน มวล',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-mechanics',
+      slug: 'pre-momentum-energy-projectile',
+    },
+  },
+  {
+    id: 'circuit-builder',
+    category: 'flagship',
+    titleTh: 'ห้องต่อวงจรไฟฟ้า DC (เพิ่มกิ่ง หลอดไฟ & สวิตช์)',
+    subtitleTh: 'ต่อวงจรอนุกรม/ขนาน ใส่หลอดไฟสว่างตามกำลังวัตต์ P=I²R พร้อมจุดกระแสไหล',
+    keywords: 'circuit builder dc ohm bulb resistor parallel series วงจรไฟฟ้า หลอดไฟ กระแส',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-em',
+      slug: 'pre-dc-circuits-rc',
+    },
+  },
+  {
+    id: 'magnet-field',
+    category: 'flagship',
+    titleTh: 'แล็บแม่เหล็ก เข็มทิศ ขดลวดฟาราเดย์ & ประจุ qv×B',
+    subtitleTh: 'เลื่อนแท่งแม่เหล็ก N/S ดูเข็มทิศหมุน หลอดไฟเหนี่ยวนำ และวงโคจรประจุ',
+    keywords: 'magnet compass faraday coil lorentz cyclotron electromagnetic แม่เหล็ก เข็มทิศ ประจุ',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-em',
+      slug: 'pre-magnetic-field-wires',
+    },
+  },
+  {
+    id: 'heat-flow',
+    category: 'flagship',
+    titleTh: 'แล็บการไหลของความร้อน (Q̇ = kAΔT / L)',
+    subtitleTh: 'เห็นอนุภาคความร้อนไหลตามค่า K (ทองแดง/เหล็ก/ไม้) ขนาดหน้าตัด A และความยาว L',
+    keywords: 'heat thermal conduction fourier temperature series rod ความร้อน นำความร้อน',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-fluids-thermo',
+      slug: 'pre-thermal-conduction-expansion',
+    },
+  },
+  {
     id: 'wave-interference',
     category: 'flagship',
     titleTh: 'ห้องทดลองคลื่น แทรกสอด Buff/Debuff & คลื่นนิ่ง',
     subtitleTh: 'ดูคลื่นเสริม (0°) คลื่นหักล้าง (180°) คลื่นนิ่ง Nodes/Antinodes และบีตส์สดๆ',
     keywords: 'wave interference buff debuff standing beats constructive destructive แทรกสอด คลื่น',
+    relatedLesson: {
+      track: 'pre-camp-1',
+      topicId: 'pre-waves',
+      slug: 'pre-waves-interference',
+    },
   },
   {
     id: 'snell-fermat',
@@ -109,13 +162,13 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
   {
     id: 'temperature-box',
     category: 'pre-camp-1',
-    titleTh: 'กล่องนำความร้อน & กระบอกสูบแก๊สอุดมคติ',
-    subtitleTh: 'สมดุลฟลักซ์ความร้อน J₁=J₂ และการแบ่งพลังงาน ΔU กับงาน ΔW',
-    keywords: 'thermal conduction heat gas piston thermo first law นำความร้อน แก๊ส',
+    titleTh: 'กล่องอุณหภูมิ & กระบอกสูบแก๊ส (กฎข้อที่ 1)',
+    subtitleTh: 'สมดุลความร้อนและการแบ่งพลังงาน ΔU กับงานขยายตัว ΔW',
+    keywords: 'thermal conduction heat gas piston thermo first law แก๊ส ลูกสูบ',
     relatedLesson: {
       track: 'pre-camp-1',
       topicId: 'pre-fluids-thermo',
-      slug: 'pre-thermal-conduction-expansion',
+      slug: 'pre-heat-gas-thermo',
     },
   },
   {
@@ -151,7 +204,7 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
     relatedLesson: {
       track: 'pre-camp-1',
       topicId: 'pre-em',
-      slug: 'pre-magnetic-field-wires',
+      slug: 'pre-magnetism-induction-maxwell',
     },
   },
   {
@@ -166,21 +219,9 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
       slug: 'pre-mirrors-reflection',
     },
   },
-  {
-    id: 'projectile-collision',
-    category: 'pre-camp-1',
-    titleTh: 'กราฟวิถีโพรเจกไทล์ & ระยะตก',
-    subtitleTh: 'เปรียบเทียบองค์ประกอบ v_x, v_y และมุมยิง 45° แบบรวดเร็ว',
-    keywords: 'projectile range height apex โพรเจกไทล์',
-    relatedLesson: {
-      track: 'pre-camp-1',
-      topicId: 'pre-mechanics',
-      slug: 'pre-momentum-energy-projectile',
-    },
-  },
 
   // =========================================================================
-  // 3. CAMP 1 -> 2 CALCULUS MICRO-LABS
+  // 3. CAMP 1 -> 2 CALCULUS & ADVANCED MECHANICS LABS
   // =========================================================================
   {
     id: 'derivative-slope',
@@ -216,6 +257,42 @@ export const PHYSICS_LAB_CATALOG: LabCatalogItem[] = [
       track: 'camp-1-2',
       topicId: 'work-energy-potentials',
       slug: 'conservative-forces-potential-wells',
+    },
+  },
+  {
+    id: 'pulley-capstan',
+    category: 'camp-1-2',
+    titleTh: 'แรงเสียดทานเชือกพันเสา Capstan (T_B = T_A e^(μθ))',
+    subtitleTh: 'ดูการคูณแรงเสียดทานแบบเอกซ์โพเนนเชียลเมื่อพันเชือกหลายรอบเสา',
+    keywords: 'capstan friction exponential tension rope pulley แคปสแตน เชือก',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'newton-constraints',
+      slug: 'continuous-mass-tension-capstan',
+    },
+  },
+  {
+    id: 'coriolis-disk',
+    category: 'camp-1-2',
+    titleTh: 'จานหมุนและแรงคอริโอลิส (Coriolis Frame)',
+    subtitleTh: 'เทียบเส้นทางลูกบอลระหว่างกรอบอ้างอิงเฉื่อยกับกรอบที่กำลังหมุน',
+    keywords: 'coriolis rotating frame inertial turntable centrifugal คอริโอลิส จานหมุน',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'non-inertial-central-force',
+      slug: 'accelerating-rotating-frames',
+    },
+  },
+  {
+    id: 'coupled-oscillators',
+    category: 'camp-1-2',
+    titleTh: 'ลูกตุ้มคู่ควบสปริง & Normal Modes',
+    subtitleTh: 'ดูการถ่ายเทพลังงานไปมาระหว่าง 2 ลูกตุ้ม และโหมดสมมาตร/ต้านสมมาตร',
+    keywords: 'coupled oscillator normal modes beats pendulum spring ลูกตุ้มคู่ควบ',
+    relatedLesson: {
+      track: 'camp-1-2',
+      topicId: 'shm-differential-eq',
+      slug: 'coupled-oscillators-normal-modes',
     },
   },
   {

@@ -7,6 +7,7 @@ export type TopicId =
   | 'pre-fluids-thermo'
   | 'pre-em'
   | 'pre-optics'
+  | 'pre-waves'
   | 'math-tools'
   | 'kinematics-calculus'
   | 'newton-constraints'

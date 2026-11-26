@@ -7,6 +7,11 @@ import { PreCampVisualLabs, PreCampLabId } from './PreCampVisualLabs';
 import { ProjectileShooterLab } from './ProjectileShooterLab';
 import { WaveInterferenceLab } from './WaveInterferenceLab';
 import { SnellFermatLab } from './SnellFermatLab';
+import { MomentumCollisionLab } from './MomentumCollisionLab';
+import { CircuitBuilderLab } from './CircuitBuilderLab';
+import { MagnetFieldLab } from './MagnetFieldLab';
+import { HeatFlowLab } from './HeatFlowLab';
+import { Track2AdvancedLabs, Track2LabKind } from './Track2AdvancedLabs';
 import { Sliders } from 'lucide-react';
 
 interface ConceptBridgeLabProps {
@@ -32,6 +37,21 @@ export const ConceptBridgeLab: React.FC<ConceptBridgeLabProps> = ({ labId }) => 
   }
   if (labId === 'snell-fermat') {
     return <SnellFermatLab />;
+  }
+  if (labId === 'momentum-collision') {
+    return <MomentumCollisionLab />;
+  }
+  if (labId === 'circuit-builder') {
+    return <CircuitBuilderLab />;
+  }
+  if (labId === 'magnet-field') {
+    return <MagnetFieldLab />;
+  }
+  if (labId === 'heat-flow') {
+    return <HeatFlowLab />;
+  }
+  if (labId === 'pulley-capstan' || labId === 'coriolis-disk' || labId === 'coupled-oscillators') {
+    return <Track2AdvancedLabs labId={labId as Track2LabKind} />;
   }
 
   const preCampLabs: PreCampLabId[] = [

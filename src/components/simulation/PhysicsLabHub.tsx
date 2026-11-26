@@ -16,15 +16,15 @@ interface PhysicsLabHubProps {
 
 const CATEGORY_META: Record<LabCategory, { label: string; icon: React.ReactNode }> = {
   flagship: {
-    label: 'แล็บไฮไลต์ & เกมฝึกคำนวณ',
+    label: `แล็บไฮไลต์ & เกม (${PHYSICS_LAB_CATALOG.filter((l) => l.category === 'flagship').length})`,
     icon: <Gamepad2 className="w-3.5 h-3.5" />,
   },
   'pre-camp-1': {
-    label: 'Pre-Camp 1 (9 แล็บ)',
+    label: `Pre-Camp 1 (${PHYSICS_LAB_CATALOG.filter((l) => l.category === 'pre-camp-1').length})`,
     icon: <Sparkles className="w-3.5 h-3.5" />,
   },
   'camp-1-2': {
-    label: 'Camp 1–2 Calculus (4 แล็บ)',
+    label: `Camp 1–2 Calculus (${PHYSICS_LAB_CATALOG.filter((l) => l.category === 'camp-1-2').length})`,
     icon: <GraduationCap className="w-3.5 h-3.5" />,
   },
 };
